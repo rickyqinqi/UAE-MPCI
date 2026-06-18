@@ -139,8 +139,8 @@ mark { background:var(--highlight); padding:1px 3px; border-radius:2px; }
 
   <!-- Stats -->
   <div class="stats-bar">
-    <div class="stat-card"><div class="num" id="totalDocs">11</div><div class="label">源文档</div></div>
-    <div class="stat-card"><div class="num" id="totalCats">9</div><div class="label">知识分类</div></div>
+    <div class="stat-card"><div class="num" id="totalDocs">15</div><div class="label">源文档</div></div>
+    <div class="stat-card"><div class="num" id="totalCats">12</div><div class="label">知识分类</div></div>
     <div class="stat-card"><div class="num" id="totalItems">0</div><div class="label">知识条目</div></div>
     <div class="stat-card"><div class="num" id="totalPkgTypes">169</div><div class="label">包装类型代码</div></div>
   </div>
@@ -156,6 +156,9 @@ mark { background:var(--highlight); padding:1px 3px; border-radius:2px; }
     <button class="tab-btn" onclick="filterTab('package', this)">📦 包装代码</button>
     <button class="tab-btn" onclick="filterTab('smartlink', this)">🔗 SmartLink</button>
     <button class="tab-btn" onclick="filterTab('scenarios', this)">🔄 业务场景</button>
+    <button class="tab-btn" onclick="filterTab('mandatory', this)">⚠️ 强制令</button>
+    <button class="tab-btn" onclick="filterTab('workflow', this)">🔧 实施手册</button>
+    <button class="tab-btn" onclick="filterTab('cuscar-layout', this)">📋 CUSCAR格式</button>
   </div>
 
   <!-- TOC -->
@@ -1062,8 +1065,463 @@ $$$MSGSTART:SENDERID            MSGTYPE     MPCI MREF0000000001
     </div>
   </div>
 
+  <!-- Category: Mandatory Implementation Notice -->
+  <div class="category open visible" data-cat="mandatory" id="cat-mandatory">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">⚠️</span>
+      <h2>强制实施通知（2026年6月30日截止）</h2>
+      <span class="badge">5 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="强制 实施 截止日期 2026">
+<div class="q"><span class="q-icon">Q:</span>UAE MPCI 的强制实施截止日期是什么？</div>
+<div class="a">
+<p>根据 NAIC 于 <strong>2026年3月12日</strong> 发布的正式通知（Ref: GAPB/NAIC/MPCI/001），所有在阿联酋港口运营的海运承运人——包括 <strong>船公司（Shipping Lines）、货运代理（Freight Forwarder）和 NVOCC</strong>——必须在 <strong>2026年6月30日</strong> 之前完成 UAE MPCI 系统的实施。</p>
+<p class="highlight-box">⚠️ 逾期未实施将影响船舶在阿联酋港口的正常运营。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="强制 范围 适用 谁需要">
+<div class="q"><span class="q-icon">Q:</span>强制令的适用范围是什么？</div>
+<div class="a">
+<p>所有航行至或途经阿联酋（UAE）港口的<strong>海运货物承运人</strong>都必须遵守：</p>
+<ul>
+  <li><strong>船公司（Shipping Lines）</strong> — 必须在装船前提交主提单数据</li>
+  <li><strong>货运代理（Freight Forwarder / NVOCC）</strong> — 必须提交货代提单数据</li>
+  <li><strong>覆盖范围：</strong>进口（IM）、转运（TS）、过境进口（TI）、FROB（FR）货物</li>
+  <li><strong>不包括：</strong>从阿联酋出口的货物</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="强制 目的 安全">
+<div class="q"><span class="q-icon">Q:</span>强制实施 MPCI 的目的是什么？</div>
+<div class="a">
+<p>该计划旨在：</p>
+<ul>
+  <li>🔒 <strong>提升安全水平：</strong>加强海上货物安全保障</li>
+  <li>📡 <strong>促进沟通：</strong>便利与经阿联酋港口运营的海运承运人的沟通</li>
+  <li>✅ <strong>确保合规：</strong>确保承运人遵守阿联酋现行法律和程序</li>
+  <li>🚢 <strong>保障贸易畅通：</strong>在提升安全的同时确保商业运营顺畅</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="强制 联系方式 支持 inquiry">
+<div class="q"><span class="q-icon">Q:</span>关于强制实施有疑问应该联系谁？</div>
+<div class="a">
+<p><strong>邮箱：</strong><a href="mailto:mpci.inquiries@icp.gov.ae">mpci.inquiries@icp.gov.ae</a></p>
+<p><strong>签署方：</strong>Dr. Maryam Alhashemi — Director of Operations Support Department, NAIC</p>
+<p>NAIC 可应要求安排与 IT 团队的说明会议，以解答关于 MPCI 实施程序的所有问询。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="强制 通知 原文">
+<div class="q"><span class="q-icon">Q:</span>强制通知的原文要点是什么？</div>
+<div class="a">
+<p>通知编号：<strong>GAPB/NAIC/MPCI/001</strong>，日期：2026年3月12日</p>
+<p>原文为阿拉伯语和英语双语，关键声明：</p>
+<blockquote>We would like to bring to your attention that all sea Cargo carriers including (Shipping lines, freight forwarder and NVOCC) which have journeys to/from UAE must implement UAE-MPCI of the National Advance Information Centre System no later than June 30th 2026.</blockquote>
+<p>通知附有 UAE MPCI 实施指南，要求接收方采取行动以确保遵守通知规定。</p>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <!-- Category: Working Manual System Implementation -->
+  <div class="category open visible" data-cat="workflow" id="cat-workflow">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">🔧</span>
+      <h2>系统实施工作手册（Working Manual v1.8）</h2>
+      <span class="badge">12 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="工作手册 系统 概述 Allegro">
+<div class="q"><span class="q-icon">Q:</span>系统实施工作手册包含哪些内容？</div>
+<div class="a">
+<p>本手册基于船公司（CULines）的 Allegro 系统，描述了为满足 UAE MPCI 要求所做的系统增强和配置。主要内容包括：</p>
+<ul>
+  <li>新增 UI 界面：Customer Service > 24 Hour Advance Manifest > UAE > Transmit Manifest (MPCI)</li>
+  <li>CUSCAR 扁平文件（Flat File）布局及数据字段说明</li>
+  <li>CONTRL 和 CUSRES 响应消息格式</li>
+  <li>EDI 传输工作流程及异常处理</li>
+  <li>E-service 和 E-booking 相关增强</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 范围 货型 集装箱">
+<div class="q"><span class="q-icon">Q:</span>系统实施的范围是什么（哪些货型包含在内）？</div>
+<div class="a">
+<table>
+<tr><th>类型</th><th>是否支持</th><th>说明</th></tr>
+<tr><td>✅ 集装箱货物（FCL）</td><td>支持</td><td>Cargo Type = "F"（Full Container）</td></tr>
+<tr><td>❌ 散货（Bulk）</td><td>不支持</td><td>Breakbulk、Liquid Bulk 排除</td></tr>
+<tr><td>❌ RO-RO 货物</td><td>不支持</td><td>滚装船货物排除</td></tr>
+<tr><td>❌ 空集装箱</td><td>不支持</td><td>无货空箱排除</td></tr>
+<tr><td>✅ Direct B/L + MBL</td><td>支持</td><td>当前阶段仅支持直单和主单</td></tr>
+<tr><td>❌ House B/L</td><td>暂不支持</td><td>HBL 传输不在当前阶段范围内</td></tr>
+</table>
+<p>货物移动类型支持：IM（进口）、TS（转运）、TI（过境进口）、FR（FROB）。不包括从阿联酋出口的货物（EX）。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 UI 界面 操作 传输 删除">
+<div class="q"><span class="q-icon">Q:</span>Transmit Manifest (MPCI) UI 的操作流程是什么？</div>
+<div class="a">
+<p><strong>导航路径：</strong>Customer Service > 24 Hour Advance Manifest > UAE > Transmit Manifest (MPCI)</p>
+<p><strong>搜索方式（3种）：</strong></p>
+<ol>
+  <li>输入 VVD + POL/POD/FROB Port</li>
+  <li>输入时间范围 + POL/POD/FROB Port</li>
+  <li>输入具体 B/L 号码</li>
+</ol>
+<p><strong>传输操作：</strong></p>
+<ul>
+  <li><strong>Transmit 按钮：</strong>发送/重新发送 CUSCAR 消息。从第二次传输起，用户必须输入 Amend Reason</li>
+  <li><strong>Delete Transmit 按钮：</strong>取消已发送的申报。取消后只收到 CONTRL 响应（无 CUSRES）</li>
+</ul>
+<p><strong>数据过滤：</strong>系统自动过滤仅显示 Cargo Type = "F"（集装箱）且 Movement Type 为 IM/TS/TI/FR 的 B/L。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 流程 主流程 异常">
+<div class="q"><span class="q-icon">Q:</span>MPCI 申报的主流程和异常流程是怎样的？</div>
+<div class="a">
+<p><strong>主流程（成功提交）：</strong></p>
+<ol>
+  <li>用户选择 B/L → 点击"Transmit" → Allegro 发送 CUSCAR 消息</li>
+  <li>海关进行技术校验 → 返回 CONTRL 消息 → 显示 "CONTRL-Result"</li>
+  <li>CONTRL = "Success" (S) → 海关进行业务校验</li>
+  <li>海关返回 CUSRES 消息（ACT/ACW/DNL）→ 申报完成</li>
+</ol>
+<p><strong>异常流程 1 — CONTRL 技术错误 (Fail)：</strong></p>
+<ul>
+  <li>CONTRL 返回 "Fail"，列显示 "Error" + 错误代码列表</li>
+  <li>用户需修正错误后重新点击 "Transmit"（需填写 Amend Reason）</li>
+</ul>
+<p><strong>异常流程 2 — CUSRES = PSF（Pending Sub-filing）：</strong></p>
+<ul>
+  <li>表示关联的货代提单尚未完成申报</li>
+  <li>船公司应联系货运代理尽快完成补充申报</li>
+  <li>超时未解决将变为 EXP（过期），需重新提交</li>
+</ul>
+<p><strong>异常流程 3 — CUSRES = RFI（Request for Information）：</strong></p>
+<ul>
+  <li>海关要求补充信息</li>
+  <li>用户点击 "Transmit" 重新传输，附带 Amend Reason</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 响应码 ACT ACW DNL RFI PSF EXP">
+<div class="q"><span class="q-icon">Q:</span>NAIC 全部响应代码（CUSRES）及其含义是什么？</div>
+<div class="a">
+<table>
+<tr><th>代码</th><th>状态</th><th>含义</th><th>操作要求</th></tr>
+<tr><td><span class="tag tag-act">ACT</span></td><td>Accept</td><td>接受，允许装载</td><td>正常装载货物</td></tr>
+<tr><td><span class="tag tag-dnl">ACW</span></td><td>Accept with Warning</td><td>接受但有警告（如数据质量问题）</td><td>允许装载，需关注评论</td></tr>
+<tr><td><span class="tag tag-rfi">DNL</span></td><td>Do Not Load</td><td>禁止装载（安全风险）</td><td>不得装载该货物</td></tr>
+<tr><td><span class="tag tag-info">RFI</span></td><td>Request for Information</td><td>需要补充信息</td><td>提供额外信息后重新申报</td></tr>
+<tr><td><span class="tag tag-info">PSF</span></td><td>Pending Sub-filing</td><td>等待子提单申报</td><td>联系货代完成 HBL 申报</td></tr>
+<tr><td><span class="tag tag-info">EXP</span></td><td>Expired</td><td>申报已过期</td><td>需重新提交（200天超时）</td></tr>
+</table>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 E-service HS code">
+<div class="q"><span class="q-icon">Q:</span>E-service 上有哪些 MPCI 相关增强？</div>
+<div class="a">
+<ul>
+  <li><strong>HS Code 字段：</strong>新增 "GCC HS" 列（12位），位于原 HS Code 旁边，用于输入 GCC HS 代码</li>
+  <li><strong>验证逻辑：</strong>输入的 GCC HS 代码须与 Allegro 中的 Master Data 匹配</li>
+  <li><strong>House B/L 声明：</strong>新增 "House B/L Involve" 字段 — 用户须选择 "Consol (Exist)" 或 "Simple (Do not exist)"，不允许留空</li>
+  <li><strong>HBL MPCI ID：</strong>当 "House B/L Involve" = "Consol (Exist)" 且航程涉及 UAE 港口时，HBL MPCI ID 为必填</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 拼箱 合并 简单 Consol Simple">
+<div class="q"><span class="q-icon">Q:</span>如何判断 shipment 是 Consolidation 还是 Simple？</div>
+<div class="a">
+<p><strong>E-service 用户声明：</strong>用户通过 "House B/L Involve" 字段在 Shipping Instruction 中声明</p>
+<p><strong>自动逻辑（非 E-booking 上传场景）：</strong></p>
+<ul>
+  <li>Cargo Type = "F"（集装箱）且 Shipper Type = <strong>BCO</strong> → <strong>Simple</strong>，CNSL_IND = N</li>
+  <li>Cargo Type = "F"（集装箱）且 Shipper Type = <strong>Non-BCO</strong> → <strong>Consolidated</strong>，CNSL_IND = Y</li>
+</ul>
+<p><strong>默认规则（无声明时）：</strong>视为 Consolidation（Consol）</p>
+<p>用户可在 "Shipping Party (Outbound)" UI 中手动调整。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 船公司代码 SMDG VSL_CRR_CD">
+<div class="q"><span class="q-icon">Q:</span>VSL_CRR_CD（船舶承运人代码）如何获取？</div>
+<div class="a">
+<p><strong>代码来源：</strong>必须来自 <strong>SMDG Liner Code List</strong>（https://smdg.org/documents/smdg-code-lists/smdg-liner-code-list/）</p>
+<p><strong>获取流程：</strong></p>
+<ol>
+  <li>系统从 "Search Long Range Schedule" 画面获取船舶运营商（Vessel Operator）代码</li>
+  <li>在 "Customs Code Config. (IT only)" 画面中应用代码转换规则</li>
+  <li>导出最终 VSL_CRR_CD</li>
+</ol>
+<p>此字段为 CUSCAR 传输中的必填项。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 港口 代码 转换 UNLOCODE AESCT">
+<div class="q"><span class="q-icon">Q:</span>港口代码的转换规则是什么？</div>
+<div class="a">
+<p>系统获取原始港口代码后，通过 "Customs Code Config. (IT only)" 画面进行转换。已知转换规则示例：</p>
+<table>
+<tr><th>原始代码</th><th>转换后代码</th></tr>
+<tr><td>AESCT</td><td>AESHJ</td></tr>
+<tr><td>THLKB</td><td>THLKR</td></tr>
+</table>
+<p>所有方案中涉及目的港、转运港的 UN/LOCODE 均需按此规则映射。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 ETA ETD UTC 时区">
+<div class="q"><span class="q-icon">Q:</span>ETA/ETD 时间如何处理时区？</div>
+<div class="a">
+<p><strong>格式：</strong>CCYYMMDDHHMM（如 202601130600），必须为 <strong>UTC 时间</strong>。</p>
+<p><strong>转换方式：</strong></p>
+<ol>
+  <li>系统在 "Manage Location" UI 中查询港口代码对应的 "UTC Gap"</li>
+  <li>将本地时间加上/减去 UTC Gap，转换为 UTC 时间</li>
+</ol>
+<p>涉及字段：LST_CALL_ETD（最后外国港 ETD）、FST_UAE_ETA（首 UAE 港 ETA）</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 消息参考号 格式 生成 Message Ref No">
+<div class="q"><span class="q-icon">Q:</span>Message Reference Number 的格式是什么？</div>
+<div class="a">
+<p><strong>格式：</strong>CUL (3 字符) + YYMMDD (6 位) + Sequence (5 位)</p>
+<p><strong>总长度：</strong>最多 14 字符</p>
+<p><strong>示例：</strong>CUL26012400001</p>
+<p><strong>规则：</strong>每次 CUSCAR 消息传输均生成一个新的 Message Reference Number。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="工作手册 MSG_FUNC 消息功能码 O U C">
+<div class="q"><span class="q-icon">Q:</span>MSG_FUNC（消息功能码）的取值规则是什么？</div>
+<div class="a">
+<table>
+<tr><th>代码</th><th>含义</th><th>触发条件</th></tr>
+<tr><td><strong>O</strong></td><td>Original（原始）</td><td>首次提交 CUSCAR 消息</td></tr>
+<tr><td><strong>U</strong></td><td>Update（更新）</td><td>从第二次起点击 "Transmit" 重新传输（非 Delete Transmit）时</td></tr>
+<tr><td><strong>C</strong></td><td>Cancel（取消）</td><td>点击 "Delete Transmit" 取消申报时</td></tr>
+</table>
+<p><strong>特殊情况：</strong>若 CONTRL 响应为 Fail，重新提交时 MSG_FUNC 保持与上次传输一致。</p>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <!-- Category: CUSCAR Flat File Layout Detail -->
+  <div class="category open visible" data-cat="cuscar-layout" id="cat-cuscar-layout">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">📋</span>
+      <h2>CUSCAR 扁平文件字段详解</h2>
+      <span class="badge">10 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="CUSCAR 扁平文件 消息头 MSGSTART">
+<div class="q"><span class="q-icon">Q:</span>CUSCAR 扁平文件的消息头（$$$MSGSTART）格式是什么？</div>
+<div class="a">
+<p><strong>格式：</strong><code>$$$MSGSTART:SenderID ReceiverID MessageType MessageRefNo</code></p>
+<p><strong>字段说明：</strong></p>
+<ul>
+  <li><strong>SenderID：</strong>发送方标识（如 CUL）</li>
+  <li><strong>ReceiverID：</strong>接收方标识（如 UAENAIC）</li>
+  <li><strong>MessageType：</strong>消息类型（MPCI）</li>
+  <li><strong>MessageRefNo：</strong>消息参考号，格式 CUL + YYMMDD + 5位序列号</li>
+</ul>
+<p><strong>示例：</strong><code>$$$MSGSTART:CUL                 UAENAIC             MPCI      CUL26031636101</code></p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSCAR BL_INFO 提单信息 字段">
+<div class="q"><span class="q-icon">Q:</span>CUSCAR 中 {BL_INFO 段包含哪些提单级字段？</div>
+<div class="a">
+<table>
+<tr><th>字段名</th><th>类型</th><th>说明</th></tr>
+<tr><td>BL_NO</td><td>U（必填）</td><td>提单号</td></tr>
+<tr><td>NEGO_IND</td><td>U</td><td>可转让标识（Y/N）— Consignee 为 "To Order" 时为 Y</td></tr>
+<tr><td>BL_ISSU_LOC</td><td>Optional</td><td>提单签发地代码（暂留空）</td></tr>
+<tr><td>BL_ISSU_DT</td><td>Optional</td><td>提单签发日期（CCYYMMDD）— 暂留空</td></tr>
+<tr><td>VSL_VOY</td><td>U</td><td>船名航次 — 优先使用 Consortium Voyage Number</td></tr>
+<tr><td>VSL_CRR_CD</td><td>U</td><td>船舶承运人代码（SMDG Liner Code）</td></tr>
+<tr><td>VSL_IMO</td><td>U</td><td>船舶 IMO 编号</td></tr>
+<tr><td>VSL_NM</td><td>U</td><td>船舶英文名称</td></tr>
+<tr><td>VSL_NTN</td><td>Optional</td><td>船旗国代码</td></tr>
+</table>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSCAR 港口 字段 POR POL POD DEL">
+<div class="q"><span class="q-icon">Q:</span>CUSCAR 中的港口相关字段有哪些？</div>
+<div class="a">
+<table>
+<tr><th>字段名</th><th>类型</th><th>说明</th></tr>
+<tr><td>POR / POR_NM</td><td>Optional</td><td>收货地代码 / 名称</td></tr>
+<tr><td>POL / POL_NM</td><td>U（必填）</td><td>装货港代码 / 名称</td></tr>
+<tr><td>POD / POD_NM</td><td>U（必填）</td><td>卸货港代码 / 名称</td></tr>
+<tr><td>DEL / DEL_NM</td><td>Optional</td><td>交货地代码 / 名称</td></tr>
+<tr><td>TS_LOC1 / TS_LOC2 / TS_LOC3</td><td>Conditional</td><td>第一/第二/第三转运港（在或进入 UAE 之前的港口）</td></tr>
+<tr><td>LST_CALL_PORT</td><td>U</td><td>抵达首 UAE 港前的最后一个外国离港</td></tr>
+<tr><td>LST_CALL_ETD</td><td>U</td><td>最后外国港 ETD（CCYYMMDDHHMM，UTC）</td></tr>
+<tr><td>FST_UAE_PORT</td><td>U</td><td>船舶航次中的首 UAE 挂靠港</td></tr>
+<tr><td>FST_UAE_ETA</td><td>U</td><td>首 UAE 港 ETA（CCYYMMDDHHMM，UTC）</td></tr>
+</table>
+<p>所有港口代码均需通过 Customs Code Config 转换规则处理。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSCAR 参与方 BL_PT_INFO PT_TP CZ CN NI">
+<div class="q"><span class="q-icon">Q:</span>CUSCAR 中的参与方（{BL_PT_INFO）如何定义？</div>
+<div class="a">
+<p>每方包含以下信息块：</p>
+<table>
+<tr><th>字段名</th><th>说明</th></tr>
+<tr><td>PT_TP</td><td>参与方类型 — CZ（发货人）、CN（收货人）、NI（通知方）</td></tr>
+<tr><td>PT_ID</td><td>参与方 ID（MPCI Party ID 或自定义 ID）</td></tr>
+<tr><td>PT_PRSN_TP</td><td>参与方身份类型（1=自然人, 空=法人实体）</td></tr>
+<tr><td>PT_NM</td><td>参与方名称</td></tr>
+<tr><td>PT_ADDR1 / PT_ADDR2</td><td>地址行 1 / 地址行 2</td></tr>
+<tr><td>PT_CITY</td><td>城市</td></tr>
+<tr><td>PT_CNT_CD</td><td>国家代码（ISO 2位）</td></tr>
+</table>
+<p>每方还包含 {BL_PT_COM_INFO 子块（联系方式）：</p>
+<ul>
+  <li><strong>CT_TP：</strong>联系方式类型（COM = 通信方式）</li>
+  <li><strong>PT_EM_ADDR：</strong>电子邮箱</li>
+  <li><strong>PT_TEL_NO：</strong>电话号码</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSCAR 集装箱 CNTR_INFO SEAL_INFO">
+<div class="q"><span class="q-icon">Q:</span>CUSCAR 中的集装箱信息（{CNTR_INFO）如何定义？</div>
+<div class="a">
+<table>
+<tr><th>字段名</th><th>类型</th><th>说明</th></tr>
+<tr><td>CNTR_NO</td><td>U</td><td>集装箱号</td></tr>
+<tr><td>CNTR_TPSZ</td><td>U</td><td>集装箱类型尺寸（如 45G1）</td></tr>
+<tr><td>FM_IND</td><td>U</td><td>满载/空箱指示（F=满载，E=空箱）</td></tr>
+<tr><td>EQ_SPLR_IND</td><td>Conditional</td><td>设备供应商标识</td></tr>
+<tr><td>GRS_WGT</td><td>Conditional</td><td>毛重</td></tr>
+<tr><td>GRS_WGT_UNT</td><td>Conditional</td><td>毛重单位（如 KGM）</td></tr>
+</table>
+<p><strong>铅封信息子块 {SEAL_INFO：</strong>SEAL_NO（铅封号）、SEAL_TP（铅封类型）、SEAL_PTY_CD（铅封方代码）</p>
+<p><strong>温度信息子块 {TEMP_INFO：</strong>TEMP_TP（温度类型）、TEMP（温度值）、TEMP_UNT（单位，如 CEL）</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSCAR 货物 CM_INFO HS_CD GDS_DESC">
+<div class="q"><span class="q-icon">Q:</span>CUSCAR 中的货物信息（{CM_INFO）如何定义？</div>
+<div class="a">
+<table>
+<tr><th>字段名</th><th>类型</th><th>说明</th></tr>
+<tr><td>ITEM_NO</td><td>U</td><td>货物项序号（从 1 开始递增）</td></tr>
+<tr><td>PKG_CNT</td><td>U</td><td>包装件数</td></tr>
+<tr><td>PKG_TP_CD</td><td>U</td><td>包装类型代码（NAIC MPCI Mapping，如 CT=纸箱）</td></tr>
+<tr><td>GRS_WGT</td><td>Conditional</td><td>毛重</td></tr>
+<tr><td>GRS_WGT_UNT</td><td>Conditional</td><td>毛重单位（KGM）</td></tr>
+<tr><td>VOL</td><td>Conditional</td><td>体积</td></tr>
+<tr><td>VOL_UNT</td><td>Conditional</td><td>体积单位（MTQ=立方米）</td></tr>
+<tr><td>HS_CD</td><td>U</td><td>HS Code（12 位 GCC HS Code）</td></tr>
+<tr><td>GDS_DESC</td><td>U</td><td>货物描述</td></tr>
+<tr><td>CM_MARK</td><td>Conditional</td><td>货物标记/唛头</td></tr>
+</table>
+<p>每个 CM_INFO 可包含 {CM_CNTR（关联集装箱号）和 {CM_DANGER（危险品信息：危险品ID、UNDG编号、闪点等）。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSCAR CNEE_MPCI_ID 拼箱 收货人 MPCI ID">
+<div class="q"><span class="q-icon">Q:</span>CNEE_MPCI_ID 什么时候是必填的？</div>
+<div class="a">
+<p><strong>规则：</strong>当 shipment 为拼箱（CNSL_IND = Y）时，CNEE_MPCI_ID 为必填。</p>
+<p><strong>含义：</strong>该字段存储的是 House B/L (HBL) 签发方的 MPCI ID。</p>
+<p><strong>E-service 增强：</strong></p>
+<ul>
+  <li>新增 "HBL MPCI ID (UAE)" 字段供发货人填写</li>
+  <li>当 "House B/L Involve" = "Consol (Exist)" 且航程涉及 UAE 港口时，该字段为必填</li>
+  <li>E-booking 和 Outbound (Shipping Party UI) 中同样新增此字段</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSCAR 修改 原因码 AMD_RSN_CD CHG RIR SPL">
+<div class="q"><span class="q-icon">Q:</span>Amend Reason Code（修改原因码）有哪些可选值？</div>
+<div class="a">
+<table>
+<tr><th>代码</th><th>含义</th><th>使用场景</th></tr>
+<tr><td><strong>CHG</strong></td><td>Change（变更）</td><td>因运营变更或数据修正而更新已提交信息</td></tr>
+<tr><td><strong>RIR</strong></td><td>RFI Response（RFI 回复）</td><td>根据 NAIC 的 RFI 消息提供额外信息</td></tr>
+<tr><td><strong>SPL</strong></td><td>Split（拆单）</td><td>因拆单导致的更新</td></tr>
+<tr><td><strong>SWB</strong></td><td>Switch B/L（换单）</td><td>因换单导致的更新</td></tr>
+<tr><td><strong>RIJ</strong></td><td>RFI Reject（拒绝 RFI）</td><td>无法提供 NAIC 要求的 RFI 信息</td></tr>
+<tr><td><strong>CXL</strong></td><td>Cancel（取消）</td><td>取消该票货物</td></tr>
+</table>
+<p>第一次传输（MSG_FUNC = "O"）时 AMD_RSN_CD 为空。第二次起重新传输（MSG_FUNC = "U" 或 "C"）时 AMD_RSN_CD 为必填，AMD_RSN（详细原因）为选填。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSCAR REF_NO REF_NO_SEQ 版本">
+<div class="q"><span class="q-icon">Q:</span>REF_NO 和 REF_NO_SEQ 的关系是什么？</div>
+<div class="a">
+<p><strong>REF_NO（参考号）：</strong></p>
+<ul>
+  <li>首次提交 CUSCAR 消息时由系统自动生成（MSG_FUNC = "O"）</li>
+  <li>唯一值，后续更新/取消同一申报时保持不变</li>
+</ul>
+<p><strong>REF_NO_SEQ（版本号）：</strong></p>
+<ul>
+  <li>首次提交时为 "1"</li>
+  <li>重新传输时规则：</li>
+  <ul>
+    <li>CONTRL 响应 = Fail → REF_NO_SEQ 不变</li>
+    <li>CONTRL 响应 = Success → REF_NO_SEQ 递增 +1</li>
+  </ul>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSCAR 拆单 SPLT_IND 换单 SWCH_IND">
+<div class="q"><span class="q-icon">Q:</span>SPLT_IND 和 SWCH_IND 的使用场景？</div>
+<div class="a">
+<p><strong>SPLT_IND（拆单标识）：</strong></p>
+<ul>
+  <li>N 或空 = 非拆单 B/L</li>
+  <li>Y = 该 B/L 为拆单后的子单</li>
+  <li>当 SPLT_IND = Y 时，必须填写 ORG_BL_NO（原 B/L 号码）</li>
+  <li>ORG_BL_NO 从 "Booking Master" 的 Split Information 中获取</li>
+</ul>
+<p><strong>SWCH_IND（换单标识）：</strong></p>
+<ul>
+  <li>Null = 无换单</li>
+  <li>N = 存在换单请求（Switch BL request port 和 Switch bill 信息）</li>
+  <li>换单时，参与方数据元素将使用 "Switch B/L" UI 中的信息覆盖</li>
+</ul>
+</div>
+</div>
+
+    </div>
+  </div>
+
   <div class="footer">
-    <p>📚 知识库内容基于以下源文档整合：NAIC MPCI 业务规范文档 V1.0、消息实施指南 V1.0、接入指南 V1.0、计划概述、2025年4月网络研讨会资料、迪拜海关综合关税目录、包装类型代码表、SmartLink CUSCAR 扁平文件格式 V1.1 等 11 份原始文档。</p>
+    <p>📚 知识库内容基于以下源文档整合：NAIC MPCI 业务规范文档 V1.0、消息实施指南 (MIG) V1.0、接入指南 V1.0、计划概述、2025年4月网络研讨会资料、迪拜海关综合关税目录、包装类型代码表、SmartLink CUSCAR 扁平文件格式 V1.1、强制实施通知 (2026.3.12)、系统实施工作手册 v1.8 等 15 份原始文档。</p>
     <p style="margin-top:8px;">文档版本：2025-2026 | 最后编译：2026年6月18日 | 内容仅供参考，正式申报请以 NAIC 官方最新文档为准。</p>
   </div>
 </div>
