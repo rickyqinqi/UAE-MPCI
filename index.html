@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAE MPCI 知识库 — 阿联酋海运预装货物信息计划</title>
+<style>
+:root {
+  --primary: #1a5276;
+  --primary-light: #2980b9;
+  --accent: #e67e22;
+  --bg: #f5f7fa;
+  --card-bg: #ffffff;
+  --text: #2c3e50;
+  --text-light: #7f8c8d;
+  --border: #dcdfe6;
+  --danger: #e74c3c;
+  --success: #27ae60;
+  --warning: #f39c12;
+  --highlight: #fff3cd;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif; background: var(--bg); color: var(--text); line-height:1.7; }
+.container { max-width:1200px; margin:0 auto; padding:0 20px; }
+
+/* Header */
+.header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color:#fff; padding:40px 0 30px; text-align:center; }
+.header h1 { font-size:28px; font-weight:700; margin-bottom:8px; }
+.header .subtitle { font-size:15px; opacity:0.85; }
+
+/* Search */
+.search-wrap { background:#fff; padding:24px 30px; margin:-30px auto 30px; max-width:900px; border-radius:12px; box-shadow:var(--shadow); position:relative; z-index:10; }
+.search-box { display:flex; gap:12px; }
+.search-box input { flex:1; padding:12px 18px; border:2px solid var(--border); border-radius:8px; font-size:15px; transition:border-color .2s; }
+.search-box input:focus { outline:none; border-color:var(--primary-light); }
+.search-box button { padding:12px 28px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-size:15px; cursor:pointer; transition:background .2s; }
+.search-box button:hover { background:var(--primary-light); }
+.search-stats { margin-top:12px; font-size:13px; color:var(--text-light); display:none; }
+
+/* Stats bar */
+.stats-bar { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin-bottom:30px; }
+.stat-card { background:#fff; padding:16px 24px; border-radius:10px; box-shadow:var(--shadow); text-align:center; min-width:120px; }
+.stat-card .num { font-size:28px; font-weight:700; color:var(--primary); }
+.stat-card .label { font-size:12px; color:var(--text-light); margin-top:4px; }
+
+/* Tabs */
+.tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:24px; justify-content:center; }
+.tab-btn { padding:8px 16px; border:1px solid var(--border); background:#fff; border-radius:20px; font-size:13px; cursor:pointer; transition:all .2s; white-space:nowrap; }
+.tab-btn:hover { border-color:var(--primary-light); color:var(--primary-light); }
+.tab-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+
+/* Category sections */
+.category { background:#fff; border-radius:12px; margin-bottom:20px; box-shadow:var(--shadow); overflow:hidden; display:none; }
+.category.visible { display:block; }
+.cat-header { padding:16px 24px; cursor:pointer; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); transition:background .2s; }
+.cat-header:hover { background:#f8f9fa; }
+.cat-header .icon { font-size:22px; }
+.cat-header h2 { font-size:17px; font-weight:600; flex:1; }
+.cat-header .badge { background:var(--primary); color:#fff; font-size:11px; padding:2px 10px; border-radius:12px; }
+.cat-header .arrow { transition:transform .3s; font-size:14px; color:var(--text-light); }
+.category.open .cat-header .arrow { transform:rotate(180deg); }
+.cat-body { display:none; padding:20px 24px; }
+.category.open .cat-body { display:block; }
+
+/* Knowledge items */
+.kb-item { padding:14px 0; border-bottom:1px solid #f0f0f0; }
+.kb-item:last-child { border-bottom:none; }
+.kb-item .q { font-weight:600; font-size:15px; color:var(--primary); cursor:pointer; display:flex; align-items:flex-start; gap:8px; }
+.kb-item .q:hover { color:var(--primary-light); }
+.kb-item .q .q-icon { color:var(--accent); flex-shrink:0; }
+.kb-item .a { margin-top:8px; padding:10px 16px; background:#f8f9fa; border-radius:8px; font-size:14px; border-left:3px solid var(--primary-light); }
+.kb-item .a p { margin-bottom:8px; }
+.kb-item .a p:last-child { margin-bottom:0; }
+.kb-item .a table { width:100%; border-collapse:collapse; margin:8px 0; font-size:13px; }
+.kb-item .a table th, .kb-item .a table td { border:1px solid var(--border); padding:6px 10px; text-align:left; }
+.kb-item .a table th { background:#eef2f7; font-weight:600; }
+.kb-item .a code { background:#ecf0f1; padding:2px 6px; border-radius:3px; font-size:13px; color:var(--danger); }
+.kb-item .a .tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:12px; margin-right:4px; }
+.tag-act { background:#d4efdf; color:var(--success); }
+.tag-dnl { background:#fadbd8; color:var(--danger); }
+.tag-rfi { background:#fdebd0; color:var(--warning); }
+.tag-info { background:#d6eaf8; color:var(--primary-light); }
+
+/* Highlight */
+mark { background:var(--highlight); padding:1px 3px; border-radius:2px; }
+
+/* Table of contents style kb */
+.kb-toc { background:#fff; border-radius:12px; padding:24px; box-shadow:var(--shadow); margin-bottom:24px; }
+.kb-toc h3 { font-size:16px; margin-bottom:16px; color:var(--primary); }
+.kb-toc ul { list-style:none; columns:2; column-gap:24px; }
+.kb-toc li { padding:4px 0; }
+.kb-toc a { color:var(--text); text-decoration:none; font-size:14px; }
+.kb-toc a:hover { color:var(--primary-light); }
+
+/* Footer */
+.footer { text-align:center; padding:30px 0; color:var(--text-light); font-size:13px; }
+
+/* No results */
+.no-results { text-align:center; padding:40px; color:var(--text-light); display:none; }
+.no-results .icon { font-size:48px; margin-bottom:12px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header h1 { font-size:22px; }
+  .search-wrap { padding:16px; }
+  .search-box { flex-direction:column; }
+  .kb-toc ul { columns:1; }
+  .stats-bar { gap:8px; }
+  .stat-card { padding:12px 16px; min-width:100px; }
+  .tabs { gap:2px; }
+  .tab-btn { font-size:12px; padding:6px 12px; }
+}
+
+/* Table wrapper for scroll */
+.tbl-wrap { overflow-x:auto; }
+
+/* Last updated */
+.last-updated { text-align:center; font-size:12px; color:var(--text-light); margin-bottom:8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <h1>🇦🇪 UAE MPCI 知识库</h1>
+    <p class="subtitle">阿联酋海运预装货物信息计划（Maritime Pre-Load Cargo Information）— 中文综合查询系统</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="search-wrap">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索知识库...（例如：申报时限 / HS Code / CUSCAR / 委托 / 装箱类型代码）" oninput="doSearch()">
+      <button onclick="doSearch()">🔍 搜索</button>
+    </div>
+    <div class="search-stats" id="searchStats"></div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-card"><div class="num" id="totalDocs">11</div><div class="label">源文档</div></div>
+    <div class="stat-card"><div class="num" id="totalCats">9</div><div class="label">知识分类</div></div>
+    <div class="stat-card"><div class="num" id="totalItems">0</div><div class="label">知识条目</div></div>
+    <div class="stat-card"><div class="num" id="totalPkgTypes">169</div><div class="label">包装类型代码</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="filterTab('all', this)">📋 全部</button>
+    <button class="tab-btn" onclick="filterTab('overview', this)">📌 计划概述</button>
+    <button class="tab-btn" onclick="filterTab('register', this)">📝 注册接入</button>
+    <button class="tab-btn" onclick="filterTab('filing', this)">📄 申报要求</button>
+    <button class="tab-btn" onclick="filterTab('messages', this)">📡 消息格式</button>
+    <button class="tab-btn" onclick="filterTab('hscode', this)">🏷️ HS Code</button>
+    <button class="tab-btn" onclick="filterTab('package', this)">📦 包装代码</button>
+    <button class="tab-btn" onclick="filterTab('smartlink', this)">🔗 SmartLink</button>
+    <button class="tab-btn" onclick="filterTab('scenarios', this)">🔄 业务场景</button>
+  </div>
+
+  <!-- TOC -->
+  <div class="kb-toc" id="toc">
+    <h3>📑 快速导航</h3>
+    <ul id="tocList"></ul>
+  </div>
+
+  <div id="noResults" class="no-results">
+    <div class="icon">🔍</div>
+    <p>未找到匹配的内容，请尝试其他关键词</p>
+  </div>
+
+  <!-- Category: MPCI Program Overview -->
+  <div class="category open visible" data-cat="overview" id="cat-overview">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">📌</span>
+      <h2>MPCI 计划概述</h2>
+      <span class="badge">8 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="MPCI 概述 定义 计划">
+<div class="q"><span class="q-icon">Q:</span>什么是 MPCI 计划？</div>
+<div class="a">
+<p>MPCI（Maritime Pre-Load Cargo Information，海运预装货物信息计划）是由阿联酋国家预申报信息中心（NAIC）领导的政府计划，旨在增强货物安全。</p>
+<p><strong>核心要求：</strong>在货物装载到驶往阿联酋港口的船舶之前，船公司和货运代理必须向 NAIC 电子提交提单（Bill of Lading）数据。</p>
+<p><strong>生效日期：</strong>2025 年 6 月起生效。</p>
+<p><strong>法律依据：</strong>阿联酋联邦法令 2018 年第 22 号及 2019 年第 15 号决议。</p>
+<p><strong>重要说明：</strong>MPCI 申报完全独立于海关申报（Customs Filing），不会取代或影响现有海关要求。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="NAIC 机构 简介 历史">
+<div class="q"><span class="q-icon">Q:</span>NAIC（国家预申报信息中心）是什么机构？</div>
+<div class="a">
+<p>NAIC 是阿联酋联邦身份、公民、海关和港口安全局（Federal Authority for Identity, Citizenship, Customs & Port Security）下属部门。</p>
+<p><strong>发展历程：</strong></p>
+<ul>
+  <li>2012 年成立，旨在收集旅客预申报信息</li>
+  <li>2015 年正式运营</li>
+  <li>2016 年扩展至货物数据收集，2020 年正式启动</li>
+  <li>2024 年 4 月推出 PLACI（航空预装货物信息）计划</li>
+  <li>2025 年推出 MPCI（海运预装货物信息）计划</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="适用范围 范围 涵盖 排除">
+<div class="q"><span class="q-icon">Q:</span>MPCI 计划的适用范围是什么？</div>
+<div class="a">
+<p><strong>✅ 适用范围内（In Scope）：</strong></p>
+<ul>
+  <li>所有运往阿联酋的集装箱海运货物（进口 Import、转运 Transshipment、过境 Transit、船上剩余货物 FROB）</li>
+</ul>
+<p><strong>❌ 不适用范围（Out of Scope）：</strong></p>
+<ul>
+  <li>非集装箱货物：散货（干散货、液体散货）、件杂货</li>
+  <li>滚装船货物（RoRo）</li>
+  <li>出口货物</li>
+  <li>木船运输</li>
+  <li>空箱</li>
+  <li>船员物品</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="申报主体 责任方 船公司 货运代理 NVOCC">
+<div class="q"><span class="q-icon">Q:</span>谁负责 MPCI 申报（Filing）？</div>
+<div class="a">
+<table>
+<tr><th>申报主体类型</th><th>申报责任</th><th>申报方式</th></tr>
+<tr><td><strong>船公司（Shipping Line）</strong></td><td>负责提交承运人提单（Master B/L / Carrier B/L）</td><td>直接对接 NAIC 或通过认证服务提供商</td></tr>
+<tr><td><strong>货运代理 / NVOCC（Freight Forwarder）</strong></td><td>负责提交货代提单（House B/L / FF B/L）</td><td>通过 NAIC 认证的服务提供商</td></tr>
+<tr><td><strong>船代（Shipping Agent）</strong></td><td>被船公司委托后，代表船公司进行申报</td><td>通过认证服务提供商</td></tr>
+</table>
+<p><strong>关键原则：</strong>无论申报是否委托给他人，合规责任始终由本地（阿联酋境内）船公司或货运代理承担。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="申报时限 时限 时间 截止">
+<div class="q"><span class="q-icon">Q:</span>MPCI 申报的时限要求是什么？</div>
+<div class="a">
+<table>
+<tr><th>提单类型</th><th>申报主体</th><th>时限</th></tr>
+<tr><td><strong>主提单（Master B/L）</strong></td><td>船公司（Shipping Line）</td><td>装船前 <strong>6 小时</strong></td></tr>
+<tr><td><strong>联运主提单（Master Co-Loader B/L）</strong></td><td>主拼箱商</td><td>装船前 <strong>6 小时</strong></td></tr>
+<tr><td><strong>直接提单（Direct B/L）</strong></td><td>船公司</td><td>装船前 <strong>24 小时</strong></td></tr>
+<tr><td><strong>最低层级货代提单（Lowest Level House B/L）</strong></td><td>货运代理</td><td>装船前 <strong>24 小时</strong></td></tr>
+</table>
+</div>
+</div>
+
+<div class="kb-item" data-tags="NAIC 响应 状态码 ACT DNL RFI">
+<div class="q"><span class="q-icon">Q:</span>NAIC 的响应代码有哪些？</div>
+<div class="a">
+<table>
+<tr><th>响应代码</th><th>含义</th><th>操作要求</th></tr>
+<tr><td><span class="tag tag-act">ACT</span> <strong>Accepted</strong></td><td>接受，允许装载</td><td>正常装载货物</td></tr>
+<tr><td><span class="tag tag-dnl">DNL</span> <strong>Do Not Load</strong></td><td>禁止装载</td><td>不得装载该货物</td></tr>
+<tr><td><span class="tag tag-rfi">RFI</span> <strong>Request for Information</strong></td><td>需要补充信息</td><td>根据 NAIC 要求提供额外信息后再申报</td></tr>
+</table>
+<p><strong>说明：</strong>多数情况下货物会自动获批（ACT）。"禁止装载（DNL）" 非常罕见，初期不会强制执行。NAIC 可能会引入其他附加响应代码，详见正式指南。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="申报流程 业务流程 步骤">
+<div class="q"><span class="q-icon">Q:</span>MPCI 申报的业务流程是怎样的？</div>
+<div class="a">
+<p><strong>标准申报流程：</strong></p>
+<ol>
+  <li><strong>提交申报（File）：</strong>向 NAIC 提交货物数据进行风险评估</li>
+  <li><strong>收到 RFI（Receive RFI）- 可选：</strong>仅在 NAIC 需要额外信息时触发</li>
+  <li><strong>修改申报（Amend）- 可选：</strong>如信息变更或响应 RFI 时提交更新</li>
+  <li><strong>NAIC 最终决定（NAIC Final Decision）：</strong>收到 ACT / DNL 响应</li>
+</ol>
+<p><strong>修改类型：</strong>标准更新、响应 RFI、换单（Switch B/L）、拆单（Split B/L）、取消（Cancellation）</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="MPCI Party ID 代码 标识">
+<div class="q"><span class="q-icon">Q:</span>什么是 MPCI Party ID？</div>
+<div class="a">
+<p>MPCI Party ID 是 NAIC 分配给每个经济运营商的唯一标识符，在申报中用于标识申报责任方。</p>
+<p><strong>获取方式：</strong>注册并通过 NAIC 审核后，通过电子邮件接收。</p>
+<p><strong>使用场景：</strong></p>
+<ul>
+  <li>船公司的 MPCI 代码会在 NAIC 门户公布，供其他方在申报时参考</li>
+  <li>货代提单（House B/L）中需包含主提单申报方（船公司或主拼箱商）的 MPCI 代码</li>
+  <li>主提单中需包含预期提交货代提单的货运代理的 MPCI 代码</li>
+  <li>委托场景下，被委托方需提供自己的 MPCI 代码和委托方的 MPCI 代码</li>
+</ul>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <!-- Category: Registration & Onboarding -->
+  <div class="category open visible" data-cat="register" id="cat-register">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">📝</span>
+      <h2>注册与接入流程</h2>
+      <span class="badge">7 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="注册 谁需要 强制">
+<div class="q"><span class="q-icon">Q:</span>哪些实体必须注册 MPCI？</div>
+<div class="a">
+<table>
+<tr><th>运营商类型</th><th>注册要求</th></tr>
+<tr><td><strong>船公司（Shipping Lines）</strong></td><td>强制注册，无论是否自行申报或委托代理申报</td></tr>
+<tr><td><strong>阿联酋本地货运代理 / NVOCC</strong></td><td>强制注册，无论是否自行申报或委托海外代理申报</td></tr>
+<tr><td><strong>船代（Shipping Agent）</strong></td><td>仅在被船公司委托承担申报责任或代为申报时需注册</td></tr>
+<tr><td><strong>海外货运代理 / NVOCC</strong></td><td>仅在被阿联酋本地货运代理委托代为申报时需注册</td></tr>
+</table>
+<p><strong>注意：</strong>技术服务提供商（TSP）无需自行注册，由 NAIC 手动注册。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="注册 流程 步骤 门户">
+<div class="q"><span class="q-icon">Q:</span>经济运营商（EO）的注册流程是怎样的？</div>
+<div class="a">
+<ol>
+  <li><strong>访问 NAIC 门户：</strong>授权用户访问 NAIC 互联网门户网站</li>
+  <li><strong>选择角色：</strong>点击"Register"，选择对应的运营商类型（如 Local FF/NVOCC）</li>
+  <li><strong>回答问卷：</strong>完成简短问卷，评估是否需要注册、确定责任、是否自行申报或委托</li>
+  <li><strong>填写公司信息：</strong>在线填写公司信息，OTP 认证邮箱</li>
+  <li><strong>NAIC 审核：</strong>提交后 NAIC 审核，批准或拒绝</li>
+  <li><strong>接收 MPCI Party ID：</strong>审核通过后，唯一 MPCI Party ID 发送至注册邮箱</li>
+  <li><strong>开始申报：</strong>选择 NAIC 认证的技术服务提供商，或委托代理申报</li>
+</ol>
+</div>
+</div>
+
+<div class="kb-item" data-tags="注册 信息 材料 船公司 SMDG">
+<div class="q"><span class="q-icon">Q:</span>船公司注册需要提供哪些信息？</div>
+<div class="a">
+<ul>
+  <li><strong>基本信息：</strong>公司名称、联系方式等</li>
+  <li><strong>SMDG 代码：</strong>从下拉列表中选择船公司的 SMDG 代码（必填）</li>
+</ul>
+<p>船公司不需要提供税务登记号（TRN）。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="注册 信息 材料 货运代理 TRN">
+<div class="q"><span class="q-icon">Q:</span>阿联酋本地货运代理注册需要提供哪些信息？</div>
+<div class="a">
+<p><strong>必填项：</strong></p>
+<ul>
+  <li>阿联酋税务登记号（UAE TRN #）：由阿联酋联邦税务局签发</li>
+</ul>
+<p><strong>选填项：</strong></p>
+<ul>
+  <li>当地营业执照号及签发机构（经济发展局、市政局或自由区管理局）</li>
+  <li>国家经济注册号（CBLS #）：由阿联酋经济部签发</li>
+  <li>当地海关注册号（如迪拜海关、阿布扎比海关等）</li>
+  <li>阿联酋 AEO 证书编号（如 AE-AEO-DU-000001）</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="注册 海外 货运代理 信息">
+<div class="q"><span class="q-icon">Q:</span>海外货运代理注册需要提供哪些信息？</div>
+<div class="a">
+<p><strong>必填项：</strong></p>
+<ul>
+  <li>所在国税务编号（如 GSTIN #）</li>
+  <li>税务编号签发国（如 India）</li>
+</ul>
+<p><strong>选填项：</strong></p>
+<ul>
+  <li>EU EORI 编号</li>
+  <li>WCO TIN 及签发国</li>
+  <li>D&B DUNS 编号</li>
+  <li>GLEIF LEI 编码</li>
+  <li>GS1 GLN 编码</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="委托 选项 货运代理 delegation">
+<div class="q"><span class="q-icon">Q:</span>货运代理的委托选项有哪些？</div>
+<div class="a">
+<p>注册时，每个货运代理可以选择以下委托选项之一：</p>
+<ul>
+  <li><strong>禁用委托（Disabled）：</strong>不允许其他货运代理代其申报</li>
+  <li><strong>允许全部（Enabled for All）：</strong>任何持有其 MPCI 代码的货运代理均可代其申报</li>
+  <li><strong>允许指定方（Enabled for Selected FFs）：</strong>仅限指定的货运代理，被指定方需先注册并获得 MPCI 代码</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="接入 上线 技术服务提供商 TSP onboarding">
+<div class="q"><span class="q-icon">Q:</span>船公司和技术服务提供商的接入（Onboarding）流程是什么？</div>
+<div class="a">
+<p>接入（Onboarding）使船公司和技术服务提供商成为经过认证的电子数据源（Data Provider），可以代表经济运营商进行申报。</p>
+<p><strong>船公司接入方式：</strong>直接集成（Direct Integration）— 联系 NAIC 获取连接和测试支持，以 EDIFACT 格式提交申报。</p>
+<p><strong>技术服务提供商类型：</strong>运输管理系统（TMS）、货运管理系统（FMS）、合规/单证系统提供商。</p>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <!-- Category: Filing Requirements -->
+  <div class="category open visible" data-cat="filing" id="cat-filing">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">📄</span>
+      <h2>申报数据要求</h2>
+      <span class="badge">6 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="申报数据 字段 提单 要求">
+<div class="q"><span class="q-icon">Q:</span>MPCI 申报需要提交哪些数据？</div>
+<div class="a">
+<p>需提交标准提单（BOL）数据，包括以下 10 大类：</p>
+<table>
+<tr><th>编号</th><th>数据类别</th><th>内容说明</th></tr>
+<tr><td>01</td><td><strong>提单信息</strong></td><td>提单号、类型（直接/拼箱）、状态（新建/取消）</td></tr>
+<tr><td>02</td><td><strong>可转让性</strong></td><td>可转让（To Order）或不可转让（记名收货人）</td></tr>
+<tr><td>03</td><td><strong>MPCI 代码</strong></td><td>申报方的 MPCI 代码及相关责任方的 MPCI 代码</td></tr>
+<tr><td>04</td><td><strong>参与方详情</strong></td><td>发货人（Shipper）、收货人（Consignee）、通知方（Notify Party）、交货代理等</td></tr>
+<tr><td>05</td><td><strong>港口信息</strong></td><td>装货港、卸货港、转运港、最终交货地</td></tr>
+<tr><td>06</td><td><strong>船舶和航次信息</strong></td><td>船名、IMO 编号、航次号、ETA（仅船公司必填）</td></tr>
+<tr><td>07</td><td><strong>集装箱和封条详情</strong></td><td>集装箱号、类型、封条号</td></tr>
+<tr><td>08</td><td><strong>货物和包装详情</strong></td><td>货描、HS Code、包装数量和类型、重量、体积</td></tr>
+<tr><td>09</td><td><strong>关联提单</strong></td><td>关联货代提单数量、母提单引用</td></tr>
+<tr><td>10</td><td><strong>其他提单详情</strong></td><td>签发日期及其他可选信息</td></tr>
+</table>
+</div>
+</div>
+
+<div class="kb-item" data-tags="收货人 consignee 数据 处理">
+<div class="q"><span class="q-icon">Q:</span>如何处理收货人（Consignee）数据？</div>
+<div class="a">
+<p>根据提单的可转让性，收货人信息有不同的处理方式：</p>
+<ul>
+  <li><strong>不可转让（Non-Negotiable / Straight B/L）：</strong>必须提供完整的收货人名称和地址</li>
+  <li><strong>可转让（Negotiable / To Order）：</strong>可填写 "To Order" 或 "To Order of [银行名称]"，但通知方信息必须提供</li>
+  <li><strong>拼箱场景：</strong>母提单的收货人可能是货运代理，货代提单的收货人是最终收货人</li>
+</ul>
+<p>具体数据规则参见 MPCI 业务规范文档第 5.2 节。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="货物描述 指南 goods description">
+<div class="q"><span class="q-icon">Q:</span>货物描述（Goods Description）的填写要求是什么？</div>
+<div class="a">
+<ul>
+  <li>货物描述必须<strong>准确、具体</strong>，不能使用模糊描述（如 "General Cargo"、"Said to Contain"、"Freight of all kinds"）</li>
+  <li>必须使用<strong>通俗语言</strong>描述货物，能让不具备专业知识的人员理解货物性质</li>
+  <li>HS Code（海关编码）必须与货物描述匹配</li>
+  <li>建议使用 12 位 HS Code（遵循 GCC 统一关税目录）</li>
+  <li>危险品货物须在货物描述中明确标明</li>
+</ul>
+<p>详细指南参见 MPCI 业务规范文档附录 D。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="申报方式 提交 集成 上传">
+<div class="q"><span class="q-icon">Q:</span>MPCI 申报有哪些方式？</div>
+<div class="a">
+<table>
+<tr><th>申报方式</th><th>适用对象</th><th>说明</th></tr>
+<tr><td><strong>直接集成（Direct Integration）</strong></td><td>船公司</td><td>通过 EDIFACT 格式直接与 NAIC 系统对接</td></tr>
+<tr><td><strong>认证服务提供商</strong></td><td>货运代理、船代</td><td>通过 NAIC 认证的 TSP 提交，如 TMS、FMS 系统</td></tr>
+<tr><td><strong>表单/附件上传</strong></td><td>小型运营商</td><td>填写在线表单或上传附件（如有提供）</td></tr>
+</table>
+<p>NAIC 将在网站上公布认证服务提供商名单。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="数据质量 规则 校验">
+<div class="q"><span class="q-icon">Q:</span>MPCI 的数据质量规则有哪些？</div>
+<div class="a">
+<p>NAIC 对申报数据实施以下质量检查：</p>
+<ul>
+  <li><strong>必填字段验证：</strong>所有标记为必填（Mandatory）的字段必须填写</li>
+  <li><strong>格式验证：</strong>字段值必须符合规定的格式和长度</li>
+  <li><strong>代码值验证：</strong>港口代码、国家代码等必须使用标准代码（UN/LOCODE）</li>
+  <li><strong>逻辑一致性检查：</strong>如同一提单中的日期逻辑、重量与包装数量的匹配等</li>
+  <li><strong>MPCI Party ID 验证：</strong>验证申报名义下的 MPCI 代码是否有效</li>
+</ul>
+<p>详细规则参见 MPCI 业务规范文档第 7 节。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="HS Code 海关编码 申报 MPCI">
+<div class="q"><span class="q-icon">Q:</span>MPCI 申报中 HS Code 的要求是什么？</div>
+<div class="a">
+<p>MPCI 申报要求提供货物的 HS Code（协调制度编码），用于风险评估和分类。</p>
+<p>自 2025 年 8 月起，迪拜海关（及 GCC）将从 8 位 HS Code 转换为 12 位统一关税编码。MPCI 申报建议使用 12 位 HS Code。</p>
+<p>当前 HS Code 从约 7,809 个扩展到 13,450 个，其中：</p>
+<ul>
+  <li>5,981 个不变（补 4 个零）</li>
+  <li>6,518 个细分</li>
+  <li>951 个新增</li>
+</ul>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <!-- Category: Message Formats -->
+  <div class="category open visible" data-cat="messages" id="cat-messages">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">📡</span>
+      <h2>EDI 消息格式</h2>
+      <span class="badge">7 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="消息类型 CUSCAR CUSRES CONTRL EDIFACT">
+<div class="q"><span class="q-icon">Q:</span>MPCI 使用哪些 EDIFACT 消息类型？</div>
+<div class="a">
+<table>
+<tr><th>消息类型</th><th>用途</th><th>方向</th></tr>
+<tr><td><strong>CUSCAR</strong></td><td>海关货物报告消息 — 用于提交提单数据给 NAIC</td><td>申报方 → NAIC</td></tr>
+<tr><td><strong>CUSRES</strong></td><td>海关响应消息 — NAIC 对申报的评估结果（ACT/DNL/RFI）</td><td>NAIC → 申报方</td></tr>
+<tr><td><strong>CONTRL</strong></td><td>技术确认消息 — 确认消息的语法正确性或报告错误</td><td>NAIC → 申报方</td></tr>
+</table>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSCAR 结构 段 segments">
+<div class="q"><span class="q-icon">Q:</span>CUSCAR 消息的主要结构和段（Segments）有哪些？</div>
+<div class="a">
+<p>CUSCAR 消息遵循 UN/EDIFACT 标准，主要段包括：</p>
+<table>
+<tr><th>段标签</th><th>名称</th><th>用途</th></tr>
+<tr><td><strong>UNB</strong></td><td>交换头</td><td>标识发送方和接收方，包含语法标识符</td></tr>
+<tr><td><strong>UNH</strong></td><td>消息头</td><td>消息类型和参考号</td></tr>
+<tr><td><strong>BGM</strong></td><td>消息开始</td><td>消息功能代码（Original/Update/Cancel）</td></tr>
+<tr><td><strong>RFF</strong></td><td>引用</td><td>各类引用号（提单号等）</td></tr>
+<tr><td><strong>NAD</strong></td><td>名称和地址</td><td>各参与方信息（发货人、收货人、通知方等）</td></tr>
+<tr><td><strong>TDT</strong></td><td>运输详情</td><td>运输方式和工具信息</td></tr>
+<tr><td><strong>LOC</strong></td><td>地点</td><td>港口、地点代码</td></tr>
+<tr><td><strong>DTM</strong></td><td>日期/时间</td><td>各类日期（签发日、装船日等）</td></tr>
+<tr><td><strong>EQD</strong></td><td>设备详情</td><td>集装箱信息</td></tr>
+<tr><td><strong>GID</strong></td><td>货物项目详情</td><td>货物描述、HS Code、包装信息</td></tr>
+<tr><td><strong>UNT</strong></td><td>消息尾</td><td>段计数和消息参考号</td></tr>
+<tr><td><strong>UNZ</strong></td><td>交换尾</td><td>交换结束标识</td></tr>
+</table>
+<p>完整的段定义和字段说明参见 MPCI 消息实施指南（MIG），共 177 页。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="服务字符 分隔符 语法">
+<div class="q"><span class="q-icon">Q:</span>EDIFACT 服务字符（分隔符）是什么？</div>
+<div class="a">
+<table>
+<tr><th>字符</th><th>名称</th><th>用途</th></tr>
+<tr><td><code>'</code></td><td>段终止符</td><td>标识每个段的结束</td></tr>
+<tr><td><code>+</code></td><td>数据元素分隔符</td><td>分隔段内的数据元素</td></tr>
+<tr><td><code>:</code></td><td>组件数据元素分隔符</td><td>分隔复合数据元素中的组件</td></tr>
+<tr><td><code>?</code></td><td>释放字符</td><td>恢复被用作分隔符的字符的原始含义</td></tr>
+</table>
+<p><strong>示例：</strong><code>BGM+O+BL123456+9'</code></p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CUSRES 响应 消息 结构">
+<div class="q"><span class="q-icon">Q:</span>CUSRES 响应消息的结构是什么？</div>
+<div class="a">
+<p>CUSRES 是 NAIC 对申报的评估响应消息，关键段包括：</p>
+<ul>
+  <li><strong>BGM：</strong>消息功能代码，标识响应类型</li>
+  <li><strong>RFF：</strong>引用原始 CUSCAR 消息的提单号</li>
+  <li><strong>STS：</strong>状态段，包含评估状态代码</li>
+</ul>
+<p><strong>状态码示例：</strong></p>
+<ul>
+  <li><code>ACT</code> — 接受（Accepted），允许装载</li>
+  <li><code>DNL</code> — 禁止装载（Do Not Load）</li>
+  <li><code>RFI</code> — 请求补充信息（Request for Information）</li>
+</ul>
+<p>完整定义参见 MIG 第 5 节。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="CONTRL 技术确认 ACK NAK">
+<div class="q"><span class="q-icon">Q:</span>CONTRL 技术确认消息的作用是什么？</div>
+<div class="a">
+<p>CONTRL 是语法和服务级别的确认消息，用于：</p>
+<ul>
+  <li><strong>确认收到：</strong>确认 NAIC 已收到申报消息</li>
+  <li><strong>语法错误报告：</strong>报告交换、消息或段级别的语法错误</li>
+  <li><strong>数据元素错误：</strong>报告特定数据元素的格式或值错误</li>
+</ul>
+<p>CONTRL 消息的接收不等同于业务的接受（ACT），两者是独立的。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="消息 样例 sample 示例">
+<div class="q"><span class="q-icon">Q:</span>能否提供一个 CUSCAR 消息的样例？</div>
+<div class="a">
+<p><strong>主提单（Master B/L）简短样例：</strong></p>
+<pre style="background:#f8f9fa;padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;">
+UNB+UNOB:4:SENDERID:20+RECEIVERID:20+250315:0835+REF001'
+UNH+MREF001+CUSCAR:D:24B:UN'
+BGM+O+BL123456789+9'
+RFF+BM:BL123456789'
+NAD+CZ+SHIPPERID::9'
+NAD+CN+CONSIGNEEID::9'
+TDT+20+VESSELNAME+++SHIPPINGLINEID::9'
+LOC+9+USNYC'
+LOC+11+AEJEA'
+DTM+137:20250315:102'
+EQD+CN+CONT1234567+22G1++5'
+GID+1+10:PKGCODE:PKGNAME'
+FTX+AAA+++GOODS DESCRIPTION'
+UNT+15+MREF001'
+UNZ+1+REF001'</pre>
+<p>完整样例参见 MIG 第 3.8 节。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="UNB 交换头 发送方 接收方 格式">
+<div class="q"><span class="q-icon">Q:</span>UNB 交换头中的发送方和接收方 ID 如何设置？</div>
+<div class="a">
+<p>UNB 段格式：<code>UNB+UNOB:4::2:02+SENDERID::RECEIVERID++DATE:TIME+REF+++A'</code></p>
+<ul>
+  <li><strong>SenderID：</strong>发送方标识，20 字符长度。委托场景下格式为 <code>SERPRID::FORFFID:LOCFFID</code>（服务商 ID + 海外货代 ID + 本地货代 ID）</li>
+  <li><strong>ReceiverID：</strong>接收方标识，20 字符长度。NAIC 接收方标识</li>
+  <li><strong>Message Type：</strong>消息类型，10 字符长度（如 "MPCI"）</li>
+  <li><strong>Message Ref No：</strong>消息参考号，14 字符长度</li>
+</ul>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <!-- Category: HS Code Transition -->
+  <div class="category open visible" data-cat="hscode" id="cat-hscode">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">🏷️</span>
+      <h2>HS Code 12 位转换（迪拜海关）</h2>
+      <span class="badge">8 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="HS Code 转换 迪拜海关 8位 12位">
+<div class="q"><span class="q-icon">Q:</span>迪拜海关 HS Code 从 8 位转换到 12 位的背景是什么？</div>
+<div class="a">
+<p>迪拜海关正在从 8 位 HS Code 过渡到 12 位统一关税目录，依据：</p>
+<ul>
+  <li>GCC（海湾合作委员会）发布基于 WCO 2022 版协调制度的统一关税表</li>
+  <li>阿联酋内阁 2024 年第 119 号决议批准 GCC 统一关税目录</li>
+  <li><strong>实施起始日期：2025 年 8 月</strong></li>
+</ul>
+<p>统一关税目录包含：海关编码、关税率、自由贸易协定、反倾销税率、增值税和消费税、地方及联邦限制和禁令、监管机构信息。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="HS Code 实施 阶段 时间表">
+<div class="q"><span class="q-icon">Q:</span>HS Code 12 位转换的实施阶段是怎样的？</div>
+<div class="a">
+<table>
+<tr><th>阶段</th><th>贸易类型</th><th>实施时间</th></tr>
+<tr><td>01</td><td>GCC 贸易（海合会国家间）</td><td>2025 年 8 月起</td></tr>
+<tr><td>02</td><td>自由区和海关仓库至本地市场</td><td>2026 年 2 月起</td></tr>
+<tr><td>03</td><td>世界其他地区进口（RoW Import）</td><td>2026 年 8 月起</td></tr>
+<tr><td>04</td><td>临时流动（Temporary Flows）</td><td>2027 年 2 月起</td></tr>
+</table>
+<p>采用分阶段方式以降低风险、减少中断、监测影响并持续改进。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="HS Code 豁免 不适用 例外">
+<div class="q"><span class="q-icon">Q:</span>哪些贸易类型豁免 12 位 HS Code？</div>
+<div class="a">
+<p><strong>适用 12 位分类：</strong></p>
+<ul><li>GCC 贸易、进口至本地市场、临时流动</li></ul>
+<p><strong>豁免 12 位分类（继续使用 8 位）：</strong></p>
+<ul>
+  <li>自由区转运进出（GCC 以外/迪拜自由区之间）</li>
+  <li>转运货物（Transshipments）</li>
+  <li>过境贸易（Transit Trade）</li>
+  <li>自由区内转移</li>
+  <li>本地出口至世界其他地区</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="HS Code 分类 变化 不变 细分 新增">
+<div class="q"><span class="q-icon">Q:</span>HS Code 转换后有哪些变化类型？</div>
+<div class="a">
+<table>
+<tr><th>变化类型</th><th>数量</th><th>说明</th></tr>
+<tr><td><strong>不变编码</strong></td><td>5,981 个</td><td>原 8 位后补 4 个零（如 85171300 → 851713000000）</td></tr>
+<tr><td><strong>细分编码</strong></td><td>6,518 个</td><td>原 8 位按产品细分（如 84201000 分为造纸抛光机/纺织抛光机/皮革抛光机/塑料抛光机）</td></tr>
+<tr><td><strong>新增编码</strong></td><td>951 个</td><td>新增产品条目（如 01029011 阿拉伯羚羊、01029012 非洲羚羊）</td></tr>
+</table>
+<p>总计从 7,809 个 HS Code 增加到 13,450 个。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="HS Code 工具 资源 Al Munassiq 对照表">
+<div class="q"><span class="q-icon">Q:</span>迪拜海关为 HS Code 转换提供了哪些工具和资源？</div>
+<div class="a">
+<table>
+<tr><th>工具名称</th><th>说明</th><th>获取方式</th></tr>
+<tr><td><strong>Al Munassiq（AI 应用）</strong></td><td>AI 驱动的 HS Code 分类应用，可查询编码、税率、限制和所需许可证</td><td>Apple Store / Google Play / DC 网站</td></tr>
+<tr><td><strong>对照表（Correlation Table）</strong></td><td>8 位到 12 位编码映射表</td><td>迪拜海关网站</td></tr>
+<tr><td><strong>贸易商指南（Trader Guidebook）</strong></td><td>过渡参考指南，包含分步申报指引和 FAQ</td><td>迪拜海关网站</td></tr>
+</table>
+<p><strong>运营支持：</strong></p>
+<ul>
+  <li>延长运营时间：每日 8:00-18:00 电话支持（8001886）</li>
+  <li>重分类服务：提交货描，1 个工作日内获得迪拜海关认证分类</li>
+  <li>每周研讨会：通过 Microsoft Teams 或迪拜物流学院参加</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="HS Code 示例 不变 补零">
+<div class="q"><span class="q-icon">Q:</span>不变 HS Code 的补零示例有哪些？</div>
+<div class="a">
+<table>
+<tr><th>旧编码（8位）</th><th>新编码（12位）</th><th>商品</th></tr>
+<tr><td>85171300</td><td>85171300 0000</td><td>智能手机</td></tr>
+<tr><td>90041000</td><td>90041000 0000</td><td>太阳镜</td></tr>
+<tr><td>36035000</td><td>36035000 0000</td><td>点火器</td></tr>
+<tr><td>03023400</td><td>03023400 0000</td><td>大眼金枪鱼</td></tr>
+</table>
+</div>
+</div>
+
+<div class="kb-item" data-tags="HS Code 细分 子目 示例">
+<div class="q"><span class="q-icon">Q:</span>HS Code 细分的示例有哪些？</div>
+<div class="a">
+<table>
+<tr><th>原编码</th><th>商品类别</th><th>新编码</th><th>细分商品</th></tr>
+<tr><td rowspan="4">84201000</td><td rowspan="4">砑光机或滚压机</td><td>84201000 0001</td><td>造纸抛光机</td></tr>
+<tr><td>84201000 0002</td><td>纺织抛光机</td></tr>
+<tr><td>84201000 0003</td><td>皮革抛光机</td></tr>
+<tr><td>84201000 0004</td><td>塑料抛光机</td></tr>
+<tr><td rowspan="3">71039100</td><td rowspan="3">红宝石、蓝宝石和绿宝石</td><td>71039100 0001</td><td>红宝石</td></tr>
+<tr><td>71039100 0002</td><td>蓝宝石</td></tr>
+<tr><td>71039100 0003</td><td>绿宝石</td></tr>
+<tr><td rowspan="2">90051000</td><td rowspan="2">双筒望远镜</td><td>90051000 0001</td><td>夜视双筒望远镜</td></tr>
+<tr><td>90051000 0002</td><td>其他双筒望远镜</td></tr>
+</table>
+</div>
+</div>
+
+<div class="kb-item" data-tags="HS Code 联系方式 支持">
+<div class="q"><span class="q-icon">Q:</span>迪拜海关 HS Code 相关联系方式是什么？</div>
+<div class="a">
+<ul>
+  <li>迪拜海关官方网站：<strong>www.dubaicustoms.ae</strong></li>
+  <li>迪拜贸易平台：<strong>www.dubaitrade.ae</strong></li>
+  <li>客户幸福部电话：<strong>8001886</strong></li>
+  <li>邮件：<strong>1886@dubaicustoms.ae</strong></li>
+  <li>MPCI 咨询邮箱：<strong>mpci.inquiries@icp.gov.ae</strong></li>
+</ul>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <!-- Category: Package Type Codes -->
+  <div class="category open visible" data-cat="package" id="cat-package">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">📦</span>
+      <h2>包装类型代码表（NAIC MPCI 映射）</h2>
+      <span class="badge">169 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="包装类型 代码 概述">
+<div class="q"><span class="q-icon">Q:</span>NAIC MPCI 包装类型代码表是什么？</div>
+<div class="a">
+<p>NAIC MPCI 包装类型代码表基于联合国 UN/CEFACT Recommendation 21 标准，共包含 <strong>169 种</strong>包装类型代码。</p>
+<p>每行包含：序号、包装类型代码、Recommendation 21 名称、NAIC MPCI 映射代码、WPM（木质包装材料）标记、状态、批量操作标记。</p>
+<p>申报时应使用 <strong>NAIC MPCI Mapping</strong> 列的代码值（3位字母代码）。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="包装代码 查询 搜索">
+<div class="q"><span class="q-icon">Q:</span>如何在页面中查找包装类型代码？</div>
+<div class="a">
+<p><strong>使用页面顶部的搜索框</strong>，输入代码（如 "BX"、"BG"、"CN"）或英文名称（如 "Box"、"Bag"、"Container"）即可快速定位。</p>
+<p>以下为常用包装类型代码索引（完整 169 项在下方表格中）。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="包装代码表 完整列表">
+<div class="q"><span class="q-icon">Q:</span>完整包装类型代码对照表</div>
+<div class="a">
+<div class="tbl-wrap">
+<table id="pkgTable">
+<thead>
+<tr><th>#</th><th>代码</th><th>REC 21 名称</th><th>NAIC MPCI 映射</th><th>WPM</th><th>状态</th></tr>
+</thead>
+<tbody id="pkgBody"></tbody>
+</table>
+</div>
+<p style="margin-top:8px;font-size:13px;color:var(--text-light);">共 169 种包装类型，使用搜索框可按代码或名称筛选。</p>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <!-- Category: SmartLink CUSCAR Flat File -->
+  <div class="category open visible" data-cat="smartlink" id="cat-smartlink">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">🔗</span>
+      <h2>SmartLink CUSCAR 扁平文件格式</h2>
+      <span class="badge">6 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="SmartLink 扁平文件 概述">
+<div class="q"><span class="q-icon">Q:</span>SmartLink MPCI CUSCAR 扁平文件格式是什么？</div>
+<div class="a">
+<p>SmartLink MPCI CUSCAR 扁平文件是一种<strong>结构化的文本格式</strong>，用于将提单数据提交给 NAIC MPCI 系统。</p>
+<p>文件版本：<strong>1.1</strong>（2026年1月14日更新），初始版本 1.0（2025年7月25日）。</p>
+<p>该格式包含以下部分：</p>
+<ul>
+  <li><strong>消息头（Message Header）</strong></li>
+  <li><strong>提单信息（BL_INFO）</strong></li>
+  <li><strong>费用信息（BL_CHG_INFO）</strong></li>
+  <li><strong>集装箱信息（CNTR_INFO）</strong></li>
+  <li><strong>封条信息（SEAL_INFO）</strong></li>
+  <li><strong>温度信息（TEMP_INFO）</strong></li>
+  <li><strong>参与方信息（BL_PARTY_INFO）</strong></li>
+  <li><strong>货物信息（BL_GOODS_INFO）</strong></li>
+  <li><strong>危险品信息（BL_DG_INFO）</strong></li>
+  <li><strong>附加信息（BL_ADDL_INFO）</strong></li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="SmartLink 消息头 MSGSTART">
+<div class="q"><span class="q-icon">Q:</span>SmartLink 扁平文件的消息头格式是什么？</div>
+<div class="a">
+<p>消息头格式（固定 64 字符）：</p>
+<pre style="background:#f8f9fa;padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;">
+$$$MSGSTART:SENDERID            MSGTYPE     MPCI MREF0000000001
+</pre>
+<table>
+<tr><th>字段</th><th>长度</th><th>说明</th></tr>
+<tr><td>SENDERID</td><td>20</td><td>发送方标识</td></tr>
+<tr><td>MSGTYPE</td><td>10</td><td>消息类型（如 "MPCI"）</td></tr>
+<tr><td>RECEIVERID</td><td>10</td><td>接收方标识</td></tr>
+<tr><td>MREF</td><td>14</td><td>消息参考号</td></tr>
+</table>
+<p><strong>实际示例：</strong><code>$$$MSGSTART:SENDER                UAECUSTOMS            MPCI C07ABQ681B036465</code></p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="SmartLink 字段 MPCI_ID MSG_FUNC CONSOLE_IND">
+<div class="q"><span class="q-icon">Q:</span>SmartLink 扁平文件有哪些核心字段？</div>
+<div class="a">
+<table>
+<tr><th>字段名</th><th>必填</th><th>格式</th><th>说明</th></tr>
+<tr><td>MSG_FUNC</td><td>M</td><td>a1</td><td>消息功能：O=Original / U=Update / C=Cancel</td></tr>
+<tr><td>MPCI_ID</td><td>M</td><td>an70</td><td>NAIC 分配的唯一 MPCI Party ID</td></tr>
+<tr><td>CONSOLE_IND</td><td>M</td><td>a1</td><td>拼箱标识：Y=拼箱 / N=非拼箱</td></tr>
+<tr><td>MSG_SEQ</td><td>M</td><td>n..5</td><td>消息序号</td></tr>
+<tr><td>REF_ID</td><td>M</td><td>an..35</td><td>引用标识（如 DOCUMENTIDENTIFIER01）</td></tr>
+<tr><td>CUST_ID</td><td>O</td><td>an..17</td><td>客户标识</td></tr>
+<tr><td>SPLT_IND</td><td>O</td><td>a1</td><td>拆单标识：Y/N</td></tr>
+<tr><td>SW_IND</td><td>O</td><td>a1</td><td>换单标识：Y/N</td></tr>
+<tr><td>REEFER_IND</td><td>O</td><td>a1</td><td>冷藏箱标识：Y/N</td></tr>
+<tr><td>RFI_IND</td><td>O</td><td>a1</td><td>RFI 响应标识：Y/N</td></tr>
+</table>
+</div>
+</div>
+
+<div class="kb-item" data-tags="SmartLink 提单 字段 BL_NO VSL_VOY POD POL">
+<div class="q"><span class="q-icon">Q:</span>SmartLink 提单相关字段有哪些？</div>
+<div class="a">
+<table>
+<tr><th>字段名</th><th>必填</th><th>说明</th></tr>
+<tr><td>BL_NO</td><td>M</td><td>提单号</td></tr>
+<tr><td>PR_BL_NO</td><td>O</td><td>母提单号（Previous B/L No）</td></tr>
+<tr><td>PR_MPCI_ID</td><td>O</td><td>母提单 MPCI ID</td></tr>
+<tr><td>CN_MPCI_ID</td><td>O</td><td>子提单 MPCI ID（拼箱场景）</td></tr>
+<tr><td>BL_ISSUE_LOC</td><td>M</td><td>提单签发地（UN/LOCODE）</td></tr>
+<tr><td>BL_ISSUE_DT</td><td>M</td><td>提单签发日期（YYYYMMDDHHMM 格式）</td></tr>
+<tr><td>VSL_VOY</td><td>O</td><td>船名航次</td></tr>
+<tr><td>VSL_IMO</td><td>O</td><td>船舶 IMO 编号</td></tr>
+<tr><td>VSL_NM</td><td>O</td><td>船舶名称</td></tr>
+<tr><td>POR</td><td>M</td><td>收货地（Port of Receipt）</td></tr>
+<tr><td>POL</td><td>M</td><td>装货港（Port of Loading）</td></tr>
+<tr><td>POD</td><td>M</td><td>卸货港（Port of Discharge）</td></tr>
+<tr><td>DEL</td><td>O</td><td>交货地（Place of Delivery）</td></tr>
+<tr><td>MV_TYPE</td><td>M</td><td>运输类型：IM=进口 / TS=转运 / TR=过境 / FROB=船上剩余</td></tr>
+<tr><td>FST_UAE_PORT</td><td>O</td><td>首个阿联酋挂靠港</td></tr>
+<tr><td>FST_UAE_ETA</td><td>O</td><td>首个阿联酋港预计到达时间</td></tr>
+</table>
+</div>
+</div>
+
+<div class="kb-item" data-tags="SmartLink 集装箱 参与方 字段">
+<div class="q"><span class="q-icon">Q:</span>SmartLink 集装箱和参与方字段有哪些？</div>
+<div class="a">
+<p><strong>集装箱信息（CNTR_INFO）：</strong></p>
+<table>
+<tr><th>字段名</th><th>说明</th></tr>
+<tr><td>CNTR_NO</td><td>集装箱号</td></tr>
+<tr><td>CNTR_TPSZ</td><td>集装箱类型尺寸（如 20FT, 40FT, 40HC）</td></tr>
+<tr><td>GROSS_WGT / GROSS_WGT_UNIT</td><td>毛重及单位（如 KGM=千克, LBR=磅）</td></tr>
+<tr><td>FM_IND</td><td>FCL/LCL 标识：F=整箱 / L=拼箱</td></tr>
+<tr><td>SEAL_NO / SEAL_PARTY_CD / SEAL_TYPE</td><td>封条号、施封方代码、封条类型</td></tr>
+</table>
+<p><strong>参与方信息（BL_PARTY_INFO）：</strong></p>
+<table>
+<tr><th>PT_TYPE</th><th>说明</th></tr>
+<tr><td>CZ</td><td>发货人（Consignor/Shipper）</td></tr>
+<tr><td>CN</td><td>收货人（Consignee）</td></tr>
+<tr><td>N1</td><td>第一通知方</td></tr>
+<tr><td>N2</td><td>第二通知方</td></tr>
+<tr><td>FW</td><td>货运代理</td></tr>
+</table>
+</div>
+</div>
+
+<div class="kb-item" data-tags="SmartLink 版本 历史">
+<div class="q"><span class="q-icon">Q:</span>SmartLink 扁平文件格式的版本历史？</div>
+<div class="a">
+<table>
+<tr><th>版本</th><th>日期</th><th>变更说明</th><th>作者</th></tr>
+<tr><td>1.0</td><td>2025.07.25</td><td>初始版本</td><td>Lee Jinseob</td></tr>
+<tr><td>1.1</td><td>2026.01.14</td><td>修正项目名称和序号</td><td>Lee Jinseob</td></tr>
+</table>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <!-- Category: Business Scenarios -->
+  <div class="category open visible" data-cat="scenarios" id="cat-scenarios">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <span class="icon">🔄</span>
+      <h2>业务场景与特殊处理</h2>
+      <span class="badge">7 条</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="cat-body">
+
+<div class="kb-item" data-tags="委托 delegation 货运代理 船公司">
+<div class="q"><span class="q-icon">Q:</span>委托申报（Delegation）的场景是怎样的？</div>
+<div class="a">
+<p><strong>货运代理委托：</strong></p>
+<ul>
+  <li>本地货运代理可委托海外代理（发货方货代）代为申报</li>
+  <li>海外代理须先注册 MPCI 并获得 Party ID</li>
+  <li><strong>合规责任始终由本地货运代理承担</strong></li>
+</ul>
+<p><strong>船公司委托：</strong></p>
+<ul>
+  <li>船公司可委托本地或海外船代代为申报</li>
+  <li>船代需在注册时指定代为申报的船公司及责任范围（阿联酋全国或特定酋长国）</li>
+</ul>
+<p>委托场景下，被委托方申报时需同时提供自己的 MPCI ID 和被委托方的 MPCI ID。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="拼箱 consolidation co-loading">
+<div class="q"><span class="q-icon">Q:</span>拼箱（Consolidation）和共装（Co-loading）场景如何处理？</div>
+<div class="a">
+<p><strong>拼箱（Consolidation）场景：</strong></p>
+<ul>
+  <li>货运代理将多个发货人的货物拼装在一个集装箱内</li>
+  <li>船公司提交主提单（Master B/L），货运代理提交货代提单（House B/L）</li>
+  <li>主提单需包含各货代的 MPCI ID</li>
+  <li>货代提单需包含主提单号和船公司的 MPCI ID</li>
+</ul>
+<p><strong>共装（Co-loading）场景：</strong></p>
+<ul>
+  <li>多个货运代理共享一个集装箱空间</li>
+  <li>主拼箱商（Master Co-Loader）对船公司负责，提交 Master Co-Loader B/L</li>
+  <li>子拼箱商（Sub Co-Loader）对主拼箱商负责</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="更新 提单 修改 update amendment">
+<div class="q"><span class="q-icon">Q:</span>如何更新/修改已提交的提单？</div>
+<div class="a">
+<p><strong>更新场景：</strong></p>
+<ul>
+  <li><strong>标准更新：</strong>因运营变更或错误更正（如修改收货人、集装箱号等）</li>
+  <li><strong>响应 RFI 更新：</strong>根据 NAIC 要求补充信息后重新提交</li>
+  <li><strong>换单（Switch B/L）：</strong>签发新提单替换原提单（通常涉及收货人或发货人变更）</li>
+  <li><strong>拆单（Split B/L）：</strong>一张提单下的货物拆分到不同船舶或航次</li>
+  <li><strong>取消（Cancellation）：</strong>因错误、误发或客户要求全额取消</li>
+</ul>
+<p>更新时需使用 <code>MSG_FUNC:U</code>（Update），并通过 <code>ORG_BL_NO</code> 引用原提单号。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="拆单 split 提单">
+<div class="q"><span class="q-icon">Q:</span>拆单（Split Bill of Lading）如何处理？</div>
+<div class="a">
+<p>当一张提单下的货物需要拆分时：</p>
+<ul>
+  <li>原提单使用 Update 消息标记为拆分（<code>SPLT_IND:Y</code>）</li>
+  <li>每份拆分的提单作为新的 Original 消息提交</li>
+  <li>拆分后的提单需引用原提单号（<code>ORG_BL_NO</code>）</li>
+  <li>NAIC 会对原提单和拆分后的各提单分别评估</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="换单 switch BL 提单">
+<div class="q"><span class="q-icon">Q:</span>换单（Switch Bill of Lading）如何处理？</div>
+<div class="a">
+<p>换单指用新提单替换原提单，通常涉及收货人或发货人变更：</p>
+<ul>
+  <li>使用 Original 消息提交新提单，<code>SW_IND:Y</code> 标记为换单</li>
+  <li>新提单需引用原提单号（<code>ORG_BL_NO</code>）</li>
+  <li>原提单的处理状态将更新以反映已换单</li>
+</ul>
+</div>
+</div>
+
+<div class="kb-item" data-tags="业务连续性 contingency 应急">
+<div class="q"><span class="q-icon">Q:</span>MPCI 业务连续性计划是什么？</div>
+<div class="a">
+<p>NAIC 制定了业务连续性计划以应对系统中断或其他紧急情况：</p>
+<ul>
+  <li>维护最新的公司联系信息至关重要（参见业务规范文档第 8.1 节）</li>
+  <li>NAIC 通过注册时提供的联系方式与运营商沟通</li>
+  <li>在系统不可用的情况下，NAIC 将通过官方渠道发布应急申报指引</li>
+</ul>
+<p>建议各运营商确保 MPCI 联系人信息保持最新，以便接收重要通知。</p>
+</div>
+</div>
+
+<div class="kb-item" data-tags="咨询 联系 NAIC 邮箱">
+<div class="q"><span class="q-icon">Q:</span>如何联系 NAIC 获取 MPCI 相关支持？</div>
+<div class="a">
+<ul>
+  <li><strong>MPCI 咨询邮箱：</strong>mpci.inquiries@icp.gov.ae</li>
+  <li><strong>NAIC 门户网站：</strong>NAIC Internet Portal（通过联邦身份管理局访问）</li>
+  <li><strong>迪拜海关热线：</strong>8001886</li>
+  <li><strong>迪拜海关邮箱：</strong>1886@dubaicustoms.ae</li>
+  <li><strong>迪拜海关官网：</strong>www.dubaicustoms.ae</li>
+  <li><strong>迪拜贸易平台：</strong>www.dubaitrade.ae</li>
+</ul>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>📚 知识库内容基于以下源文档整合：NAIC MPCI 业务规范文档 V1.0、消息实施指南 V1.0、接入指南 V1.0、计划概述、2025年4月网络研讨会资料、迪拜海关综合关税目录、包装类型代码表、SmartLink CUSCAR 扁平文件格式 V1.1 等 11 份原始文档。</p>
+    <p style="margin-top:8px;">文档版本：2025-2026 | 最后编译：2026年6月18日 | 内容仅供参考，正式申报请以 NAIC 官方最新文档为准。</p>
+  </div>
+</div>
+
+<script>
+// Package type data
+const packageTypes = [
+  ["4T","TEST FOR NNN","4T","No","Inactive"],
+  ["AE","AEROSOL","AE","No","Active"],
+  ["AR","ARTICLES","PP","No","Active"],
+  ["AT","AUTO","VN","No","Active"],
+  ["BA","BARREL","BA","No","Active"],
+  ["BB","BOBBIN","BB","No","Active"],
+  ["BC","BOTTLERACK","BC","No","Active"],
+  ["BD","BOARD","BD","No","Active"],
+  ["BE","BUNDLE","BE","No","Active"],
+  ["BF","BALLOON","BF","No","Active"],
+  ["BG","BAG","BG","No","Active"],
+  ["BH","BUNCH","BH","No","Active"],
+  ["BI","BIN","BI","No","Active"],
+  ["BJ","BUCKET","BJ","No","Active"],
+  ["BK","BASKET","BK","No","Active"],
+  ["BL","BALE","BL","No","Active"],
+  ["BM","BALE, COMPRESSED","BL","No","Active"],
+  ["BN","BALE,NON-COMPRESSED","BN","No","Active"],
+  ["BO","BOTTLE","BO","No","Inactive"],
+  ["BP","BARE","NE","No","Active"],
+  ["BQ","BRIQUETTES","OK","No","Active"],
+  ["BR","BAR","BR","No","Active"],
+  ["BS","BALLOTS","PP","No","Active"],
+  ["BT","BOLT","BT","No","Active"],
+  ["BU","BULK","ZZ","No","Active"],
+  ["BX","BOX","BX","No","Active"],
+  ["BZ","BLOCK","OK","No","Active"],
+  ["CA","CAN","CA","No","Active"],
+  ["CB","CUBITAINER","BW","No","Active"],
+  ["CC","CHURN","CC","No","Active"],
+  ["CD","CAN","CD","No","Inactive"],
+  ["CE","CREEL","CE","No","Active"],
+  ["CF","COFFER","CF","No","Active"],
+  ["CG","CAGE","CG","No","Active"],
+  ["CH","CHEST","CH","No","Active"],
+  ["CI","CANISTER","CI","No","Active"],
+  ["CJ","COFFIN","CJ","No","Active"],
+  ["CK","CASK","CK","No","Active"],
+  ["CL","COIL","CL","No","Active"],
+  ["CN","CONTAINER","CN","No","Active"],
+  ["CO","BOTTLE","BO","No","Active"],
+  ["CR","CRATE","CR","No","Active"],
+  ["CS","CASE","CS","No","Active"],
+  ["CT","CARTON","CT","No","Active"],
+  ["CU","CUP","CU","No","Active"],
+  ["CV","COVER","CV","No","Active"],
+  ["CY","CYLINDER","CY","No","Active"],
+  ["CZ","CANVAS","CZ","No","Active"],
+  ["DA","CRATE","CR","No","Active"],
+  ["DB","CRATE","CR","No","Active"],
+  ["DC","CRATE","CR","No","Active"],
+  ["DE","CRATE","CR","No","Active"],
+  ["DF","DRUM","DF","No","Active"],
+  ["DG","CAGE","CG","No","Active"],
+  ["DH","CRATE","CR","No","Active"],
+  ["DI","DRUM","DR","No","Active"],
+  ["DJ","DEMIJOHN","DJ","No","Active"],
+  ["DK","CRATE","CR","No","Active"],
+  ["DL","CRATE","CR","No","Active"],
+  ["DM","DRUM","DR","No","Active"],
+  ["DN","DRUM","DR","No","Active"],
+  ["DP","DEMIJOHN","DJ","No","Active"],
+  ["DR","DRUM","DR","No","Active"],
+  ["DS","TRAY","PU","No","Active"],
+  ["DT","CRATE","CR","No","Active"],
+  ["DU","CRATE","CR","No","Active"],
+  ["DV","CRATE","CR","No","Active"],
+  ["DW","CRATE","CR","No","Active"],
+  ["DX","CRATE","CR","No","Active"],
+  ["DY","CRATE","CR","No","Active"],
+  ["DZ","CRATE","CR","No","Active"],
+  ["EC","BAG","BG","No","Active"],
+  ["ED","CASE","CS","No","Active"],
+  ["EE","CASE","CS","No","Active"],
+  ["EF","CASE","CS","No","Active"],
+  ["EG","CASE","CS","No","Active"],
+  ["EH","CASE","CS","No","Active"],
+  ["EI","CASE","CS","No","Active"],
+  ["EN","ENVELOPE","EN","No","Active"],
+  ["FC","CRATE","CR","No","Active"],
+  ["FD","CRATE","CR","No","Active"],
+  ["FE","FLEXITANK","FE","No","Active"],
+  ["FI","FIRKIN","FI","No","Active"],
+  ["FL","FLASK","FL","No","Active"],
+  ["FO","FOOTLOCKER","FO","No","Active"],
+  ["FP","FILMPACK","FP","No","Active"],
+  ["FR","FRAME","FR","No","Active"],
+  ["FT","FOODTAINER","FT","No","Active"],
+  ["FW","CART, FLATBED","FW","No","Active"],
+  ["FX","BAG","BG","No","Active"],
+  ["GB","BOTTLE","BO","No","Active"],
+  ["GI","GIRDER","GI","No","Active"],
+  ["GR","RECEPTACLE","GR","No","Active"],
+  ["GZ","GARMENT","GZ","No","Active"],
+  ["HA","BASKET","BK","No","Active"],
+  ["HB","BASKET","BK","No","Active"],
+  ["HC","BASKET","BK","No","Active"],
+  ["HG","HOGSHEAD","HG","No","Active"],
+  ["HR","HAMPER","HR","No","Active"],
+  ["IA","PACKAGE","PK","No","Active"],
+  ["IB","PACKAGE","PK","No","Active"],
+  ["IC","PACKAGE","PK","No","Active"],
+  ["ID","PACKAGE","PK","No","Active"],
+  ["IE","PACKAGE","PK","No","Active"],
+  ["IF","PACKAGE","PK","No","Active"],
+  ["IG","PACKAGE","PK","No","Active"],
+  ["IH","PACKAGE","PK","No","Active"],
+  ["IK","PACKAGE","PK","No","Active"],
+  ["IL","PACKAGE","PK","No","Active"],
+  ["IN","INGOT","IN","No","Active"],
+  ["IZ","INGOTS","IN","No","Active"],
+  ["JB","BAG","BG","No","Active"],
+  ["JC","JERRICAN","JC","No","Active"],
+  ["JG","JUG","JG","No","Active"],
+  ["JR","JAR","JR","No","Active"],
+  ["JT","JUTEBAG","JT","No","Active"],
+  ["JY","JERRICAN","JC","No","Active"],
+  ["KG","KEG","KG","No","Active"],
+  ["KR","CRATE","CR","No","Active"],
+  ["KT","KIT","KT","No","Active"],
+  ["LG","LOG","LG","No","Active"],
+  ["LT","LOT","LT","No","Active"],
+  ["LU","LUG","LU","No","Active"],
+  ["LV","LIFT","LV","No","Active"],
+  ["LZ","LOGS","LG","No","Active"],
+  ["MA","CRATE","CR","No","Active"],
+  ["MB","MULTIPACK","MB","No","Active"],
+  ["MC","CRATE","CR","No","Active"],
+  ["ME","CRATE","CR","No","Active"],
+  ["MR","RECEPTACLE","GR","No","Active"],
+  ["MS","SACK","SA","No","Active"],
+  ["MT","MAT","MT","No","Active"],
+  ["MW","CRATE","CR","No","Active"],
+  ["MX","MATCHBOX","MX","No","Active"],
+  ["NA","NOT AVAILABLE","NA","No","Active"],
+  ["NE","UNPACKED","NE","No","Active"],
+  ["NF","UNPACKED","NE","No","Active"],
+  ["NG","UNPACKED","NE","No","Active"],
+  ["NS","NEST","NS","No","Active"],
+  ["NT","NET","NT","No","Active"],
+  ["NU","NET","NT","No","Active"],
+  ["NV","NET","NT","No","Active"],
+  ["OK","BLOCK","OK","No","Active"],
+  ["OT","OCTABIN","OT","No","Active"],
+  ["OU","OUTER","OU","No","Active"],
+  ["P2","PALLET","PX","No","Active"],
+  ["PA","PACKET","PA","No","Active"],
+  ["PB","PALLET, BOX","PX","No","Active"],
+  ["PC","PARCEL","PC","No","Active"],
+  ["PD","PALLET","PX","No","Active"],
+  ["PE","PALLET","PX","No","Active"],
+  ["PF","PALLET","PX","No","Active"],
+  ["PG","PLATE","PG","No","Active"],
+  ["PH","PITCHER","PH","No","Active"],
+  ["PI","PIPE","PI","No","Active"],
+  ["PJ","PUNNET","PJ","No","Active"],
+  ["PK","PACKAGE","PK","No","Active"],
+  ["PL","PAIL","PL","No","Active"],
+  ["PN","PLANK","PN","No","Active"],
+  ["PO","POUCH","PO","No","Active"],
+  ["PP","PALLET","PX","No","Active"],
+  ["PR","PARCEL","PC","No","Active"],
+  ["PT","POT","PT","No","Active"],
+  ["PU","TRAY","PU","No","Active"],
+  ["PV","PIPES","PI","No","Active"],
+  ["PX","PALLET","PX","No","Active"],
+  ["PY","PLATES","PG","No","Active"],
+  ["PZ","PLANKS","PN","No","Active"],
+  ["QA","DRUM","DR","No","Active"],
+  ["QB","DRUM","DR","No","Active"],
+  ["QC","DRUM","DR","No","Active"],
+  ["QD","DRUM","DR","No","Active"],
+  ["QF","DRUM","DR","No","Active"],
+  ["QG","DRUM","DR","No","Active"],
+  ["QH","DRUM","DR","No","Active"],
+  ["QJ","DRUM","DR","No","Active"],
+  ["QK","DRUM","DR","No","Active"],
+  ["QL","DRUM","DR","No","Active"],
+  ["QM","DRUM","DR","No","Active"],
+  ["QN","DRUM","DR","No","Active"],
+  ["QP","DRUM","DR","No","Active"],
+  ["QQ","DRUM","DR","No","Active"],
+  ["QR","DRUM","DR","No","Active"],
+  ["QS","DRUM","DR","No","Active"],
+  ["QT","DRUM","DR","No","Active"],
+  ["QU","DRUM","DR","No","Active"],
+  ["QV","DRUM","DR","No","Active"],
+  ["QW","DRUM","DR","No","Active"],
+  ["QX","DRUM","DR","No","Active"],
+  ["QY","DRUM","DR","No","Active"],
+  ["QZ","DRUM","DR","No","Active"],
+  ["RA","RACK","RA","No","Active"],
+  ["RB","RACK","RA","No","Active"],
+  ["RC","RACK","RA","No","Active"],
+  ["RD","RACK","RA","No","Active"],
+  ["RE","RACK","RA","No","Active"],
+  ["RF","RACK","RA","No","Active"],
+  ["RG","RACK","RA","No","Active"],
+  ["RH","RACK","RA","No","Active"],
+  ["RI","RACK","RA","No","Active"],
+  ["RJ","RACK","RA","No","Active"],
+  ["RK","RACK","RA","No","Active"],
+  ["RL","REEL","RL","No","Active"],
+  ["RO","ROLL","RO","No","Active"],
+  ["RT","REDNET","RT","No","Active"],
+  ["RZ","RODS","RD","No","Active"],
+  ["SA","SACK","SA","No","Active"],
+  ["SB","SLAB","SB","No","Active"],
+  ["SC","CRATE","CR","No","Active"],
+  ["SD","SPINDLE","SD","No","Active"],
+  ["SE","SEA-CHEST","SE","No","Active"],
+  ["SH","SACHET","SH","No","Active"],
+  ["SI","SKID","SI","No","Active"],
+  ["SK","SKELETON CASE","SK","No","Active"],
+  ["SL","SLIPSHEET","SL","No","Active"],
+  ["SM","SHEETMETAL","SM","No","Active"],
+  ["SO","SPOOL","SO","No","Active"],
+  ["SP","SHEET","SP","No","Active"],
+  ["SS","CRATE","CR","No","Active"],
+  ["ST","SHEET","SP","No","Active"],
+  ["SU","SUITCASE","SU","No","Active"],
+  ["SV","ENVELOPE","EN","No","Active"],
+  ["SW","SHRINKWRAP","SW","No","Active"],
+  ["SX","SET","SX","No","Active"],
+  ["SY","SLEEVE","SY","No","Active"],
+  ["SZ","SHEETS","SP","No","Active"],
+  ["TB","TUB","TB","No","Active"],
+  ["TC","TEA-CHEST","TC","No","Active"],
+  ["TD","TUBE","TD","No","Active"],
+  ["TE","TYRE","TE","No","Active"],
+  ["TG","TANK","TG","No","Active"],
+  ["TI","TIERCE","TI","No","Active"],
+  ["TK","TANK","TN","No","Active"],
+  ["TL","TUB","TB","No","Active"],
+  ["TN","TIN","TN","No","Active"],
+  ["TO","TUN","TO","No","Active"],
+  ["TR","TRUNK","TR","No","Active"],
+  ["TS","TRUSS","TS","No","Active"],
+  ["TT","TOTE","TT","No","Active"],
+  ["TU","TUBE","TD","No","Active"],
+  ["TV","TUBE","TD","No","Active"],
+  ["TW","PALLET","PX","No","Active"],
+  ["TY","TANK","TN","No","Active"],
+  ["TZ","TUBES","TD","No","Active"],
+  ["UC","UNCAGED","UC","No","Active"],
+  ["UN","UNIT","UN","No","Active"],
+  ["VA","VAT","VA","No","Active"],
+  ["VG","BULK","ZZ","No","Active"],
+  ["VI","VIAL","VI","No","Active"],
+  ["VK","VANPACK","VK","No","Active"],
+  ["VL","BOTTLE","BO","No","Active"],
+  ["VN","VEHICLE","VN","No","Active"],
+  ["VO","BULK","ZZ","No","Active"],
+  ["VP","VACUUM-PACKED","VP","No","Active"],
+  ["VQ","BULK","ZZ","No","Active"],
+  ["VR","BULK","ZZ","No","Active"],
+  ["VS","BULK","ZZ","No","Active"],
+  ["VY","BULK","ZZ","No","Active"],
+  ["VZ","BULK","ZZ","No","Active"],
+  ["WA","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WB","BOTTLE","BO","No","Active"],
+  ["WC","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WD","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WF","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WG","WINE GALLON","WG","No","Active"],
+  ["WH","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WJ","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WK","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WL","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WM","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WN","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WP","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WQ","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WR","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WS","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WT","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WU","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WV","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WW","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WX","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WY","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["WZ","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["XA","BAG","BG","No","Active"],
+  ["XB","BAG","BG","No","Active"],
+  ["XC","BAG","BG","No","Active"],
+  ["XD","BAG","BG","No","Active"],
+  ["XE","BAG","BG","No","Active"],
+  ["XF","BAG","BG","No","Active"],
+  ["XG","BAG","BG","No","Active"],
+  ["XH","BAG","BG","No","Active"],
+  ["XJ","BAG","BG","No","Active"],
+  ["XK","BAG","BG","No","Active"],
+  ["YA","BULK","ZZ","No","Active"],
+  ["YB","BULK","ZZ","No","Active"],
+  ["YC","BULK","ZZ","No","Active"],
+  ["YD","BULK","ZZ","No","Active"],
+  ["YF","BULK","ZZ","No","Active"],
+  ["YG","BULK","ZZ","No","Active"],
+  ["YH","BULK","ZZ","No","Active"],
+  ["YJ","BULK","ZZ","No","Active"],
+  ["YK","BULK","ZZ","No","Active"],
+  ["YL","BULK","ZZ","No","Active"],
+  ["YM","BULK","ZZ","No","Active"],
+  ["YN","BULK","ZZ","No","Active"],
+  ["YP","BULK","ZZ","No","Active"],
+  ["YQ","BULK","ZZ","No","Active"],
+  ["YR","BULK","ZZ","No","Active"],
+  ["YS","BULK","ZZ","No","Active"],
+  ["YT","BULK","ZZ","No","Active"],
+  ["YV","BULK","ZZ","No","Active"],
+  ["YW","BULK","ZZ","No","Active"],
+  ["YX","BULK","ZZ","No","Active"],
+  ["YY","BULK","ZZ","No","Active"],
+  ["YZ","BULK","ZZ","No","Active"],
+  ["ZA","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZB","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZC","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZD","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZE","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZF","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZG","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZH","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZJ","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZK","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZL","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZM","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZN","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZP","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZQ","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZR","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZS","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZT","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZU","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZV","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZW","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZX","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZY","INTERMEDIATE BULK CONTAINER","WA","No","Active"],
+  ["ZZ","MUTUALLY DEFINED","ZZ","No","Active"],
+];
+
+// Render package types table
+function renderPkgTable(filter) {
+  const tbody = document.getElementById('pkgBody');
+  let html = '';
+  let count = 0;
+  packageTypes.forEach((row, i) => {
+    if (filter && !row.join(' ').toUpperCase().includes(filter.toUpperCase())) return;
+    count++;
+    html += `<tr>
+      <td>${i+1}</td>
+      <td><strong>${row[0]}</strong></td>
+      <td>${row[1]}</td>
+      <td><code>${row[2]}</code></td>
+      <td>${row[3]}</td>
+      <td>${row[4] === 'Active' ? '✅ 启用' : '❌ 停用'}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+  return count;
+}
+renderPkgTable();
+
+// Category toggle
+function toggleCat(header) {
+  const cat = header.parentElement;
+  cat.classList.toggle('open');
+}
+
+// Search functionality
+function doSearch() {
+  const query = document.getElementById('searchInput').value.trim().toUpperCase();
+  const stats = document.getElementById('searchStats');
+  const noResults = document.getElementById('noResults');
+  const cats = document.querySelectorAll('.category');
+  const items = document.querySelectorAll('.kb-item');
+  const toc = document.getElementById('toc');
+
+  // Also filter package table
+  renderPkgTable(query);
+
+  if (!query) {
+    stats.style.display = 'none';
+    noResults.style.display = 'none';
+    cats.forEach(c => { c.style.display = ''; c.classList.add('visible'); });
+    items.forEach(item => {
+      item.style.display = '';
+      item.querySelectorAll('mark').forEach(m => {
+        m.replaceWith(m.textContent);
+      });
+    });
+    toc.style.display = '';
+    document.getElementById('totalItems').textContent = items.length;
+    return;
+  }
+
+  let foundItems = 0;
+  let foundCats = new Set();
+
+  items.forEach(item => {
+    const text = item.textContent.toUpperCase();
+    const tags = item.getAttribute('data-tags') || '';
+    if (text.includes(query) || tags.toUpperCase().includes(query)) {
+      item.style.display = '';
+      const cat = item.closest('.category');
+      foundCats.add(cat);
+      foundItems++;
+
+      // Highlight
+      const aDiv = item.querySelector('.a');
+      if (aDiv) highlightText(aDiv, query);
+      const qDiv = item.querySelector('.q');
+      if (qDiv) highlightText(qDiv, query);
+    } else {
+      item.style.display = 'none';
+      item.querySelectorAll('mark').forEach(m => m.replaceWith(m.textContent));
+    }
+  });
+
+  // Show/hide categories
+  cats.forEach(c => {
+    if (foundCats.has(c)) {
+      c.style.display = '';
+      c.classList.add('visible');
+      c.classList.add('open');
+    } else {
+      c.style.display = 'none';
+      c.classList.remove('visible');
+    }
+  });
+
+  // Update stats
+  if (foundItems === 0) {
+    noResults.style.display = 'block';
+  } else {
+    noResults.style.display = 'none';
+  }
+  stats.style.display = 'block';
+  stats.textContent = `找到 ${foundItems} 条匹配结果`;
+  document.getElementById('totalItems').textContent = foundItems;
+  toc.style.display = foundItems === 0 ? 'none' : '';
+
+  // Open matching categories
+  foundCats.forEach(c => c.classList.add('open'));
+}
+
+function highlightText(el, query) {
+  // Simple highlight: wrap matching text
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+
+  nodes.forEach(node => {
+    const text = node.textContent;
+    const idx = text.toUpperCase().indexOf(query);
+    if (idx >= 0) {
+      const span = document.createElement('span');
+      const before = text.substring(0, idx);
+      const match = text.substring(idx, idx + query.length);
+      const after = text.substring(idx + query.length);
+      span.appendChild(document.createTextNode(before));
+      const mark = document.createElement('mark');
+      mark.textContent = match;
+      span.appendChild(mark);
+      span.appendChild(document.createTextNode(after));
+      node.replaceWith(span);
+    }
+  });
+}
+
+// Tab filter
+function filterTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const cats = document.querySelectorAll('.category');
+  if (tab === 'all') {
+    cats.forEach(c => { c.style.display = ''; c.classList.add('visible'); });
+  } else {
+    cats.forEach(c => {
+      if (c.getAttribute('data-cat') === tab) {
+        c.style.display = ''; c.classList.add('visible');
+      } else {
+        c.style.display = 'none'; c.classList.remove('visible');
+      }
+    });
+  }
+
+  // Hide TOC when filtering
+  document.getElementById('toc').style.display = tab === 'all' ? '' : 'none';
+}
+
+// Build TOC
+function buildTOC() {
+  const tocList = document.getElementById('tocList');
+  const cats = document.querySelectorAll('.category');
+  let html = '';
+  cats.forEach(c => {
+    const h2 = c.querySelector('h2');
+    const id = c.id;
+    if (h2 && id) {
+      html += `<li><a href="#${id}" onclick="scrollToCat('${id}')">${h2.textContent}</a></li>`;
+    }
+  });
+  tocList.innerHTML = html;
+}
+
+function scrollToCat(id) {
+  const cat = document.getElementById(id);
+  if (cat) {
+    cat.scrollIntoView({ behavior: 'smooth' });
+    cat.classList.add('open');
+  }
+}
+
+// Count items
+document.addEventListener('DOMContentLoaded', () => {
+  const items = document.querySelectorAll('.kb-item');
+  document.getElementById('totalItems').textContent = items.length;
+  buildTOC();
+});
+
+// Keyboard shortcut
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  }
+});
+</script>
+
+</body>
+</html>
