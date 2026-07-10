@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAIC MPCI 官网综合知识库 | NAIC MPCI Official Website Knowledge Base</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.8;
+    color: #333;
+    background: #f8f9fa;
+}
+.header {
+    background: linear-gradient(135deg, #1a5f7a 0%, #0d3b4d 100%);
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+}
+.header h1 { font-size: 2.2em; font-weight: 700; margin-bottom: 10px; }
+.header .subtitle { font-size: 1.1em; opacity: 0.9; }
+.header .badge {
+    display: inline-block;
+    background: #e9a31f;
+    color: #1a1a1a;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85em;
+    margin-top: 15px;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+.notice-box {
+    background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
+    border-left: 4px solid #e9a31f;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.notice-box h2 { color: #c68a00; margin-bottom: 12px; font-size: 1.3em; }
+.notice-box p { margin-bottom: 8px; }
+.search-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.search-box input {
+    flex: 1;
+    min-width: 250px;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.2s;
+}
+.search-box input:focus { outline: none; border-color: #1a5f7a; }
+.search-box button {
+    padding: 12px 24px;
+    background: #1a5f7a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.search-box button:hover { background: #0d3b4d; }
+.search-box .hint {
+    width: 100%;
+    font-size: 0.85em;
+    color: #64748b;
+    margin-top: 4px;
+}
+.content-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding: 16px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+}
+.content-nav a {
+    padding: 8px 14px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #475569;
+    font-size: 0.88em;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+.content-nav a:hover, .content-nav a.active {
+    background: #1a5f7a;
+    color: #fff;
+    border-color: #1a5f7a;
+}
+.section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    scroll-margin-top: 80px;
+}
+.section h2 {
+    color: #1a5f7a;
+    font-size: 1.5em;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.section h2 .en { font-size: 0.7em; color: #64748b; font-weight: 400; }
+.section p { margin-bottom: 10px; color: #475569; }
+.section ul { margin-left: 20px; margin-bottom: 12px; color: #475569; }
+.section li { margin-bottom: 6px; }
+.section a { color: #1a5f7a; text-decoration: none; font-weight: 500; }
+.section a:hover { text-decoration: underline; }
+.provider-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+}
+.provider-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    font-weight: 600;
+    color: #0369a1;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.provider-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(3,105,161,0.15); }
+.provider-card small { font-size: 0.75em; color: #64748b; font-weight: 400; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.95em;
+}
+th, td { padding: 10px 12px; border: 1px solid #e2e8f0; text-align: left; }
+th { background: #f8fafc; font-weight: 600; color: #1e293b; }
+tr:nth-child(even) { background: #f8fafc; }
+.faq-section { margin-bottom: 30px; }
+.faq-section h3 {
+    color: #1a5f7a;
+    font-size: 1.2em;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 2px solid #e2e8f0;
+}
+.faq-item {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 10px;
+    border-left: 3px solid #1a5f7a;
+}
+.faq-item .q {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 6px;
+}
+.faq-item .q-en {
+    font-size: 0.85em;
+    color: #64748b;
+    font-style: italic;
+    margin-bottom: 8px;
+}
+.faq-item .a {
+    color: #475569;
+    line-height: 1.7;
+}
+.highlight {
+    background: #fef3c7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #94a3b8;
+    font-size: 0.85em;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 20px;
+}
+.footer a { color: #1a5f7a; }
+mark { background: #fef3c7; padding: 1px 4px; border-radius: 3px; }
+@media (max-width: 768px) {
+    .header h1 { font-size: 1.6em; }
+    .content-nav { position: relative; }
+    .provider-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>NAIC MPCI 官网综合知识库</h1>
+    <div class="subtitle">NAIC MPCI Official Website Knowledge Base (Bilingual)</div>
+    <div class="badge">来源：naic.icp.gov.ae | 最后更新：2026年7月</div>
+</div>
+
+<div class="container">
+<div class="notice-box">
+    <h2>重要通知：宽限期延长至 2026年9月30日</h2>
+    <p>As part of the ongoing efforts to enhance security and safety standards, the National Advance Information Center (NAIC) has extended the grace period for the enforcement of MPCI requirements until <strong>30 September 2026</strong>.</p>
+    <p>NAIC 已将 MPCI 强制执行的宽限期延长至 <strong>2026年9月30日</strong>。</p>
+    <p>从2026年7月1日起，MPCI 申报仍然必须提交，但在此期间 NAIC 只会发出接受（ACT/OK to Load）响应，RFI（信息请求）和 DNL（禁止装载）响应在此期间仍保持暂停状态。</p>
+    <p>请注意：在宽限期内，不会因延迟申报而施加任何罚款、违规或执法措施。</p>
+</div>
+
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="搜索 / Search... (Ctrl+K)" onkeyup="doSearch()">
+    <button onclick="doSearch()">搜索 / Search</button>
+    <div class="hint">支持中英文搜索 | Supports bilingual search</div>
+</div>
+
+<div class="content-nav" id="navBar">
+    <a href="#overview" data-section="overview">概述</a>
+    <a href="#filing-options" data-section="filing-options">申报方式</a>
+    <a href="#scope" data-section="scope">申报范围</a>
+    <a href="#exclusions" data-section="exclusions">豁免范围</a>
+    <a href="#format" data-section="format">申报格式</a>
+    <a href="#required-info" data-section="required-info">必填信息</a>
+    <a href="#response" data-section="response">NAIC 响应代码</a>
+    <a href="#party-id" data-section="party-id">MPCI Party ID</a>
+    <a href="#delegation" data-section="delegation">申报委托</a>
+    <a href="#registration" data-section="registration">注册要求</a>
+    <a href="#service-providers" data-section="service-providers">认证服务提供商</a>
+    <a href="#deadlines" data-section="deadlines">申报时限</a>
+    <a href="#updates" data-section="updates">更新与修改</a>
+    <a href="#faqs" data-section="faqs">FAQ 问答</a>
+</div>
+
+<div class="section" id="overview" data-search="概述 Overview">
+    <h2>概述 <span class="en">Overview</span></h2>
+    
+        <p>通过或进入阿联酋运输货物的船公司、货运代理和 NVOCC 需要向 NAIC（国家预申报信息中心）提交货物数据。仅适用于集装箱货物，包括进口、中转和 FROB（船上剩余货物）。</p>
+        <p>Shipping lines, freight forwarders, and NVOCCs transporting cargo through or into the UAE are required to file shipment data with the National Advance Information Center (NAIC). This applies exclusively to containerized cargo, including import, transshipment, and FROB (Freight Remaining on Board).</p>
+        
+</div>
+
+<div class="section" id="filing-options" data-search="申报方式 Filing Options">
+    <h2>申报方式 <span class="en">Filing Options</span></h2>
+    
+        <p>NAIC 使用认证集成服务提供商来促进申报流程。可用选项如下：</p>
+        <p>NAIC uses accredited integration service providers to facilitate the filing process. The following options are available:</p>
+        <ul>
+            <li>货运代理和 NVOCC：<strong>必须通过</strong>认证服务提供商提交申报。 / Freight Forwarders and NVOCCs: <strong>Must</strong> file through accredited service providers.</li>
+            <li>船公司：可以选择以下任一方式： / Shipping Line: Can choose to either:
+                <ul>
+                    <li>通过认证服务提供商提交 / File through accredited service providers</li>
+                    <li>使用与 NAIC 系统的直接集成 / Use direct integration with the NAIC system</li>
+                </ul>
+            </li>
+        </ul>
+        <p>完整的认证服务提供商列表可在 <a href="https://naic.icp.gov.ae/portal/mpci/service-providers" target="_blank">官网查看</a>。</p>
+        <p>A complete list of accredited service providers can be found on the <a href="https://naic.icp.gov.ae/portal/mpci/service-providers" target="_blank">official website</a>.</p>
+        
+</div>
+
+<div class="section" id="scope" data-search="申报范围 Scope of Filing">
+    <h2>申报范围 <span class="en">Scope of Filing</span></h2>
+    
+        <p>以下货物类型需要申报：</p>
+        <p>The following cargo types are required to file:</p>
+        <ul>
+            <li>船公司：必须提交直接提单（非拼箱货物）或主提单（拼箱货物）。 / Shipping Line: Must file either the Direct Bill of Lading (for non-consolidated shipments) or the Master Bill of Lading (for consolidated shipments).</li>
+            <li>货运代理和 NVOCC：必须提交拼箱货物的分提单。 / Freight Forwarders and NVOCCs: Must file the House Bills of Lading for consolidated shipments.</li>
+        </ul>
+        
+</div>
+
+<div class="section" id="exclusions" data-search="豁免范围 Exclusions from Filing">
+    <h2>豁免范围 <span class="en">Exclusions from Filing</span></h2>
+    
+        <p>以下货物类型和情况免予申报：</p>
+        <p>The following cargo types and situations are excluded from filing requirements:</p>
+        <ul>
+            <li>出口货物：从阿联酋出口的货物。 / Export Shipments: Shipments being exported from the UAE.</li>
+            <li>非集装箱海运货物：散装货物（散货、液体散货）、滚装货物等。 / Non-Containerized Maritime Cargo: Bulk cargo (breakbulk, liquid bulk), Ro-Ro shipments, etc.</li>
+            <li>木质船舶：目前 MPCI 实施阶段的木质船舶除外。 / Wooden Vessels: Excluded for the current phase of MPCI implementation.</li>
+            <li>空集装箱：内部无货物的集装箱。 / Empty Containers: Containers without cargo inside.</li>
+            <li>船员物品：船员个人物品。 / Crew's Effects: Personal belongings of the vessel's crew.</li>
+        </ul>
+        
+</div>
+
+<div class="section" id="format" data-search="申报格式 Filing Format">
+    <h2>申报格式 <span class="en">Filing Format</span></h2>
+    
+        <p>所有提单必须使用 <strong>EDIFACT CUSCAR</strong> 格式提交。使用服务提供商时，申报流程的技术方面将由提供商处理。</p>
+        <p>All BOLs must be submitted in the <strong>EDIFACT CUSCAR</strong> format. When using a service provider, the technical aspects of the filing process will be handled by the provider.</p>
+        
+</div>
+
+<div class="section" id="required-info" data-search="必填信息 Required Information">
+    <h2>必填信息 <span class="en">Required Information</span></h2>
+    
+        <p>主要包含提单上的数据，以及以下附加信息：</p>
+        <p>Primarily consists of the data found on the Bill of Lading, along with additional information such as:</p>
+        <ul>
+            <li>提单号码 / Bill Number</li>
+            <li>签发日期和地点 / Issue Date and Location</li>
+            <li>港口（装载、卸货、中转、收货和交货） / Ports (Loading, Discharge, Transshipment, Receipt, and Delivery)</li>
+            <li>集装箱详情和封号 / Container Details & Seal Numbers</li>
+            <li>货物详情和 HS 编码 / Goods Details & HS Code</li>
+            <li>相关方（发货人、收货人、通知方、货运代理和代理人） / Involved Parties (Shipper, Consignee, Notify Party, Freight Forwarders and Agents)</li>
+            <li>船舶和航次信息：对船公司强制。 / Vessel & Voyage Information: Mandatory for shipping lines.</li>
+            <li>标识符：船公司和货运代理必须提供其自有标识符：MPCI Party ID。此外，货运代理必须包含主拼箱方或船公司的标识符。船公司或主拼箱方在拼箱情况下必须包含任何拼箱（子）货运代理的标识符。 / Identifiers: Shipping lines and freight forwarders must provide their own identifiers: MPCI Party ID. Additionally, freight forwarders must include identifiers for the master co-loader or shipping line. Shipping lines or master co-loaders must include identifiers for any consolidating (child) freight forwarders in cases of consolidation.</li>
+            <li>其他标准信息：通常包含在提单中的任何其他标准信息。 / Other Standard Information: Any additional standard information typically included in the BOL.</li>
+        </ul>
+        
+</div>
+
+<div class="section" id="response" data-search="NAIC 响应代码 NAIC Response Codes">
+    <h2>NAIC 响应代码 <span class="en">NAIC Response Codes</span></h2>
+    
+        <p>申报后，NAIC 将使用以下主要状态码之一进行响应：</p>
+        <p>After filing, NAIC will respond with one of the following main status codes:</p>
+        <table>
+            <tr><th>代码 Code</th><th>含义 Meaning</th><th>说明 Description</th></tr>
+            <tr><td>ACT</td><td>已接受 (Accepted)</td><td>批准装载。Approved to proceed with loading.</td></tr>
+            <tr><td>ACW</td><td>已接受（有警告）Accepted with Warning</td><td>非关键问题，批准装载。Approved with non-critical issues. Filers should address the issue in future submissions.</td></tr>
+            <tr><td>DNL</td><td>禁止装载 (Do Not Load)</td><td>不允许装载。Loading is not permitted.</td></tr>
+            <tr><td>RFI</td><td>信息请求 (Request for Information)</td><td>需要额外信息才能批准。Additional information is needed for approval.</td></tr>
+            <tr><td>PSF</td><td>等待子申报 (Pending Sub-Filing)</td><td>表示缺少子申报，如拼箱货物中所需的分提单。Indicates missing sub-filings, such as required House Bills of Lading in consolidation shipments.</td></tr>
+            <tr><td>EXP</td><td>申报过期 (Filing Expiry)</td><td>在收到 RFI 后 200 天内未响应。Issued when a filer fails to respond to an RFI within the 200-day timeframe.</td></tr>
+        </table>
+        <p>注意：完整响应详情包含在 MPCI 业务规范文档中。</p>
+        <p>Note: Full response details are included in the MPCI Business Specification Document.</p>
+        
+</div>
+
+<div class="section" id="party-id" data-search="MPCI Party ID MPCI Party ID">
+    <h2>MPCI Party ID <span class="en">MPCI Party ID</span></h2>
+    
+        <p>MPCI Party ID 是 NAIC 分配给每个注册船公司或货运代理的唯一标识符。</p>
+        <p>The MPCI Party ID is a unique identifier assigned by NAIC to each registered shipping line or freight forwarder.</p>
+        <ul>
+            <li>船公司：在计划启动日期临近时，将提供完整的船公司 MPCI Party ID 列表。 / Shipping Line: A complete list of Shipping Line MPCI Party IDs will be available as we approach the program launch date.</li>
+            <li>货运代理：必须在需要向船公司或海外货运代理提供自己的 MPCI Party ID 以用于申报。 / Freight Forwarders: Must provide their own MPCI Party ID to shipping line or overseas freight forwarders when necessary for filing purposes.</li>
+        </ul>
+        
+</div>
+
+<div class="section" id="delegation" data-search="申报委托 Delegation of Filing">
+    <h2>申报委托 <span class="en">Delegation of Filing</span></h2>
+    
+        <ul>
+            <li>船公司：可以将申报流程委托给其运输代理，但代理在申报时必须提供船公司的 MPCI 代码。责任仍由船公司承担。 / Shipping Line: May delegate the filing process to their shipping agents, but the agent must provide the Shipping Line's MPCI code during filing. The liability remains with the Shipping Line.</li>
+            <li>本地货运代理/NVOCC：可以委托海外货运代理进行申报，海外货运代理在申报时必须提供本地货运代理的 MPCI 代码。责任仍由本地货运代理承担。 / Local Freight Forwarders/NVOCCs: Can delegate filing to overseas freight forwarders, who must provide the local freight forwarder's MPCI code during filing. The liability remains with the local freight forwarder.</li>
+        </ul>
+        
+</div>
+
+<div class="section" id="registration" data-search="注册要求 Registration Requirements">
+    <h2>注册要求 <span class="en">Registration Requirements</span></h2>
+    
+        <p>所有实体（船公司、货运代理、NVOCC 和运输代理）必须在开始申报之前向 NAIC 注册。</p>
+        <p>All entities (shipping line, freight forwarders, NVOCCs, and shipping agents) must register with NAIC before initiating filings.</p>
+        <p>注册类型包括：</p>
+        <p>Registration roles include:</p>
+        <ul>
+            <li>航空公司 Airline — 如需申报 PLACI 计划</li>
+            <li>船公司 Shipping Line — 船公司，可通过直接集成或认证服务提供商申报 MPCI</li>
+            <li>货运代理/NVOCC Freight Forwarder/NVOCC — 必须通过认证服务提供商申报</li>
+            <li>运输代理 Shipping Agent — 本地或海外运输代理，代表船公司申报</li>
+            <li>快递 Express Courier — 申报 PLACI 计划</li>
+            <li>总代理 General Sales Agent — 代表不在阿联酋运营的航空公司申报 PLACI</li>
+        </ul>
+        <p>注册入口：<a href="https://naic.icp.gov.ae/portal/registration/landing" target="_blank">NAIC 注册页面</a></p>
+        <p>Registration portal: <a href="https://naic.icp.gov.ae/portal/registration/landing" target="_blank">NAIC Registration Page</a></p>
+        
+</div>
+
+<div class="section" id="service-providers" data-search="认证服务提供商 Accredited Service Providers">
+    <h2>认证服务提供商 <span class="en">Accredited Service Providers</span></h2>
+    
+        <p>货运代理和船公司可以通过 NAIC 的认证服务提供商进行申报。以下是目前认证的 8 家服务提供商：</p>
+        <p>Freight forwarders and shipping lines can file through NAIC's accredited service providers. The following 8 providers are currently certified:</p>
+        <div class="provider-grid">
+            <div class="provider-card">CargoX</div>
+            <div class="provider-card">CrimsonLogic<br><small>(A member of the new group)</small></div>
+            <div class="provider-card">DESCARTES</div>
+            <div class="provider-card">Information Dynamics<br><small>(LLC)</small></div>
+            <div class="provider-card">newage<br><small>Software & Solutions</small></div>
+            <div class="provider-card">ODEX</div>
+            <div class="provider-card">Trade Tech<br><small>Global Logistics Platform</small></div>
+            <div class="provider-card">wisetech<br><small>global</small></div>
+        </div>
+        <p>如需成为认证服务提供商，请联系 NAIC：mpci.inquiries@icp.gov.ae</p>
+        <p>To become a certified service provider, contact NAIC: mpci.inquiries@icp.gov.ae</p>
+        <p>完整列表：<a href="https://naic.icp.gov.ae/portal/mpci/service-providers" target="_blank">NAIC 认证服务提供商列表</a></p>
+        <p>Full list: <a href="https://naic.icp.gov.ae/portal/mpci/service-providers" target="_blank">NAIC Certified Service Providers List</a></p>
+        
+</div>
+
+<div class="section" id="deadlines" data-search="申报时限 Filing Deadlines">
+    <h2>申报时限 <span class="en">Filing Deadlines</span></h2>
+    
+        <p>船公司：</p>
+        <p>Shipping Lines:</p>
+        <ul>
+            <li>如果提单直接签发给发货人（无货运代理拼箱）：必须在进入阿联酋前的最后一个装货港口装货前 <strong>24 小时</strong>提交。 / If the Bill of Lading is issued directly to the shipper (no consolidation by a freight forwarder): must be submitted <strong>24 hours</strong> before loading at the last loading port before the UAE.</li>
+            <li>如果提单用于拼箱货物：必须在进入阿联酋前的最后一个装货港口装货前 <strong>6 小时</strong>提交。 / If the Bill of Lading is for a consolidated shipment: must be submitted <strong>6 hours</strong> before loading at the last loading port before the UAE.</li>
+        </ul>
+        <p>货运代理或 NVOCC：</p>
+        <p>Freight Forwarders or NVOCC:</p>
+        <ul>
+            <li>如果分提单包含实际收货人和发货人：必须在进入阿联酋前的最后一个装货港口装货前 <strong>24 小时</strong>提交。 / If the House Bill of Lading includes the actual consignee and shipper: must be submitted <strong>24 hours</strong> before loading.</li>
+            <li>如果提单合并多个货物（收货人是另一家货运代理）：必须在进入阿联酋前的最后一个装货港口装货前 <strong>6 小时</strong>提交。 / If the Bill of Lading consolidates multiple shipments (consignee is another freight forwarder): must be submitted <strong>6 hours</strong> before loading.</li>
+        </ul>
+        <p>示例 1：货物在中国装货，船只在斯里兰卡停靠，未卸货重装，则最后一个装货港仍为中国，应在装货前 24 小时提交。</p>
+        <p>Example 1: A shipment is loaded in China and the vessel stops in Sri Lanka without unloading. The last loading port remains China, and filing should be submitted 24 hours before loading.</p>
+        <p>示例 2：货物在中国装货，在斯里兰卡卸货后再装载到另一艘船前往阿联酋。由于货物在斯里兰卡被物理重新装载，斯里兰卡成为最后一个装货港，应在装货前 24 小时提交。</p>
+        <p>Example 2: Cargo loaded in China, unloaded in Sri Lanka, then reloaded onto another vessel. Sri Lanka becomes the last loading port, filing should be submitted 24 hours before loading.</p>
+        <p>注意：时限仅适用于<strong>初次申报</strong>。更新可以在货物旅程中任何时间进行，甚至到达后也可以。 / Note: Deadlines apply only to the <strong>initial filing</strong>. Updates can be made at any point during the shipment's journey.</p>
+        
+</div>
+
+<div class="section" id="updates" data-search="更新与修改 Updates & Corrections">
+    <h2>更新与修改 <span class="en">Updates & Corrections</span></h2>
+    
+        <p>任何提单更新都必须提交给 NAIC。包括但不限于：更正、路线更改、货物拆分、换单、或对 NAIC 信息请求的响应。</p>
+        <p>Any updates to the Bill of Lading must be submitted to NAIC. This includes, but is not limited to, corrections, route changes, shipment splits, switch bills, or updates in response to an RFI from NAIC.</p>
+        <ul>
+            <li>NAIC 将对每次提交（包括修改）发出响应。 / A response will be issued for every filing, including amendments.</li>
+            <li>收到 ACT 后仍可提交修改。 / Amendments can still be submitted after receiving an ACT response.</li>
+            <li>装载后提交更新仍可能收到 RFI。 / RFIs may still be issued after loading.</li>
+            <li>在极少数情况下，装载后更新核心要素可能导致重新评估，甚至产生 DNL。 / Updating core elements after loading may lead to re-assessment, which in rare cases could result in a DNL.</li>
+            <li>货物不再前往阿联酋（取消或路线变更）时，必须取消原申报。 / A filing must be canceled if the shipment is no longer coming to the UAE.</li>
+        </ul>
+        
+</div>
+
+<div class="section" id="faqs" data-search="FAQ FAQ">
+    <h2>FAQ 常见问题解答 <span class="en">Frequently Asked Questions</span></h2>
+<div class="faq-section">
+<h3>概述与区别 | General Information</h3>
+<div class="faq-item">
+<div class="q">NAIC MPCI 申报与海关申报相关吗？</div>
+<div class="q-en">Is NAIC MPCI filing related to customs filing?</div>
+<div class="a">否，NAIC（国家预申报信息中心）是独立的机构，MPCI 申报与海关申报独立。 / No, NAIC (National Advance Information Center) is a separate authority, and MPCI filing is independent of customs filing.</div>
+</div>
+<div class="faq-item">
+<div class="q">MPCI 与 PLACI 计划有何区别？</div>
+<div class="q-en">What is the difference between MPCI and PLACI programs?</div>
+<div class="a">MPCI 适用于海运货物，而 PLACI（预装前货物信息）适用于空运货物。 / MPCI applies to maritime cargo, whereas PLACI (Pre-Loading Advance Cargo Information) applies to air cargo.</div>
+</div>
+<div class="faq-item">
+<div class="q">MPCI 计划何时生效？</div>
+<div class="q-en">When does the MPCI program go into effect?</div>
+<div class="a">注册于2025年3月开放。文件提交于2025年7月开始。强制执行宽限期至2026年9月30日。 / Registration opened in March 2025. Document submission began in July 2025. The enforcement grace period is extended until September 30, 2026.</div>
+</div>
+<div class="faq-item">
+<div class="q">经济运营商如何获取申报流程和要求的详细信息？</div>
+<div class="q-en">I am an economic operator looking for information on filing process and requirements. Where can I find this information?</div>
+<div class="a">可在官网查看 MPCI 业务规范文档。 / You can find the MPCI Business Specification Document on the official website.</div>
+</div>
+<div class="faq-item">
+<div class="q">经济运营商如何获取注册要求？</div>
+<div class="q-en">I am an economic operator looking for registration requirements. Where can I find this information?</div>
+<div class="a">可在官网查看 MPCI 接入指南。 / You can find the MPCI Onboarding Guide on the official website.</div>
+</div>
+<div class="faq-item">
+<div class="q">服务提供商或船公司如何获取技术集成文档？</div>
+<div class="q-en">I am a service provider or a shipping line integrating directly with NAIC. Where can I find documentation for technical implementation?</div>
+<div class="a">可在官网查看消息实施指南（MIG）。 / You can find the Message Implementation Guide (MIG) on the official website.</div>
+</div>
+<div class="faq-item">
+<div class="q">如何成为 NAIC 的认证服务提供商？</div>
+<div class="q-en">How can I become a certified service provider with NAIC?</div>
+<div class="a">联系 NAIC 直接了解要求并提供必要信息：mpci.inquiries@icp.gov.ae / To become a certified service provider, contact NAIC directly at mpci.inquiries@icp.gov.ae to understand requirements and provide necessary information.</div>
+</div>
+</div>
+<div class="faq-section">
+<h3>申报要求与责任 | Filing Requirements & Responsibilities</h3>
+<div class="faq-item">
+<div class="q">谁负责申报？</div>
+<div class="q-en">Who is responsible for filing?</div>
+<div class="a">船公司或其委托的运输代理、以及货运代理和 NVOCC 均负责申报。每个申报方对其签发的提单负责，货运代理对其海外对应方签发的提单负责。 / Filing is required by shipping lines or their delegated shipping agents, as well as freight forwarders and NVOCCs. Each filer is liable for submitting the Bill of Lading they issue.</div>
+</div>
+<div class="faq-item">
+<div class="q">NAIC 如何定义责任？</div>
+<div class="q-en">How does NAIC define liability?</div>
+<div class="a">NAIC 的责任适用于货运代理和船公司，要求其按阿联酋法律满足申报要求，包括按时提交、提供完整信息和确保数据质量。NAIC 仅对不合规行为发出处罚。其他违法行为（如刑事犯罪）移交有关当局。 / NAIC applies to freight forwarders and shipping lines for meeting filing requirements. NAIC only issues penalties for non-compliance. Other legal violations are referred to relevant authorities.</div>
+</div>
+<div class="faq-item">
+<div class="q">MPCI 申报需要什么文件？</div>
+<div class="q-en">What documents are required for MPCI filing?</div>
+<div class="a">船公司：拼箱货物主提单（MBL）或直达货物直接提单。货运代理：拼箱货物分提单（HBL）。 / Shipping Lines: Master Bill of Lading (MBL) for consolidated shipments or Direct Bill of Lading for direct shipments. Freight Forwarders: House Bill of Lading (HBL) for consolidated shipments.</div>
+</div>
+<div class="faq-item">
+<div class="q">共装场景下需要提交哪份提单？</div>
+<div class="q-en">In co-loading scenarios, which Bill of Lading needs to be filed?</div>
+<div class="a">船公司提交其签发的提单。NVOCC 提交其签发的提单。每一层的货运代理提交其签发的提单，最低层货运代理提交包含实际收货人和发货人的提单。 / Shipping lines file the Bill of Lading they issue. NVOCCs file the Bill of Lading they issue. Freight forwarders at each level file the Bill of Lading they issue, with the lowest-level filing the Bill including actual consignee and shipper.</div>
+</div>
+<div class="faq-item">
+<div class="q">哪些货物类型需要 MPCI 申报？</div>
+<div class="q-en">Which types of cargo require MPCI filing?</div>
+<div class="a">MPCI 申报适用于通过阿联酋的集装箱海运货物，包括进口、过境、中转或 FROB（船上剩余货物）。FROB 和中转申报仅由船公司负责。 / MPCI filing is required for containerized maritime cargo that is imported, transiting through, transshipped, or FROB in the UAE. FROB and transshipment filings are only required from shipping lines.</div>
+</div>
+<div class="faq-item">
+<div class="q">哪些货物免予 MPCI 申报？</div>
+<div class="q-en">What shipments are excluded from MPCI filing?</div>
+<div class="a">出口货物、非集装箱货物、木质船舶、空集装箱和船员个人物品。这些豁免可能在未来阶段修订。 / Export shipments, non-containerized cargo, wooden vessels, empty containers, and crew's personal effects. These exclusions may be revised in future phases.</div>
+</div>
+<div class="faq-item">
+<div class="q">进口、过境、中转和 FROB 货物如何定义？</div>
+<div class="q-en">How does NAIC define import, transit, transshipment, and FROB shipments?</div>
+<div class="a">进口：最终交货地点在阿联酋境内的货物。过境：在阿联酋海港卸货，通过陆路或空路运往阿联酋以外最终目的地的货物。中转：在阿联酋一个或多个海港卸货，再装载到另一艘船到达阿联酋以外最终目的地的货物。FROB：到达阿联酋海港但未卸货仍留在船上的货物。 / Import: Final delivery inside UAE. Transit: Discharged at UAE seaport, transported by land/air to destination outside UAE. Transshipment: Unloaded at UAE seaport, reloaded onto another vessel. FROB: Arrives at UAE seaport but remains on board.</div>
+</div>
+<div class="faq-item">
+<div class="q">货运代理或船公司没有技术能力，有哪些选项？</div>
+<div class="q-en">As a freight forwarder or shipping line without technical capabilities, what are my options for filing with NAIC?</div>
+<div class="a">可以通过 NAIC 的认证服务提供商提交。他们提供界面供手动输入或上传文件，并负责将数据转换为正确格式提交。 / You can submit through one of NAIC's certified service providers. They provide an interface for manual entry or document upload, handling conversion and submission in required format.</div>
+</div>
+<div class="faq-item">
+<div class="q">使用运输管理系统（TMS）的货运代理如何申报？</div>
+<div class="q-en">I am a freight forwarder with a Transport Management System (TMS). How can I file to NAIC?</div>
+<div class="a">检查您的 TMS 提供商是否是 NAIC 的认证服务提供商。如果是，现有系统应能无缝处理申报，无需额外数据输入。 / If your TMS provider is one of NAIC's certified service providers, your existing system should handle filing seamlessly, without additional data entry.</div>
+</div>
+<div class="faq-item">
+<div class="q">提交申报时出现技术故障怎么办？</div>
+<div class="q-en">What happens if there is a technical failure when submitting a filing?</div>
+<div class="a">如果申报方系统宕机，必须通知 NAIC，以便暂时豁免申报直到系统恢复。如果 NAIC 系统宕机，申报方将收到通知，申报也将被豁免。 / If filer's system is down, they must notify NAIC so filing can be temporarily waived. If NAIC's system is down, filers will be notified, and filings will be waived for the duration of the outage.</div>
+</div>
+<div class="faq-item">
+<div class="q">不遵守 MPCI 申报要求会有什么处罚？</div>
+<div class="q-en">What are the penalties for non-compliance with MPCI filing requirements?</div>
+<div class="a">不遵守 MPCI 申报要求（包括迟交、缺失或数据错误）将被视为违规，可能导致罚款。 / Failure to comply including late submissions, missing filings, or incorrect data will be considered a violation and may result in fines.</div>
+</div>
+</div>
+<div class="faq-section">
+<h3>NAIC 响应与转介 | NAIC Response & Referrals</h3>
+<div class="faq-item">
+<div class="q">NAIC 可能的响应类型有哪些？</div>
+<div class="q-en">What are the possible response types from NAIC?</div>
+<div class="a">ACT（评估完成）：批准装载。ACW（评估完成含警告）：有非关键问题但批准。RFI（信息请求）：需要额外信息。DNL（禁止装载）：不允许装载。PSF（等待子申报）：缺少所需分提单。EXP（申报过期）：因未响应 RFI 200 天内过期。 / ACT: Approved. ACW: Approved with non-critical issues. RFI: Additional details required. DNL: Cannot be loaded. PSF: Missing sub-filings. EXP: Filing expired due to inaction.</div>
+</div>
+<div class="faq-item">
+<div class="q">NAIC 收到申报后预计响应时间是多少？</div>
+<div class="q-en">What is the expected response time from NAIC after a filing submission?</div>
+<div class="a">大多数情况下，NAIC 自动快速处理，提供即时响应。但某些提交可能需要 NAIC 官员手动评估，会延长响应时间。建议尽早提交以减少延迟。 / NAIC processes filings automatically and promptly. However, certain submissions may require manual assessment, extending response time. Submit as early as possible.</div>
+</div>
+<div class="faq-item">
+<div class="q">如果 NAIC 响应延迟该怎么办？</div>
+<div class="q-en">What should filers do if the NAIC response is delayed?</div>
+<div class="a">如果所有请求都延迟响应，可能是技术问题。请联系 NAIC 支持。如果确认是技术问题，申报可能被豁免。如果延迟与特定货物有关，可能是手动评估，建议联系 NAIC 获取澄清。 / If all requests are delayed, it may be a technical issue. Contact NAIC support. If confirmed, filing may be waived. For specific shipment delays, it may be manual assessment; contact NAIC for clarification.</div>
+</div>
+<div class="faq-item">
+<div class="q">未获得 ACT 批准装载货物会有什么后果？</div>
+<div class="q-en">What are the consequences of loading cargo without ACT approval?</div>
+<div class="a">未获 ACT 批准装载货物是违规行为，可能导致罚款和其他执法措施。货物也可能在到达时被拦截。 / Loading without ACT approval is a violation that may result in fines and other enforcement actions. The shipment may also be subject to interception upon arrival.</div>
+</div>
+<div class="faq-item">
+<div class="q">收到 ACW 转介可以装载货物吗？</div>
+<div class="q-en">Can filers load cargo if they receive an ACW referral?</div>
+<div class="a">可以，货物可以装载。但 ACW 表示提交数据有问题，应在后续申报中纠正。 / Yes, cargo can be loaded. However, ACW indicates an issue with the submitted data that should be corrected in future filings.</div>
+</div>
+<div class="faq-item">
+<div class="q">收到 ACW 转介需要提交更新吗？</div>
+<div class="q-en">Do filers need to submit an update if they receive an ACW referral?</div>
+<div class="a">不需要，ACW 不需要更新，因为它不会阻止评估决定。但申报方应解决问题以避免未来类似警告。 / No, ACW does not require an update, as it does not prevent the assessment decision. However, the filer should address the issue to avoid similar warnings.</div>
+</div>
+<div class="faq-item">
+<div class="q">收到信息请求（RFI）应如何响应？</div>
+<div class="q-en">How should filers respond to a Request for Information (RFI)?</div>
+<div class="a">申报方必须通过更新的电子申报提供请求的信息。根据 RFI 的性质，可能涉及更新申报中的必要细节或附加文件（如发票或装箱单）。 / Filers must provide the requested information via an updated filing submission. Depending on the nature, this may involve updating necessary details or attaching additional documents.</div>
+</div>
+<div class="faq-item">
+<div class="q">RFI 可以通过电子邮件回复吗？</div>
+<div class="q-en">Can an RFI be answered via email?</div>
+<div class="a">不可以，RFI 必须通过 NAIC 系统中的更新电子申报来回应。 / No, RFIs must be addressed through updated electronic filing in the NAIC system.</div>
+</div>
+<div class="faq-item">
+<div class="q">为响应 RFI 进行电子更新时是否需要修改物理提单？</div>
+<div class="q-en">Should filers update the physical Bill of Lading when making electronic updates in response to RFI?</div>
+<div class="a">不一定。除非其他当局要求，NAIC 系统中的电子更新不需要修改物理提单。 / Not necessarily. Electronic updates in the NAIC system do not require amendments to the physical Bill of Lading unless mandated by other authorities.</div>
+</div>
+<div class="faq-item">
+<div class="q">响应 RFI 后可以立即装载货物吗？</div>
+<div class="q-en">Is cargo loading allowed immediately after responding to an RFI?</div>
+<div class="a">只有在提交 RFI 响应后获得更新的 ACT 或 ACW 响应后，才允许装载货物。 / Cargo loading is allowed only after receiving an updated ACT or ACW response following the RFI response submission.</div>
+</div>
+<div class="faq-item">
+<div class="q">收到 DNL 转介该怎么办？</div>
+<div class="q-en">What should happen when a DNL referral is received?</div>
+<div class="a">如果收到 DNL（禁止装载），货物不得装载到船舶上。建议在各分提单获得批准后再合并，以避免延迟和额外处理。 / If DNL is received, the shipment must not be loaded. It is recommended to get approvals for individual house bills before consolidation.</div>
+</div>
+<div class="faq-item">
+<div class="q">PSF（等待子申报）转介是什么意思？</div>
+<div class="q-en">What does a PSF (Pending Sub-Filing) referral mean?</div>
+<div class="a">PSF 表示拼箱货物中有一个或多个分提单尚未由责任方提交。例如，当船公司提交拼箱货物的主提单时，货运代理负责分别提交底层分提单。如果缺少任何分提单，船公司将收到 PSF 通知。 / A PSF indicates that one or more HBLs in a consolidated shipment have not been filed by the responsible party.</div>
+</div>
+<div class="faq-item">
+<div class="q">收到 PSF 转介时船公司应该怎么做？</div>
+<div class="q-en">What should a shipping line do when receiving a PSF referral?</div>
+<div class="a">船公司无需采取任何行动，但可以选择跟进货运代理以加速申报。 / The shipping line is not required to take any action, but they may choose to follow up with the freight forwarder to expedite the filing.</div>
+</div>
+<div class="faq-item">
+<div class="q">什么时候会收到 EXP 转介？</div>
+<div class="q-en">When is an EXP referral received?</div>
+<div class="a">当申报方收到 NAIC 的 RFI 但在指南规定的 200 天期限内未响应时，将发出 EXP（申报过期）。收到 EXP 后必须从头重新启动申报流程。 / An EXP is issued when a filer receives an RFI but fails to respond within the 200-day timeframe. The filer must restart the filing process from the beginning.</div>
+</div>
+</div>
+<div class="faq-section">
+<h3>注册 | Registration</h3>
+<div class="faq-item">
+<div class="q">不注册可以直接提交申报吗？</div>
+<div class="q-en">Can a filer submit a filing without registering on the MPCI portal?</div>
+<div class="a">不可以，所有申报方必须在提交任何申报前向 NAIC 注册。注册期间分配的 MPCI Party ID 必须包含在所有提交中。 / No, all filers must register with NAIC before submitting any filings. The MPCI Party ID must be included in all submissions.</div>
+</div>
+<div class="faq-item">
+<div class="q">什么是 MPCI Party ID，如何获取？</div>
+<div class="q-en">What is an MPCI Party ID, and how do I obtain it?</div>
+<div class="a">MPCI Party ID 是 NAIC 向注册申报方颁发的唯一标识符。船公司和货运代理必须通过 NAIC 门户网站注册以获取 MPCI Party ID。 / An MPCI Party ID is a unique identifier issued by NAIC to registered filers. Shipping lines and freight forwarders must register via the NAIC portal to obtain their MPCI Party ID.</div>
+</div>
+<div class="faq-item">
+<div class="q">MPCI Party ID 的用途是什么？</div>
+<div class="q-en">What is the MPCI Party ID used for?</div>
+<div class="a">MPCI Party ID 用于每次提交中识别申报方。如果申报方代表另一方提交，必须包含自己的 MPCI Party ID 和所代表方的 MPCI Party ID。对于拼箱货物，拼箱方必须提供主提单方的 MPCI Party ID，主提单方也必须提供拼箱方的 MPCI Party ID。 / The MPCI Party ID is used to identify the filer in every submission. For consolidated shipments, the consolidator must provide the MPCI Party ID of the party filing the MBL, and the master filer must provide the MPCI Party ID of the consolidator.</div>
+</div>
+<div class="faq-item">
+<div class="q">货运代理如何获取船公司提交主提单的 MPCI Party ID？</div>
+<div class="q-en">I am a freight forwarder. How do I get the MPCI Party ID of the shipping line filing the master bill?</div>
+<div class="a">所有船公司的 MPCI Party ID 列表均发布在 NAIC 门户网站上，可以查询所需的 ID。 / A list of all shipping lines' MPCI Party IDs is published on the NAIC portal, where you can look up the required ID.</div>
+</div>
+<div class="faq-item">
+<div class="q">船公司如何获取货运代理提交分提单的 MPCI Party ID？</div>
+<div class="q-en">I am a shipping line. How do I get the MPCI Party ID of the freight forwarder filing the house bills?</div>
+<div class="a">货运代理的 MPCI Party ID 不公开，必须直接从货运代理获取。 / The freight forwarder's MPCI Party ID is not publicly available, so you must obtain it directly from the freight forwarder.</div>
+</div>
+<div class="faq-item">
+<div class="q">在阿联酋有多个办事处的货运代理或运输代理，每个办事处需要单独的 MPCI Party ID 吗？</div>
+<div class="q-en">I am a freight forwarder or shipping agent with multiple offices in the UAE. Do I need a separate MPCI Party ID for each office?</div>
+<div class="a">有两种选择：1) 注册一次，所有办事处使用一个 MPCI Party ID。2) 为每个办事处分别注册，获得单独的 MPCI Party ID。 / You have two options: Register once and use a single MPCI Party ID for all offices, or register separately for each office.</div>
+</div>
+<div class="faq-item">
+<div class="q">船公司已从公布的列表中获得 MPCI Party ID，还需要在 NAIC 门户网站注册吗？</div>
+<div class="q-en">I am a shipping line and have already obtained my MPCI Party ID from the published list. Do I still need to register on the NAIC portal?</div>
+<div class="a">是的，即使已从列表中获得 MPCI Party ID，仍需要完成 NAIC 门户网站上的注册流程。 / Yes, even if you have already obtained your MPCI Party ID from the published list, you are still required to complete the registration process on the NAIC portal.</div>
+</div>
+<div class="faq-item">
+<div class="q">在阿联酋有多个办事处的船公司，每个办事处需要分别注册吗？</div>
+<div class="q-en">I am a shipping line with multiple offices in the UAE. Do I need to register separately for each office?</div>
+<div class="a">不需要，船公司必须注册一次，每个船公司分配一个 MPCI Party ID，所有办事处使用。 / No, shipping lines must register once, and each shipping line is assigned one MPCI Party ID for all offices.</div>
+</div>
+<div class="faq-item">
+<div class="q">有哪些委托申报选项？</div>
+<div class="q-en">What delegation options are available for filing?</div>
+<div class="a">货运代理：可以委托另一本地或海外货运代理，但保留法律合规责任。船公司：可以委托本地或海外运输代理。如果船公司在阿联酋没有法律代表，可以委托运输代理承担申报和法律责任。 / Freight Forwarders: Can delegate to another local or overseas freight forwarder but remain legally liable. Shipping Lines: Can delegate to local or overseas shipping agents. If no legal representation in UAE, can delegate both filing and liability to a local agent.</div>
+</div>
+<div class="faq-item">
+<div class="q">本地货运代理如何委托另一货运代理代为申报？</div>
+<div class="q-en">I am a local freight forwarder. How do I delegate another freight forwarder to file on my behalf?</div>
+<div class="a">注册期间必须启用委托。然后线下向委托的货运代理提供您的 MPCI Party ID。申报时，委托方必须同时提交自己的 MPCI Party ID 和您的 MPCI Party ID。 / During registration, you must enable delegation. Then provide your MPCI Party ID to the delegated freight forwarder offline. When filing, the delegated freight forwarder must submit both their own and your MPCI Party ID.</div>
+</div>
+<div class="faq-item">
+<div class="q">本地货运代理如何管理哪些货运代理可以代表其申报？</div>
+<div class="q-en">I am a local freight forwarder. How can I manage which freight forwarders can file on my behalf?</div>
+<div class="a">可通过 NAIC 门户随时启用或禁用委托：1) 允许所有货运代理代为申报。2) 只允许特定货运代理。3) 完全禁用委托，任何代申报将被拒绝。 / You can enable or disable delegation at any time through the NAIC portal: Enable all, allow only specific, or disable entirely.</div>
+</div>
+<div class="faq-item">
+<div class="q">运输代理如何获取所代表船公司的 MPCI Party ID？</div>
+<div class="q-en">I am a shipping agent. How do I get the MPCI Party ID of the shipping line I am filing for?</div>
+<div class="a">可直接从船公司获取，或访问 NAIC 门户网站查看所有船公司的 MPCI Party ID 列表。 / You can either obtain it directly from the shipping line or access it from the NAIC portal where all shipping lines' MPCI Party IDs are listed.</div>
+</div>
+<div class="faq-item">
+<div class="q">运输代理代表船公司申报，需要单独注册吗？</div>
+<div class="q-en">I am a shipping agent filing on behalf of a shipping line. Do I need to register separately?</div>
+<div class="a">是的，运输代理必须单独注册，并在注册期间指定将代表哪些船公司申报。 / Yes, shipping agents must register separately and specify the shipping lines they will be filing on behalf of during registration.</div>
+</div>
+<div class="faq-item">
+<div class="q">船公司委托运输代理处理申报，船公司仍需要注册吗？</div>
+<div class="q-en">I am a shipping line delegating a shipping agent to handle the filing. Do I still need to register?</div>
+<div class="a">是的，船公司即使委托运输代理申报也必须注册。 / Yes, shipping lines must register, even if they delegate filing to a shipping agent.</div>
+</div>
+<div class="faq-item">
+<div class="q">运输代理不代表船公司申报，也不作为货运代理，需要注册吗？</div>
+<div class="q-en">I am a shipping agent, but I will not be filing on behalf of a shipping line and I am not acting as a freight forwarder. Do I still need to register?</div>
+<div class="a">不需要，如果运输代理不负责作为运输代理或货运代理进行申报，则不需要注册。 / No, if you are not responsible for filing as a shipping agent or freight forwarder, you do not need to register.</div>
+</div>
+<div class="faq-item">
+<div class="q">本地货运代理将所有申报委托给海外对应方，还需要注册吗？</div>
+<div class="q-en">I am a local freight forwarder, but I will be delegating all filings to my overseas counterparts. Do I still need to register?</div>
+<div class="a">是的，本地货运代理必须向 NAIC 注册，即使委托给海外对应方。 / Yes, local freight forwarders must register with NAIC, even if they delegate filing to their overseas counterparts.</div>
+</div>
+<div class="faq-item">
+<div class="q">海外货运代理未被委托向 NAIC 申报，需要注册吗？</div>
+<div class="q-en">I am an overseas freight forwarder, but I am not delegated to file with NAIC. Do I still need to register?</div>
+<div class="a">不需要，海外货运代理不需要注册，除非直接通过 NAIC 申报。 / No, overseas freight forwarders do not need to register unless they are directly filing with NAIC.</div>
+</div>
+<div class="faq-item">
+<div class="q">同时作为货运代理和运输代理，需要注册两次吗？</div>
+<div class="q-en">I am a freight forwarder who also acts as a shipping agent. Do I need to register twice?</div>
+<div class="a">不需要，可以注册一次，对两个角色使用同一个 MPCI Party ID：作为货运代理只需提供自己的 MPCI Party ID；作为运输代理代表船公司申报时，必须同时提供自己的和船公司的 MPCI Party ID。 / No, you can register once and use the same MPCI Party ID for both roles: As a freight forwarder, provide only your own MPCI Party ID. As a shipping agent, provide both your own and the shipping line's MPCI Party ID.</div>
+</div>
+</div>
+<div class="faq-section">
+<h3>特殊场景 | Special Scenarios & Other Questions</h3>
+<div class="faq-item">
+<div class="q">多式联运货物需要申报吗？</div>
+<div class="q-en">Are intermodal shipments required to file?</div>
+<div class="a">目前，MPCI 仅适用于海运货物。空运货物申报属于 PLACI 计划。每种运输方式需要分别申报。 / Currently, MPCI filing is required only for maritime shipments. Air cargo filing falls under the PLACI program, and separate filing will be required for each mode of transport.</div>
+</div>
+<div class="faq-item">
+<div class="q">支线船需要单独申报吗？</div>
+<div class="q-en">Do feeder vessels have to file?</div>
+<div class="a">支线船不需要单独申报，除非它们作为第一个到达点进入阿联酋并运营自己的提单。如果货物在单份提单下覆盖整个旅程（包括到达阿联酋前在支线船中转），则应为干线船完成申报，支线船无需额外申报。 / Feeder vessels do not need a separate filing unless they are entering the UAE as the first point of arrival and operating under their own Bill of Lading. If cargo is moving under a single BOL covering the entire journey, the filing should be completed for the main vessel.</div>
+</div>
+<div class="faq-item">
+<div class="q">如果船舶最初未计划到达阿联酋，但后来更改路线怎么办？</div>
+<div class="q-en">What happens if a vessel was not initially scheduled to arrive in the UAE but later changes its route?</div>
+<div class="a">一旦确认船舶将到达阿联酋港口，必须立即提交申报，即使这最初不在计划之内。 / A filing must be submitted as soon as it is confirmed that the vessel will be arriving at a UAE port, even if this was not originally planned.</div>
+</div>
+<div class="faq-item">
+<div class="q">MPCI 申报有费用吗？</div>
+<div class="q-en">Are there any charges for MPCI filing?</div>
+<div class="a">NAIC 不收取申报费用。但第三方服务提供商可能根据其定价模式收费。 / NAIC does not charge fees for filing. However, third-party service providers may apply charges, depending on their pricing model.</div>
+</div>
+</div>
+</div>
+
+<div class="footer">
+    <p>数据来源：NAIC 官方网站 naic.icp.gov.ae | 2026年7月抓取</p>
+    <p>Data Source: NAIC Official Website naic.icp.gov.ae | Scraped July 2026</p>
+    <p>Disclaimer: 内容仅供参考，正式申报请以 NAIC 官方最新文档为准 | Content for reference only; refer to official NAIC documents for formal filing.</p>
+</div>
+
+<script>
+function doSearch() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    if (!query) {
+        document.querySelectorAll('.section, .faq-item').forEach(el => el.style.display = '');
+        return;
+    }
+    
+    document.querySelectorAll('.section').forEach(section => {
+        const text = section.innerText.toLowerCase();
+        const hasMatch = text.includes(query);
+        section.style.display = hasMatch ? '' : 'none';
+    });
+    
+    document.querySelectorAll('.faq-item').forEach(item => {
+        const text = item.innerText.toLowerCase();
+        if (text.includes(query)) {
+            item.style.display = '';
+            item.closest('.faq-section').style.display = '';
+            item.closest('.section').style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+    
+    // Highlight
+    document.querySelectorAll('mark').forEach(m => {
+        const parent = m.parentNode;
+        parent.replaceChild(document.createTextNode(m.textContent), m);
+        parent.normalize();
+    });
+    if (query.length > 2) {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+        let node;
+        while (node = walker.nextNode()) {
+            if (node.parentNode.tagName === 'SCRIPT' || node.parentNode.tagName === 'STYLE') continue;
+            const text = node.textContent;
+            const idx = text.toLowerCase().indexOf(query);
+            if (idx >= 0) {
+                const span = document.createElement('mark');
+                span.textContent = text.substring(idx, idx + query.length);
+                const after = text.substring(idx + query.length);
+                node.textContent = text.substring(0, idx);
+                node.parentNode.insertBefore(span, node.nextSibling);
+                if (after) {
+                    const afterNode = document.createTextNode(after);
+                    node.parentNode.insertBefore(afterNode, span.nextSibling);
+                }
+            }
+        }
+    }
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key === 'k') {
+        e.preventDefault();
+        document.getElementById('searchInput').focus();
+    }
+});
+</script>
+</body>
+</html>
