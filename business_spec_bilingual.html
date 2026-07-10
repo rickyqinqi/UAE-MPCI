@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAE MPCI 业务规范文档 V1.0 — 中英双语知识库</title>
+<style>
+:root{--primary:#1a5276;--accent:#2980b9;--light:#ebf5fb;--border:#d5e3f0;--en:#2c3e50;--zh:#1a5276;--tag:#eaf2f8;--warn:#e74c3c;--ok:#27ae60}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Microsoft YaHei',sans-serif;background:#f8fafc;color:#333;line-height:1.7}
+.header{background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:28px 24px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.header h1{font-size:1.5rem;margin-bottom:4px}
+.header .subtitle{font-size:.85rem;opacity:.9}
+.header .meta{font-size:.75rem;opacity:.7;margin-top:6px}
+.search-bar{max-width:700px;margin:12px auto 0;display:flex;gap:8px}
+.search-bar input{flex:1;padding:10px 16px;border:none;border-radius:6px;font-size:.9rem}
+.search-bar .lang-toggle{padding:8px 14px;border:none;border-radius:6px;background:rgba(255,255,255,.2);color:#fff;cursor:pointer;font-size:.8rem}
+.search-bar .lang-toggle.active{background:#fff;color:#1a5276}
+.nav{background:#fff;border-bottom:1px solid var(--border);padding:8px 16px;position:sticky;top:88px;z-index:99;display:flex;gap:4px;overflow-x:auto;flex-wrap:nowrap}
+.nav a{padding:6px 12px;border-radius:4px;font-size:.8rem;white-space:nowrap;text-decoration:none;color:#666;transition:.2s}
+.nav a:hover{background:var(--light);color:var(--primary)}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.section{background:#fff;border-radius:8px;padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.section h2{color:var(--primary);font-size:1.15rem;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+.section h3{color:var(--accent);font-size:1rem;margin:16px 0 8px}
+.section h4{color:#34495e;font-size:.9rem;margin:12px 0 6px}
+.bilingual{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:768px){.bilingual{grid-template-columns:1fr}}
+.en-block{background:#fdfdfd;border-left:3px solid #bdc3c7;padding:12px 16px;border-radius:0 6px 6px 0;font-size:.88rem;color:var(--en)}
+.zh-block{background:var(--light);border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 6px 6px 0;font-size:.88rem;color:var(--zh)}
+.en-block::before{content:'EN';display:inline-block;font-size:.65rem;background:#bdc3c7;color:#fff;padding:1px 6px;border-radius:3px;margin-bottom:6px;font-weight:600}
+.zh-block::before{content:'中文';display:inline-block;font-size:.65rem;background:var(--accent);color:#fff;padding:1px 6px;border-radius:3px;margin-bottom:6px;font-weight:600}
+body.hide-en .en-block{display:none}
+body.hide-zh .zh-block{display:none}
+body.hide-en .bilingual,body.hide-zh .bilingual{display:block}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.82rem}
+th{background:var(--primary);color:#fff;padding:8px 10px;text-align:left}
+td{padding:8px 10px;border-bottom:1px solid var(--border)}
+tr:nth-child(even){background:#f8fafc}
+.tag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:.7rem;margin:2px}
+.tag-act{background:#d5f5e3;color:#1e8449}
+.tag-dnl{background:#fadbd8;color:#cb4335}
+.tag-rfi{background:#fef9e7;color:#b7950b}
+.tag-psf{background:#ebf5fb;color:#2874a6}
+.tag-exp{background:#f5eef8;color:#7d3c98}
+.tag-acw{background:#fef9e7;color:#b7950b}
+.info-box{background:#fef9e7;border:1px solid #f9e79f;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:.82rem}
+.warn-box{background:#fadbd8;border:1px solid #f5b7b1;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:.82rem}
+.ok-box{background:#d5f5e3;border:1px solid #abebc6;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:.82rem}
+.highlight{background:#fff3cd;padding:0 2px;border-radius:2px}
+.footer{text-align:center;padding:24px;color:#999;font-size:.78rem}
+.toc{background:#fff;border-radius:8px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.toc h2{color:var(--primary);font-size:1.1rem;margin-bottom:10px}
+.toc ol{padding-left:20px}
+.toc li{margin:4px 0}
+.toc a{text-decoration:none;color:var(--accent);font-size:.85rem}
+.toc a:hover{text-decoration:underline}
+.stat-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.stat-card{flex:1;min-width:120px;background:#fff;border-radius:8px;padding:16px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.stat-card .num{font-size:1.5rem;font-weight:700;color:var(--primary)}
+.stat-card .label{font-size:.75rem;color:#888;margin-top:4px}
+ul,ol{padding-left:20px;margin:8px 0}
+li{margin:3px 0;font-size:.85rem}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>UAE MPCI 业务规范文档 V1.0</h1>
+<div class="subtitle">National Advance Information Center (NAIC) — Maritime Pre-Load Cargo Information Program (MPCI)</div>
+<div class="subtitle">国家预申报信息中心 — 海运预装货物信息计划 | 中英双语知识库</div>
+<div class="meta">Document Version: 1.0 | First Public Release: 15 Mar 2025 | Bilingual KB: 10 Jul 2026</div>
+<div class="search-bar">
+<input type="text" id="searchInput" placeholder="搜索 / Search... (Ctrl+K)" oninput="searchContent()">
+<button class="lang-toggle active" onclick="toggleLang('both')" id="btn-both">双语</button>
+<button class="lang-toggle" onclick="toggleLang('zh')" id="btn-zh">仅中文</button>
+<button class="lang-toggle" onclick="toggleLang('en')" id="btn-en">EN Only</button>
+</div>
+</div>
+
+<div class="nav">
+<a href="#ch1">1 目的</a>
+<a href="#ch2">2 简介</a>
+<a href="#ch3">3 范围与要求</a>
+<a href="#ch4">4 业务流程</a>
+<a href="#ch5">5 数据要求</a>
+<a href="#ch6">6 特殊场景</a>
+<a href="#ch7">7 数据质量</a>
+<a href="#ch8">8 沟通</a>
+<a href="#ch9">9 业务连续性</a>
+<a href="#ch10">10 术语表</a>
+<a href="#ch11">11 参考</a>
+<a href="#ch12">12 附录</a>
+</div>
+
+<div class="container">
+
+<div class="stat-row">
+<div class="stat-card"><div class="num">54</div><div class="label">页 Pages</div></div>
+<div class="stat-card"><div class="num">12</div><div class="label">章节 Chapters</div></div>
+<div class="stat-card"><div class="num">6</div><div class="label">响应类型 Response Types</div></div>
+<div class="stat-card"><div class="num">30+</div><div class="label">数据元素 Data Elements</div></div>
+<div class="stat-card"><div class="num">2</div><div class="label">语言 Languages</div></div>
+</div>
+
+<div class="toc">
+<h2>目录 Table of Contents</h2>
+<ol>
+<li><a href="#ch1">Purpose 目的</a></li>
+<li><a href="#ch2">Introduction 简介</a> — 2.1 Overview, 2.2 Legal Framework</li>
+<li><a href="#ch3">Scope and Requirements 范围与要求</a> — 3.1-3.6 Filers, Documents, Timing, Inclusions, Exclusions, Integration</li>
+<li><a href="#ch4">MPCI Business Processes 业务流程</a> — 4.1-4.6 Overview, Onboarding, Filing, Validation, Assessment, Delegation</li>
+<li><a href="#ch5">Business Data Requirements 业务数据要求</a> — 5.1-5.3 Data Elements, Consignee, Party ID</li>
+<li><a href="#ch6">Special Business Scenarios 特殊业务场景</a> — 6.1 Consolidation/Co-loading, 6.2 B/L Updates, Split Bills</li>
+<li><a href="#ch7">Data Quality Rules 数据质量规则</a></li>
+<li><a href="#ch8">Communications 沟通</a></li>
+<li><a href="#ch9">Business Continuity 业务连续性</a></li>
+<li><a href="#ch10">Glossary 术语表</a></li>
+<li><a href="#ch11">References 参考文档</a></li>
+<li><a href="#ch12">Appendices 附录</a> — BPMN, Party Info Guidelines, Goods Description Guidelines</li>
+</ol>
+</div>
+
+<!-- Chapter 1 -->
+<div class="section" id="ch1">
+<h2>1. Purpose / 目的</h2>
+<div class="bilingual">
+<div class="en-block">
+The National Advance Information Center or "NAIC", collects travel and trade information from various sources on passenger and cargo movements across the UAE, to perform risk assessment and increase national security levels. NAIC is one of the departments of the Federal Authority for Identity, Citizenship, Customs and Port Security.<br><br>
+NAIC's Pre-Loading Advance Cargo Information (PLACI) program performs risk analysis to identify potential threats from cargo moved through any of the UAE borders. The program has successfully implemented the system for air cargo and this document is to focus on Maritime Pre-Load Cargo Information Program (MPCI) expanding the program scope to cover maritime cargo.<br><br>
+For the MPCI program to be effective in carrying out risk mitigation measures before cargo can be loaded onto vessel bound to the UAE, cargo information is to be filed by either shipping line, NVOCC or freight forwarder within specific time frames and using standard message formats and protocols. NAIC will also respond with assessment response electronically to the filer.<br><br>
+MPCI program represents an additional security layer that virtually extends the UAE borders towards the foreign ports of loading. The program does not interfere nor affect other existing laws or legislations that are imposed and controlled by other agencies.<br><br>
+To facilitate the adoption of the UAE MPCI program, the underlying system design has been prepared and aligned with the principles provided by the UN/EDIFACT standards.
+</div>
+<div class="zh-block">
+国家预申报信息中心（NAIC）从多种来源收集穿越阿联酋的旅客和货物移动信息，进行风险评估并提升国家安全水平。NAIC 是联邦身份、公民、海关和港口安全局的一个部门。<br><br>
+NAIC 的预装货物信息（PLACI）计划对通过阿联酋任何边境运输的货物进行风险分析，以识别潜在威胁。该计划已成功在空运货物领域实施，本文档聚焦于海运预装货物信息计划（MPCI），将计划范围扩展至海运货物。<br><br>
+为使 MPCI 计划能够在货物装载到驶往阿联酋的船舶之前有效执行风险缓解措施，货物信息须由船公司、NVOCC 或货代在规定时间范围内使用标准消息格式和协议进行申报。NAIC 也将以电子方式向申报方返回评估响应。<br><br>
+MPCI 计划代表了一道额外的安全层，实际上将阿联酋边境延伸到了外国装货港。该计划不干预也不影响其他机构实施和管控的现有法律法规。<br><br>
+为推进阿联酋 MPCI 计划的采纳，底层系统设计已按照 UN/EDIFACT 标准原则进行了准备和对齐。
+</div>
+</div>
+</div>
+
+<!-- Chapter 2 -->
+<div class="section" id="ch2">
+<h2>2. Introduction / 简介</h2>
+
+<h3>2.1 Overview / 概述</h3>
+<div class="bilingual">
+<div class="en-block">
+Economic operators such as Shipping Lines or their representatives, Freight forwarders and NVOCCs which are bringing cargo through or into the UAE are required to file shipment data to NAIC. NAIC avails several Technology Service Providers to fulfill such filing requirements.<br><br>
+Economic operators will receive assessment response from NAIC with instructions to either load, do not load or provide additional information for the shipment before loading onto the vessel.<br><br>
+Shipping lines have the option either to integrate through accredited service providers or through direct integration with NAIC system. Filing responsibility and delegation rules for different participants are detailed in subsequent sections.<br><br>
+Throughout the document, "Filer" refers to shipping lines, shipping agents, freight forwarders or NVOCCs, while "Technology Service provider" refers to the technology service providers.
+</div>
+<div class="zh-block">
+将货物通过或运入阿联酋的经济运营商（如船公司或其代表、货代和 NVOCC）须向 NAIC 申报货物数据。NAIC 提供多家技术服务提供商来满足申报需求。<br><br>
+经济运营商将收到 NAIC 的评估响应，指示在装载到船舶前允许装船、禁止装船或提供额外信息。<br><br>
+船公司可以选择通过认证的服务提供商对接或直接与 NAIC 系统对接。不同参与方的申报责任和委托规则在后续章节详述。<br><br>
+本文件中，"申报方"（Filer）指船公司、船代、货代或 NVOCC；"技术服务提供商"指提供技术服务的一方。
+</div>
+</div>
+
+<h3>2.2 Legal Framework / 法律框架</h3>
+<div class="bilingual">
+<div class="en-block">
+The legal framework for establishing NAIC and MPCI program in the UAE is under <strong>Federal Decree Law No. 22 of 2018</strong> and <strong>Resolution No. 15 of 2019</strong>, mandating cargo information filings across all modes of transport.<br><br>
+As per <strong>UAE Cabinet Resolution No. (23) of 2023</strong>, shipping lines and forwarders must electronically submit Bills of Lading to NAIC before loading at the last foreign departure port outside the UAE. This applies to all containerized maritime cargo destined for import, transshipment, or transit through the UAE.
+</div>
+<div class="zh-block">
+建立 NAIC 和 MPCI 计划的法律框架基于 <strong>2018 年第 22 号联邦法令</strong>和 <strong>2019 年第 15 号决议</strong>，要求在所有运输方式下进行货物信息申报。<br><br>
+根据 <strong>2023 年第 23 号阿联酋内阁决议</strong>，船公司和货代须在阿联酋境外最后一个外国离港港口装船前，以电子方式向 NAIC 提交提单。此要求适用于所有以进口、转运或过境阿联酋为目的的集装箱海运货物。
+</div>
+</div>
+</div>
+
+<!-- Chapter 3 -->
+<div class="section" id="ch3">
+<h2>3. Scope and Requirements / 范围与要求</h2>
+
+<h3>3.1 Filers and Their Roles / 申报方及其角色</h3>
+<table>
+<tr><th>角色 Role</th><th>说明 Description</th><th>中文说明</th></tr>
+<tr><td><strong>Shipping Line</strong><br>船公司</td><td>The entity that owns or operates the vessel transporting the cargo.</td><td>拥有或运营运输货物船舶的实体。</td></tr>
+<tr><td><strong>Shipping Agents</strong><br>船代</td><td>A representative of a shipping line who may be delegated to assume liability or manage the filing process with NAIC.</td><td>船公司的代表，可被委托承担法律责任或管理与 NAIC 的申报流程。</td></tr>
+<tr><td><strong>Freight Forwarders</strong><br>货代</td><td>A logistics provider that coordinates and consolidates shipments from multiple shippers into a single consignment.</td><td>将多个托运人的货物协调拼装为单一票货的物流提供商。</td></tr>
+<tr><td><strong>Master Co-loaders</strong><br>主拼箱方</td><td>A freight forwarder or NVOCC that consolidates shipments from other freight forwarders (sub co-loaders) in a co-loading arrangement, managing the overall consolidated shipment.</td><td>在共装安排下整合其他货代（子拼箱方）货物的货代或 NVOCC，负责管理整体拼装货物。</td></tr>
+<tr><td><strong>Sub Co-Loader</strong><br>子拼箱方</td><td>A freight forwarder that provides cargo to be included in a consolidated shipment managed by a master co-loader.</td><td>向主拼箱方管理的拼装货物提供货物的货代。</td></tr>
+</table>
+
+<h3>3.2 Required Documents / 所需文件</h3>
+<table>
+<tr><th>角色 Role</th><th>所需文件 Required Document</th><th>中文说明</th></tr>
+<tr><td>Shipping Line<br>船公司</td><td>Master Bill of Lading (for consolidated shipments) / Direct Bill of Lading (issued directly to shipper)</td><td>主提单（拼装货物）或直接提单（直接签发给托运人）</td></tr>
+<tr><td>Freight Forwarder<br>货代</td><td>House Bill of Lading issued for standard consolidation scenarios</td><td>标准拼装场景下签发的分提单（House B/L）</td></tr>
+<tr><td>Master Co-loader<br>主拼箱方</td><td>A bill of lading issued in co-loading scenarios — serves as house bill from shipping line's perspective and master bill from sub co-loader's perspective</td><td>共装场景下签发的提单 — 对船公司来说是分提单，对子拼箱方来说是主提单</td></tr>
+<tr><td>Sub Co-loader<br>子拼箱方</td><td>House Bill of Lading representing a portion of the cargo consolidated under a master co-loader's bill</td><td>代表主拼箱方提单下部分货物的分提单</td></tr>
+</table>
+
+<h3>3.3 Filing Timing / 申报时限</h3>
+<table>
+<tr><th>角色 Role</th><th>文件类型 Document Type</th><th>截止时间 Cut-off Time</th></tr>
+<tr><td rowspan="2">Shipping Line<br>船公司</td><td>Master Bill of Lading 主提单</td><td><strong>6 Hours Pre-load 装船前 6 小时</strong></td></tr>
+<tr><td>Direct Bill of Lading 直接提单</td><td><strong>24 Hours Pre-load 装船前 24 小时</strong></td></tr>
+<tr><td>Freight Forwarder or Sub-Co-loader<br>货代/子拼箱方</td><td>Lowest Level House Bill of Lading 最底层分提单</td><td><strong>24 Hours Pre-load 装船前 24 小时</strong></td></tr>
+<tr><td>Master Co-loader<br>主拼箱方</td><td>Master Co-loader Bill of Lading 主拼箱方提单</td><td><strong>6 Hours Pre-load 装船前 6 小时</strong></td></tr>
+</table>
+
+<h3>3.4 Inclusions / 适用范围</h3>
+<div class="bilingual">
+<div class="en-block">
+<ul>
+<li><strong>Import, Transit and Transshipment (FROB) Shipments:</strong> Required within MPCI scope. FROB filings are required only from the shipping line.</li>
+<li><strong>Containerized maritime cargo:</strong> Both FCL (Full Container Load) and LCL (Less than Container Load) are included.</li>
+</ul>
+</div>
+<div class="zh-block">
+<ul>
+<li><strong>进口、过境和转运（FROB）货物：</strong>在 MPCI 实施范围内。但 FROB 申报仅要求船公司提交。</li>
+<li><strong>集装箱海运货物：</strong>包括整箱（FCL）和拼箱（LCL）。</li>
+</ul>
+</div>
+</div>
+
+<h3>3.5 Exclusions / 排除范围</h3>
+<table>
+<tr><th>排除项 Exclusion</th><th>说明 Description</th><th>中文说明</th></tr>
+<tr><td>Export Shipments 出口货物</td><td>Shipments being exported out of the UAE</td><td>从阿联酋出口的货物</td></tr>
+<tr><td>Non-Containerized Cargo 非集装箱货物</td><td>Bulk cargo (breakbulk, liquid bulk) and Ro-Ro shipments</td><td>散货（散件、液体散货）和滚装货物</td></tr>
+<tr><td>Wooden Vessels 木船</td><td>Excluded from current phase</td><td>当前阶段排除</td></tr>
+<tr><td>Empty Containers 空箱</td><td>Containers transported without cargo</td><td>无货物运输的空集装箱</td></tr>
+<tr><td>Crew's Effects 船员物品</td><td>Crew's belongings on the vessel</td><td>船上船员的个人物品</td></tr>
+</table>
+
+<h3>3.6 Integration Requirements / 对接要求</h3>
+<div class="bilingual">
+<div class="en-block">
+Filers generally submit documents through Technology Service Providers, while shipping lines have the option to file through service providers or direct integration with the MPCI system.<br><br>
+Data is transmitted using <strong>CUSCAR</strong> message based on UN/EDIFACT standards. NAIC responds with:
+<ul>
+<li><strong>CONTRL</strong> message — validation response (acceptance/rejection with error codes)</li>
+<li><strong>CUSRES</strong> message — assessment response (ACT/ACW/RFI/DNL/PSF/EXP)</li>
+</ul>
+Message specifications are detailed in the MPCI Message Implementation Guide (MIG).
+</div>
+<div class="zh-block">
+申报方通常通过技术服务提供商提交文件，船公司可选择通过服务提供商或直接与 MPCI 系统对接。<br><br>
+数据使用基于 UN/EDIFACT 标准的 <strong>CUSCAR</strong> 消息传输。NAIC 回复：
+<ul>
+<li><strong>CONTRL</strong> 消息 — 验证响应（接受/拒绝及错误代码）</li>
+<li><strong>CUSRES</strong> 消息 — 评估响应（ACT/ACW/RFI/DNL/PSF/EXP）</li>
+</ul>
+消息规范详见 MPCI 消息实施指南（MIG）。
+</div>
+</div>
+</div>
+
+<!-- Chapter 4 -->
+<div class="section" id="ch4">
+<h2>4. MPCI Business Processes / MPCI 业务流程</h2>
+
+<h3>4.1 Business Process Overview / 业务流程概述</h3>
+<table>
+<tr><th>步骤 Step</th><th>Description</th><th>中文说明</th></tr>
+<tr><td><strong>MPCI Onboarding</strong><br>注册接入</td><td>Filers must register on NAIC portal to obtain a unique MPCI Party ID</td><td>申报方须在 NAIC 门户注册以获取唯一的 MPCI 参与方 ID</td></tr>
+<tr><td><strong>MPCI Filing</strong><br>申报提交</td><td>Triggered by a filer submitting B/L information as early as possible</td><td>由申报方尽早提交提单信息触发</td></tr>
+<tr><td><strong>Message Validation</strong><br>消息验证</td><td>System validates submitted messages against supported formats</td><td>系统根据支持的消息格式验证提交的消息</td></tr>
+<tr><td><strong>Shipment Assessment</strong><br>货物评估</td><td>Submitted message is used for advance risk assessment</td><td>使用提交的消息进行预先风险评估</td></tr>
+<tr><td><strong>Assessment Response</strong><br>评估响应</td><td>NAIC sends response based on assessment result</td><td>NAIC 根据评估结果向申报方发送响应</td></tr>
+</table>
+
+<h3>4.2 Onboarding Process / 注册流程</h3>
+<div class="bilingual">
+<div class="en-block">
+The onboarding process involves registration on NAIC portal, technical onboarding and data exchange capability verification. The portal provides:
+<ul>
+<li><strong>Filing Status Monitoring:</strong> Track filing status of own or delegated filings</li>
+<li><strong>Multi-level Filing Status:</strong> Shipping lines/master co-loaders can view sub co-loaders' filing assessment statuses</li>
+</ul>
+NAIC portal: <strong>https://naic.icp.gov.ae</strong>
+</div>
+<div class="zh-block">
+注册流程包括在 NAIC 门户注册、技术接入和数据交换能力验证。门户提供：
+<ul>
+<li><strong>申报状态监控：</strong>跟踪自己或委托方提交的申报状态</li>
+<li><strong>多层级申报状态：</strong>船公司/主拼箱方可查看子拼箱方或拼装货代的申报评估状态</li>
+</ul>
+NAIC 门户：<strong>https://naic.icp.gov.ae</strong>
+</div>
+</div>
+
+<h3>4.3 Filing Process / 申报流程</h3>
+
+<h4>4.3.1 Shipping Line and Master Co-Loader Filing / 船公司及主拼箱方申报</h4>
+<table>
+<tr><th>步骤 Step</th><th>Description</th><th>中文说明</th></tr>
+<tr><td>Submit B/L Message<br>提交提单消息</td><td>Shipping line/agent/master co-loader submits B/L info (new filing or update)</td><td>船公司/船代/主拼箱方提交提单信息（新申报或更新）</td></tr>
+<tr><td>Message Validation<br>消息验证</td><td>Validated against UN/EDIFACT standards and MPCI MIG requirements</td><td>根据 UN/EDIFACT 标准和 MPCI MIG 要求验证</td></tr>
+<tr><td>Consolidation Check<br>拼装检查</td><td>System determines if shipment is direct or consolidation. For consolidation, verifies sub-filing status</td><td>系统判断是直接运输还是拼装。拼装时验证子申报状态</td></tr>
+<tr><td>FF Sub-Filing Completed?<br>货代子申报完成?</td><td>If complete → proceed to assessment. If not → send PSF response</td><td>如已完成 → 进入评估。如未完成 → 发送 PSF 响应</td></tr>
+<tr><td>Send PSF Message<br>发送 PSF 消息</td><td>Pending Sub-Filing response notifies that House B/Ls not yet submitted</td><td>待子申报响应通知分提单尚未提交</td></tr>
+<tr><td>MPCI Assessment<br>MPCI 评估</td><td>System assesses risk and compliance of provided information</td><td>系统评估所提供信息的风险和合规性</td></tr>
+<tr><td>Send RFI/ACT/ACW/DNL<br>发送响应</td><td>One of: RFI (need more info), ACT (approved), ACW (approved with warning), DNL (do not load)</td><td>其一：RFI（需补充信息）、ACT（批准）、ACW（附警告批准）、DNL（禁止装船）</td></tr>
+</table>
+
+<div class="warn-box">
+<strong>⚠️ Expiry Stage / 过期阶段：</strong>If PSF or RFI response is sent and the responsible party fails to respond within the specified timeframe (200 days), the filing will expire and be marked incomplete. Re-submission is required.
+<br>如果发送 PSF 或 RFI 响应后，责任方未在规定时间（200 天）内回应，申报将过期并标记为不完整，需要重新提交。
+</div>
+
+<h4>4.3.2 Freight Forwarder / Sub Co-loader Filing / 货代/子拼箱方申报</h4>
+<div class="bilingual">
+<div class="en-block">
+The freight forwarder filing process is similar but simpler:
+<ol>
+<li>Submit B/L Message (House B/L)</li>
+<li>Message Validation</li>
+<li>MPCI Shipment Assessment</li>
+<li>Assessment Result → RFI / ACT / ACW / DNL</li>
+<li>Sub-Process: System validates availability of all related House B/Ls before responding to shipping line's filing</li>
+</ol>
+<strong>Note:</strong> Filing of House B/Ls may impact Master B/L assessment, and in rare cases, Master B/L may affect House B/Ls assessment.
+</div>
+<div class="zh-block">
+货代申报流程类似但更简单：
+<ol>
+<li>提交提单消息（分提单 House B/L）</li>
+<li>消息验证</li>
+<li>MPCI 货物评估</li>
+<li>评估结果 → RFI / ACT / ACW / DNL</li>
+<li>子流程：系统在回复船公司申报前验证所有关联分提单是否已提交</li>
+</ol>
+<strong>注意：</strong>分提单申报可能影响主提单评估；在极少数情况下，主提单也可能影响分提单评估。
+</div>
+</div>
+
+<h3>4.4 Message Validation / 消息验证</h3>
+<table>
+<tr><th>步骤 Step</th><th>Description</th><th>中文说明</th></tr>
+<tr><td>Validate Message<br>验证消息</td><td>Receiver validates against UN/EDIFACT standards</td><td>接收方根据 UN/EDIFACT 标准验证</td></tr>
+<tr><td>CONTRL (Accepted)<br>CONTRL（接受）</td><td>If valid, acknowledgement sent to confirm receipt</td><td>如有效，发送确认消息</td></tr>
+<tr><td>CONTRL (Rejected)<br>CONTRL（拒绝）</td><td>If invalid, rejection message with error codes sent</td><td>如无效，发送含错误代码的拒绝消息</td></tr>
+<tr><td>Fix & Resubmit<br>修正并重新提交</td><td>Sender fixes errors and resubmits updated message</td><td>发送方修正错误并重新提交更新消息</td></tr>
+<tr><td>Discuss with NAIC<br>与 NAIC 沟通</td><td>If CONTRL message itself is invalid, communicate offline</td><td>如 CONTRL 消息本身无效，进行离线沟通</td></tr>
+</table>
+
+<h3>4.5 MPCI Shipment Assessment / 货物评估</h3>
+<table>
+<tr><th>响应 Response</th><th>代码 Code</th><th>Description / 中文说明</th></tr>
+<tr><td><span class="tag tag-act">ACT</span> Assessment Complete</td><td>ACT</td><td>Filing reviewed, all info verified correct and complete. Loading approved.<br>申报已审核，所有信息已验证正确完整。批准装船。</td></tr>
+<tr><td><span class="tag tag-acw">ACW</span> Assessment Complete with Comments</td><td>ACW</td><td>Filing approved, but NAIC has additional comments for future filings. Loading approved.<br>申报已批准，但 NAIC 有附加意见供后续参考。批准装船。</td></tr>
+<tr><td><span class="tag tag-rfi">RFI</span> Request for Information</td><td>RFI</td><td>Info incomplete/inaccurate, additional info or attachments needed. Shipment cannot proceed.<br>信息不完整/不准确，需补充信息或附件。货物不能继续。</td></tr>
+<tr><td><span class="tag tag-dnl">DNL</span> Do Not Load</td><td>DNL</td><td>Shipment not approved for loading due to security risks, documentation issues, or legal violations.<br>因安全风险、文件问题或法律违规，货物不允许装船。</td></tr>
+<tr><td><span class="tag tag-psf">PSF</span> Pending Sub Filing</td><td>PSF</td><td>Filing incomplete — House B/Ls not yet submitted by responsible party.<br>申报不完整 — 责任方尚未提交分提单。</td></tr>
+<tr><td><span class="tag tag-exp">EXP</span> Filing Expiry</td><td>EXP</td><td>Filing expired (typically 200 days without required actions). Re-submission required.<br>申报已过期（通常 200 天未采取必要行动）。需重新提交。</td></tr>
+</table>
+
+<h3>4.6 Delegation Process / 委托流程</h3>
+
+<h4>4.6.1 Delegation for Freight Forwarders / 货代委托</h4>
+<div class="bilingual">
+<div class="en-block">
+Freight forwarder delegation options:
+<ul>
+<li>Local freight forwarders can delegate filing to overseas freight forwarders.</li>
+<li>Master co-loaders can delegate filing to sub co-loaders.</li>
+<li>Sub co-loaders can delegate filing to master co-loaders.</li>
+</ul>
+During registration, the freight forwarder can:
+<ul>
+<li>Enable delegation to any other forwarder by default</li>
+<li>Delegate to specific freight forwarders</li>
+<li>Disable delegation entirely</li>
+</ul>
+The MPCI Party ID must be manually shared with the delegated freight forwarder.
+</div>
+<div class="zh-block">
+货代委托选项：
+<ul>
+<li>本地货代可委托海外货代申报</li>
+<li>主拼箱方可委托子拼箱方申报</li>
+<li>子拼箱方可委托主拼箱方申报</li>
+</ul>
+注册时，货代可以：
+<ul>
+<li>默认允许委托给任何其他货代</li>
+<li>委托给特定货代</li>
+<li>完全禁用委托</li>
+</ul>
+MPCI 参与方 ID 须手动分享给被委托的货代。
+</div>
+</div>
+
+<h4>4.6.2 Delegation to Shipping Agents / 船代委托</h4>
+<table>
+<tr><th>委托类型 Type</th><th>Description</th><th>中文说明</th></tr>
+<tr><td>Liability Delegation<br>责任委托</td><td>If shipping line has no local UAE representation, delegate liability to agents (max 1 per emirate)</td><td>如船公司在阿联酋无本地代表，可委托责任给船代（每个酋长国最多 1 个）</td></tr>
+<tr><td>Filing Delegation<br>申报委托</td><td>If shipping line not directly integrated, delegate filing to one or more agents</td><td>如船公司未直接对接，可委托一个或多个船代进行申报</td></tr>
+<tr><td>Both<br>两者兼委</td><td>If no local representation AND no direct integration, delegate both liability and filing</td><td>如无本地代表且未直接对接，可同时委托责任和申报</td></tr>
+</table>
+
+<h4>4.6.3 NAIC Responses in Delegation / 委托情况下的 NAIC 响应</h4>
+<div class="bilingual">
+<div class="en-block">
+NAIC issues responses primarily to the entity performing the filing (delegated party). The delegating entity can view all filings submitted on their behalf through the NAIC portal. NAIC may also share assessment results with other involved entities to facilitate trade operations.
+</div>
+<div class="zh-block">
+NAIC 主要向执行申报的实体（被委托方）发送响应。委托方可通过 NAIC 门户查看以其名义提交的所有申报及评估状态。NAIC 也可与其他相关方共享评估结果以促进贸易运营。
+</div>
+</div>
+</div>
+
+<!-- Chapter 5 -->
+<div class="section" id="ch5">
+<h2>5. MPCI Business Data Requirements / 业务数据要求</h2>
+
+<h3>5.1 Business Data Elements / 业务数据元素</h3>
+<table>
+<tr><th>数据元素 Data Element</th><th>Description</th><th>中文说明</th><th>适用</th></tr>
+<tr><td>Bill of Lading Number<br>提单号</td><td>Unique reference number assigned to the B/L</td><td>提单的唯一参考编号</td><td>全部</td></tr>
+<tr><td>MPCI Party ID<br>MPCI 参与方 ID</td><td>Unique identifiers assigned by NAIC to indicate liable parties</td><td>NAIC 分配的唯一标识，用于指示责任方</td><td>全部</td></tr>
+<tr><td>Negotiable / Non-Negotiable Flag<br>可转让/不可转让标志</td><td>Indicates whether B/L is negotiable or non-negotiable</td><td>指示提单是否可转让</td><td>全部</td></tr>
+<tr><td>Cargo Movement Type<br>货物移动类型</td><td>Import, transit, transshipment or FROB</td><td>进口、过境、转运或 FROB</td><td>全部</td></tr>
+<tr><td>Party Liable for Filing<br>申报责任方</td><td>MPCI Party ID of liable party (required for delegation)</td><td>责任方的 MPCI 参与方 ID（委托时需要）</td><td>委托时</td></tr>
+<tr><td>Number of House Bills<br>分提单数量</td><td>Number of house bills under a consolidation bill</td><td>拼装提单下的分提单数量</td><td>拼装</td></tr>
+<tr><td>Shipper Name/Address<br>托运人名称/地址</td><td>Shipper's name and address on the B/L</td><td>提单上托运人的名称和地址</td><td>全部</td></tr>
+<tr><td>Consignee Name/Address<br>收货人名称/地址</td><td>Consignee's name and address on the B/L</td><td>提单上收货人的名称和地址</td><td>全部</td></tr>
+<tr><td>Forwarding Agent Name<br>货代名称</td><td>Forwarding (Shipper's) Agent name</td><td>货代（托运人代理）名称</td><td>全部</td></tr>
+<tr><td>Voyage Number<br>航次号</td><td>Unique identifier for a specific voyage</td><td>特定航次的唯一标识</td><td>船公司</td></tr>
+<tr><td>Shipping Line SMDG Code<br>船公司 SMDG 代码</td><td>SMDG-assigned shipping line identifier</td><td>SMDG 分配的船公司标识</td><td>船公司</td></tr>
+<tr><td>Vessel Name<br>船名</td><td>Vessel name</td><td>船舶名称</td><td>船公司</td></tr>
+<tr><td>Vessel IMO Number<br>船舶 IMO 号</td><td>Unique identifier assigned to each vessel</td><td>每艘船舶的唯一标识</td><td>船公司</td></tr>
+<tr><td>Last Foreign Port Before UAE<br>阿联酋前最后外国港</td><td>Last foreign port before arriving to first UAE port</td><td>到达第一个阿联酋港口前的最后一个外国港口</td><td>船公司</td></tr>
+<tr><td>First Port of Arrival in UAE<br>阿联酋首到港</td><td>First UAE port where vessel initially arrives</td><td>船舶最初到达的第一个阿联酋港口</td><td>船公司</td></tr>
+<tr><td>Place of Receipt<br>收货地</td><td>Place where goods are received by shipping line</td><td>船公司接收货物的地点</td><td>货代</td></tr>
+<tr><td>Port of Loading<br>装货港</td><td>Port where goods are loaded on vessel</td><td>货物装载到船舶上的港口</td><td>全部</td></tr>
+<tr><td>Port of Transshipment<br>转运港</td><td>Ports where shipment is transferred between vessels</td><td>货物在船舶间转运的港口</td><td>全部</td></tr>
+<tr><td>Port of Discharge<br>卸货港</td><td>Port where shipment is discharged (not transshipped)</td><td>货物卸下的港口（非转运）</td><td>全部</td></tr>
+<tr><td>Place of Delivery<br>交货地</td><td>Final destination where goods transferred to consignee</td><td>货物移交收货人的最终目的地</td><td>货代</td></tr>
+<tr><td>ETA<br>预计到达时间</td><td>Estimated time of arrival in UAE</td><td>货物到达阿联酋的预计时间</td><td>船公司</td></tr>
+<tr><td>ETD<br>预计离港时间</td><td>Estimated time of departure from last foreign port</td><td>从最后外国港离港的预计时间</td><td>船公司</td></tr>
+<tr><td>Container Number<br>集装箱号</td><td>Unique identifier for shipping container</td><td>集装箱的唯一标识</td><td>全部</td></tr>
+<tr><td>Container Type & Size<br>集装箱类型和尺寸</td><td>Container type and size used</td><td>使用的集装箱类型和尺寸</td><td>全部</td></tr>
+<tr><td>Full or Empty Container<br>满/空箱</td><td>Indicator whether container is full or empty</td><td>指示集装箱是否满载</td><td>全部</td></tr>
+<tr><td>Seal Number<br>封条号</td><td>Unique serial number for each container seal</td><td>每个集装箱封条的唯一序列号</td><td>全部</td></tr>
+<tr><td>Goods Description<br>货物描述</td><td>Detailed description of cargo items (non-consolidated)</td><td>货物物品的详细描述（非拼装）</td><td>全部</td></tr>
+<tr><td>Package Type/Quantity<br>包装类型/数量</td><td>Type and quantity of packages</td><td>包装的类型和数量</td><td>全部</td></tr>
+<tr><td>Goods Weight<br>货物重量</td><td>Total weight including packaging, excluding container tare</td><td>总重量（含包装，不含集装箱皮重）</td><td>全部</td></tr>
+<tr><td>Container Goods Placement<br>箱内货物放置</td><td>Goods items assigned to each container</td><td>分配到每个集装箱的货物项</td><td>全部</td></tr>
+<tr><td>HS Code<br>HS 编码</td><td>Standardized numerical classification for goods (non-consolidated)</td><td>国际贸易商品分类编号（非拼装）</td><td>全部</td></tr>
+</table>
+
+<h3>5.2 Handling Consignee Scenarios / 收货人数据处理</h3>
+<table>
+<tr><th>场景 Scenario</th><th>Action</th><th>中文操作</th></tr>
+<tr><td><strong>Non-Negotiable Bills</strong><br>不可转让提单</td><td>Consignee data element must always be provided</td><td>必须始终提供收货人数据</td></tr>
+<tr><td><strong>Negotiable - Blank Endorsement</strong><br>可转让 - 空白背书</td><td>Leave consignee empty. Do NOT use "To Order"</td><td>收货人留空。不要使用"To Order"</td></tr>
+<tr><td><strong>Negotiable - To Order of Bank</strong><br>可转让 - 凭银行指示</td><td>Leave consignee empty, provide bank name in "Payer on behalf of importer" field</td><td>收货人留空，在"进口商代付人"栏填写银行名称</td></tr>
+<tr><td><strong>Negotiable - To Order of Shipper/3rd Party</strong><br>可转让 - 凭托运人/第三方指示</td><td>Enter shipper or designated third party name in consignee field</td><td>在收货人栏填写托运人或指定第三方名称</td></tr>
+</table>
+
+<h3>5.3 MPCI Party ID / MPCI 参与方 ID</h3>
+<div class="bilingual">
+<div class="en-block">
+<strong>Definition:</strong> A unique identifier assigned by NAIC to filers (shipping lines, shipping agents, NVOCCs, freight forwarders). Used for identification, enabling delegation, and linking filings across multiple layers.<br><br>
+<strong>Usage Scenarios:</strong>
+<ul>
+<li><strong>All Filings:</strong> Filer must provide their MPCI Party ID in each submission</li>
+<li><strong>Delegation (Local→Overseas FF):</strong> Overseas FF must reference local FF's MPCI Party ID</li>
+<li><strong>Delegation (Shipping Line→Agent):</strong> Agent must reference shipping line's MPCI Party ID</li>
+<li><strong>Consolidation/Co-loading:</strong> All parties must include relevant MPCI Party IDs in filing chain</li>
+</ul>
+<strong>Issuance:</strong>
+<ul>
+<li>FFs and NVOCCs receive ID during onboarding/registration</li>
+<li>Shipping lines' IDs are publicly available on NAIC portal</li>
+<li>FF IDs are NOT publicly listed — must be shared internally</li>
+</ul>
+</div>
+<div class="zh-block">
+<strong>定义：</strong>NAIC 分配给申报方（船公司、船代、NVOCC、货代）的唯一标识符。用于身份识别、启用委托以及跨层关联申报。<br><br>
+<strong>使用场景：</strong>
+<ul>
+<li><strong>所有申报：</strong>申报方须在每次提交中提供自己的 MPCI 参与方 ID</li>
+<li><strong>委托（本地→海外货代）：</strong>海外货代须引用本地货代的 MPCI 参与方 ID</li>
+<li><strong>委托（船公司→船代）：</strong>船代须引用船公司的 MPCI 参与方 ID</li>
+<li><strong>拼装/共装：</strong>所有参与方须在申报链中包含相关方的 MPCI 参与方 ID</li>
+</ul>
+<strong>发放：</strong>
+<ul>
+<li>货代和 NVOCC 在注册过程中获得 ID</li>
+<li>船公司的 ID 在 NAIC 门户公开可查</li>
+<li>货代的 ID 不公开 — 须在相关方之间内部共享</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Chapter 6 -->
+<div class="section" id="ch6">
+<h2>6. Special Business Scenarios / 特殊业务场景</h2>
+
+<h3>6.1 Consolidation and Co-loading / 拼箱与共装</h3>
+
+<h4>6.1.1 Overview / 概述</h4>
+<div class="bilingual">
+<div class="en-block">
+NAIC requires submission of all bills of lading issued throughout the shipping process in consolidation and co-loading scenarios. This includes B/Ls issued by shipping lines and freight forwarders acting as master co-loaders or sub co-loaders.<br><br>
+<strong>Example hierarchy:</strong>
+<ul>
+<li>Shipping Line issues <strong>BL 1</strong> (Master B/L)</li>
+<li>NVOCC (Master Co-loader) issues <strong>BL 1.1</strong> (House for SL, Master for FF) and <strong>BL 1.2</strong> (House for shipper A)</li>
+<li>Freight Forwarder (Sub Co-loader) issues <strong>BL 1.1.1</strong> and <strong>BL 1.1.2</strong> (House B/Ls)</li>
+</ul>
+</div>
+<div class="zh-block">
+NAIC 要求在拼箱和共装场景下提交整个运输过程中签发的所有提单。包括船公司和作为主拼箱方或子拼箱方的货代签发的提单。<br><br>
+<strong>层级示例：</strong>
+<ul>
+<li>船公司签发 <strong>BL 1</strong>（主提单）</li>
+<li>NVOCC（主拼箱方）签发 <strong>BL 1.1</strong>（对船公司是分提单，对货代是主提单）和 <strong>BL 1.2</strong>（给托运人 A 的分提单）</li>
+<li>货代（子拼箱方）签发 <strong>BL 1.1.1</strong> 和 <strong>BL 1.1.2</strong>（分提单）</li>
+</ul>
+</div>
+</div>
+
+<h4>6.1.2-3 Filing Scenarios / 申报场景</h4>
+<div class="bilingual">
+<div class="en-block">
+<strong>Normal Filing:</strong>
+<ul>
+<li>NVOCC files BL 1.1 (consolidated, referencing children BL 1.1.1 & BL 1.1.2) and BL 1.2 (non-consolidation)</li>
+<li>FF files BL 1.1.1 and BL 1.1.2 (non-consolidation), referencing BL 1.1 as parent</li>
+</ul>
+<strong>Delegation Options:</strong>
+<ul>
+<li>NVOCC can file on behalf of FF (BL 1.1.1 & BL 1.1.2), specifying FF's MPCI Party ID as issuer</li>
+<li>FF can file on behalf of NVOCC (BL 1.1), specifying NVOCC's MPCI Party ID as issuer</li>
+</ul>
+</div>
+<div class="zh-block">
+<strong>正常申报：</strong>
+<ul>
+<li>NVOCC 申报 BL 1.1（拼装，引用子提单 BL 1.1.1 和 BL 1.1.2）和 BL 1.2（非拼装）</li>
+<li>货代申报 BL 1.1.1 和 BL 1.1.2（非拼装），引用 BL 1.1 为父提单</li>
+</ul>
+<strong>委托选项：</strong>
+<ul>
+<li>NVOCC 可代货代申报（BL 1.1.1 和 BL 1.1.2），指定货代的 MPCI 参与方 ID 为签发方</li>
+<li>货代可代 NVOCC 申报（BL 1.1），指定 NVOCC 的 MPCI 参与方 ID 为签发方</li>
+</ul>
+</div>
+</div>
+
+<h4>6.1.4 Assessment Response Cascade / 评估响应级联</h4>
+<table>
+<tr><th>响应 Response</th><th>对分提单影响 Impact on House B/L</th><th>对主提单影响 Impact on Master B/L</th></tr>
+<tr><td><span class="tag tag-act">ACT</span></td><td>House ACT 不意味着 Master 也 ACT。Master 须等所有 House 都 ACT。</td><td>Master ACT 意味着所有底层 House 都已 ACT，可装船。</td></tr>
+<tr><td><span class="tag tag-dnl">DNL</span></td><td>House DNL → 级联到 Master，两者都 DNL。其他 House 不受影响。</td><td>Master DNL → 级联到所有关联 House，整票禁止装船。</td></tr>
+<tr><td><span class="tag tag-rfi">RFI</span></td><td>House RFI → Master 保持待定，直到所有 House RFI 解决。</td><td>Master RFI → 不级联到 House。House 可获得 ACT，但 Master 不能装船直到 RFI 解决。</td></tr>
+<tr><td><span class="tag tag-psf">PSF</span></td><td colspan="2">发给船公司/主拼箱方，表示缺少关联分提单申报。应直接联系货代/子拼箱方加快提交。</td></tr>
+<tr><td><span class="tag tag-exp">EXP</span></td><td colspan="2">过期适用于所有层级 — Master 和 House 申报都过期。</td></tr>
+</table>
+
+<h4>6.1.5 Coordination / 协调</h4>
+<div class="bilingual">
+<div class="en-block">
+Key coordination points:
+<ul>
+<li><strong>Ensure Consistency:</strong> Prevent duplicate filings — only designated party submits each B/L</li>
+<li><strong>Exchange MPCI Party IDs:</strong> Share IDs to accurately specify responsible entities</li>
+<li><strong>Share B/L Numbers:</strong> Communicate B/L numbers to correctly link filings across layers</li>
+<li><strong>Coordinate on Assessment Results:</strong> Align actions based on responses (e.g., DNL → remove affected House and issue new Master)</li>
+</ul>
+</div>
+<div class="zh-block">
+关键协调要点：
+<ul>
+<li><strong>确保一致性：</strong>防止重复申报 — 每份提单仅由指定方提交</li>
+<li><strong>交换 MPCI 参与方 ID：</strong>共享 ID 以准确指定责任实体</li>
+<li><strong>共享提单号：</strong>沟通提单号以正确关联不同层级的申报</li>
+<li><strong>协调评估结果：</strong>根据响应对齐行动（如 DNL → 移除受影响的 House 并签发新 Master）</li>
+</ul>
+</div>
+</div>
+
+<h3>6.2 Updating a Bill of Lading / 提单更新</h3>
+
+<h4>6.2.1 Update Scenarios / 更新场景</h4>
+<table>
+<tr><th>场景 Scenario</th><th>Description</th><th>中文说明</th><th>操作 Action</th></tr>
+<tr><td>Corrections<br>更正</td><td>Errors, re-measurements, inaccurate data</td><td>错误、重新计量、不准确数据</td><td>Submit updated version 提交更新版本</td></tr>
+<tr><td>Endorsements<br>背书</td><td>Consignee change for negotiable bills</td><td>可转让提单的收货人变更</td><td>Submit updated version with new consignee 提交含新收货人的更新版本</td></tr>
+<tr><td>Vessel/Voyage Change<br>船舶/航次变更</td><td>Rerouting, delays, operational changes</td><td>改道、延误、运营变更</td><td>Cancel & new B/L, or update same B/L 取消并新建或更新同一提单</td></tr>
+<tr><td>Consolidation/Deconsolidation<br>拼装/拆装</td><td>House bills reassigned to another master</td><td>分提单重新分配到另一主提单</td><td>SL: new Master B/L; FF: updated version referencing new Master 船公司提交新主提单；货代提交更新版本</td></tr>
+<tr><td>Response to RFI<br>回复 RFI</td><td>NAIC requests clarification</td><td>NAIC 要求澄清或补充</td><td>Submit updated version with requested changes 提交含要求变更的更新版本</td></tr>
+<tr><td>Switch Bills<br>换单</td><td>Replace original B/L with new one</td><td>用新提单替换原始提单</td><td>Submit updated version, indicate as switch bill 提交更新版本，标记为换单</td></tr>
+<tr><td>Cancellation<br>取消</td><td>Full cancellation due to errors/misrouting</td><td>因错误/错路全量取消</td><td>Submit cancellation request 提交取消请求</td></tr>
+<tr><td>Split Bills<br>拆单</td><td>Cargo split across vessels/voyages</td><td>货物拆分到不同船舶/航次</td><td>See split bill handling 见拆单处理</td></tr>
+</table>
+
+<h4>6.2.2 General Considerations / 通用注意事项</h4>
+<div class="bilingual">
+<div class="en-block">
+<ul>
+<li>Updating = modifying existing filing; New B/L = separate filing</li>
+<li>A cancelled filing cannot be updated — new filing required</li>
+<li>Cannot have two filings with same B/L number simultaneously (same entity)</li>
+<li>Filers can only update their own filings</li>
+<li>No restrictions on which data elements can be updated, but NAIC conducts data quality checks</li>
+<li>Explanatory notes expected for significant updates</li>
+</ul>
+</div>
+<div class="zh-block">
+<ul>
+<li>更新 = 修改现有申报；新提单 = 创建独立申报</li>
+<li>已取消的申报不能更新 — 须新建申报</li>
+<li>同一实体不能同时提交两份相同提单号的申报</li>
+<li>申报方只能更新自己的申报</li>
+<li>对可更新的数据元素无限制，但 NAIC 会进行数据质量检查</li>
+<li>重大更新须提供解释说明</li>
+</ul>
+</div>
+</div>
+
+<h4>6.2.3 Split Bill of Lading Handling / 拆单处理</h4>
+<div class="bilingual">
+<div class="en-block">
+A split B/L occurs when part of the cargo under a single B/L is separated and transported on a different vessel (often due to container roll-over).<br><br>
+<strong>Shipping Line Options:</strong>
+<ul>
+<li>Leave original B/L unchanged + submit new B/L for separated cargo (referencing original)</li>
+<li>Update original B/L to reflect split + submit new B/L for separated cargo (referencing updated)</li>
+</ul>
+<strong>Freight Forwarder:</strong>
+<ul>
+<li>If split affects SL B/L only: Submit new version of House B/L referencing the split SL B/L</li>
+<li>If split affects both: Leave or update original + submit new forwarder B/L referencing original and split SL B/L</li>
+</ul>
+</div>
+<div class="zh-block">
+拆单是指单一提单下的部分货物（一个或多个集装箱，或集装箱的一部分）被分离并在不同船舶上运输（通常因集装箱滚装）。<br><br>
+<strong>船公司选项：</strong>
+<ul>
+<li>保持原始提单不变 + 为分离货物提交新提单（引用原始提单）</li>
+<li>更新原始提单以反映拆分 + 为分离货物提交新提单（引用更新后的提单）</li>
+</ul>
+<strong>货代：</strong>
+<ul>
+<li>如拆分仅影响船公司提单：提交新版分提单引用拆分后的船公司提单</li>
+<li>如两者都受影响：保持或更新原始提单 + 提交新货代提单引用原始和拆分后的船公司提单</li>
+</ul>
+</div>
+</div>
+
+<h4>6.2.4 Assessment Responses for Updates / 更新的评估响应</h4>
+<div class="bilingual">
+<div class="en-block">
+<ul>
+<li>Updating a B/L re-triggers MPCI assessment</li>
+<li>First version must be submitted before loading; updates can be submitted even after arrival</li>
+<li>Any update receives one of: DNL, ACT, ACW, RFI, PSF, or EXP</li>
+<li>To close the filing, final status must be ACT, ACW, or DNL</li>
+<li><strong>Sequential Updates:</strong> If update submitted while previous version under assessment, only latest version receives response</li>
+<li><strong>DNL post-loading:</strong> Shipment should be intercepted upon arrival</li>
+<li><strong>Filing Expiration:</strong> Updates after 200 days from initial filing will be rejected</li>
+</ul>
+</div>
+<div class="zh-block">
+<ul>
+<li>更新提单将重新触发 MPCI 评估</li>
+<li>第一个版本须在装船前提交；更新可在货物到达后提交</li>
+<li>每次更新都会收到以下之一：DNL、ACT、ACW、RFI、PSF 或 EXP</li>
+<li>要关闭申报，最终状态必须是 ACT、ACW 或 DNL</li>
+<li><strong>连续更新：</strong>如在前一版本评估期间提交更新，仅最新版本会收到响应</li>
+<li><strong>装船后 DNL：</strong>货物到达后应被拦截</li>
+<li><strong>申报过期：</strong>初始申报后 200 天后的更新将被系统拒绝</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Chapter 7 -->
+<div class="section" id="ch7">
+<h2>7. Data Quality Rules / 数据质量规则</h2>
+<table>
+<tr><th>支柱 Pillar</th><th>Description</th><th>中文说明</th></tr>
+<tr><td><strong>Missing Filing</strong><br>缺失申报</td><td>Failure to submit required MPCI messages (e.g., missing House B/Ls)</td><td>未能提交要求的 MPCI 消息（如缺少分提单申报）</td></tr>
+<tr><td><strong>Inaccurate Data Elements</strong><br>数据不准确</td><td>Info is incorrect, incomplete, or inconsistent. Includes errors in shipper/consignee details, cargo descriptions, routing info, and conditional validation failures</td><td>信息不正确、不完整或不一致。包括托运人/收货人详情、货物描述、路径信息错误，以及条件验证失败</td></tr>
+<tr><td><strong>Late Filing</strong><br>延迟申报</td><td>Required data not submitted within required timeframes (see section 3.3)</td><td>未在规定时限内提交数据（见 3.3 节）</td></tr>
+<tr><td><strong>Invalid Filing</strong><br>无效申报</td><td>Filing cannot be processed due to technical issues (formatting errors, schema violations, missing required fields). CONTRL rejection sent</td><td>因技术问题无法处理的申报（格式错误、模式违规、缺少必填字段）。会发送 CONTRL 拒绝消息</td></tr>
+<tr><td><strong>Duplicate Filing</strong><br>重复申报</td><td>Same message submitted multiple times with identical data, without changes</td><td>相同消息以相同数据多次提交，无任何变更</td></tr>
+</table>
+</div>
+
+<!-- Chapter 8 -->
+<div class="section" id="ch8">
+<h2>8. Communications / 沟通</h2>
+<div class="bilingual">
+<div class="en-block">
+<ul>
+<li><strong>Maintain Contact Info:</strong> Filers must keep contact details updated on NAIC portal (valid phone + email)</li>
+<li><strong>NAIC Communications:</strong> Assessment responses requiring quick action; planned/unplanned downtimes; system issues detected</li>
+<li><strong>NAIC Support:</strong> 24/7 support email — <strong>mpci.inquiries@icp.gov.ae</strong></li>
+</ul>
+</div>
+<div class="zh-block">
+<ul>
+<li><strong>维护联系信息：</strong>申报方须在 NAIC 门户保持联系详情更新（有效电话 + 邮箱）</li>
+<li><strong>NAIC 沟通：</strong>需要快速行动的评估响应；计划内/计划外系统停机；检测到的申报方系统问题</li>
+<li><strong>NAIC 支持：</strong>7×24 小时支持邮箱 — <strong>mpci.inquiries@icp.gov.ae</strong></li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Chapter 9 -->
+<div class="section" id="ch9">
+<h2>9. Business Continuity / 业务连续性</h2>
+<div class="bilingual">
+<div class="en-block">
+Business continuity strategies and protocols are designed to reduce the impact on trade while upholding security measures during outages. For more information, refer to 'MPCI – Business Continuity Guide', reference document [4].
+</div>
+<div class="zh-block">
+业务连续性策略和协议旨在在系统停机期间减少对贸易的影响，同时维护安全措施。更多信息请参阅"MPCI — 业务连续性指南"参考文档 [4]。
+</div>
+</div>
+</div>
+
+<!-- Chapter 10 -->
+<div class="section" id="ch10">
+<h2>10. Glossary / 术语表</h2>
+<table>
+<tr><th>术语 Term</th><th>缩写 Abbr.</th><th>Definition / 定义</th></tr>
+<tr><td>Assessment Complete</td><td>AC / ACT</td><td>评估完成 — 批准装船</td></tr>
+<tr><td>Assessment Complete with Warning</td><td>ACW</td><td>评估完成（附警告）— 批准装船但有注意事项</td></tr>
+<tr><td>Application Programming Interface</td><td>API</td><td>应用程序编程接口</td></tr>
+<tr><td>Bill of Lading</td><td>BOL / B/L</td><td>提单</td></tr>
+<tr><td>Business Process Modelling Notation</td><td>BPMN</td><td>业务流程建模标注</td></tr>
+<tr><td>Consignee</td><td>—</td><td>收货人 — 接收货物的当事方</td></tr>
+<tr><td>Consolidation Shipment</td><td>—</td><td>拼装货物 — 包含多个不同收货人的小票货物</td></tr>
+<tr><td>Control Message</td><td>CONTRL</td><td>控制消息 — EDIFACT 验证响应</td></tr>
+<tr><td>Customs Cargo Report Message</td><td>CUSCAR</td><td>海关货物报告消息</td></tr>
+<tr><td>Customs Response Message</td><td>CUSRES</td><td>海关响应消息</td></tr>
+<tr><td>Direct Shipment</td><td>—</td><td>直接运输 — 不包含其他收货人货物的运输</td></tr>
+<tr><td>Do Not Load</td><td>DNL</td><td>禁止装船</td></tr>
+<tr><td>Filing Expiry</td><td>EXP</td><td>申报过期</td></tr>
+<tr><td>Freight Forwarder</td><td>FF</td><td>货代</td></tr>
+<tr><td>Filer</td><td>—</td><td>申报方 — 负责申报或被委托的船公司/货代/NVOCC/船代</td></tr>
+<tr><td>National Advance Information Centre</td><td>NAIC</td><td>国家预申报信息中心</td></tr>
+<tr><td>Non-Vessel Operating Common Carrier</td><td>NVOCC</td><td>无船承运人</td></tr>
+<tr><td>Pre-Loading Advance Cargo Information</td><td>PLACI</td><td>预装货物信息</td></tr>
+<tr><td>Pending Sub Filing</td><td>PSF</td><td>待子申报</td></tr>
+<tr><td>Request for Information</td><td>RFI</td><td>信息请求</td></tr>
+<tr><td>Shipper</td><td>—</td><td>托运人 — 发起运输的当事方</td></tr>
+<tr><td>Shipping Line</td><td>—</td><td>船公司 — 运营船舶的海运承运人</td></tr>
+<tr><td>UN/EDIFACT</td><td>—</td><td>联合国电子数据交换标准</td></tr>
+<tr><td>World Customs Organization</td><td>WCO</td><td>世界海关组织</td></tr>
+</table>
+</div>
+
+<!-- Chapter 11 -->
+<div class="section" id="ch11">
+<h2>11. References / 参考文档</h2>
+<table>
+<tr><th>编号 Ref</th><th>文档标题 Document Title</th><th>中文</th></tr>
+<tr><td>[1]</td><td>MPCI – Message Implementation Guide (MIG)</td><td>MPCI — 消息实施指南</td></tr>
+<tr><td>[2]</td><td>MPCI – Registration & Onboarding Guide</td><td>MPCI — 注册与接入指南</td></tr>
+<tr><td>[3]</td><td>MPCI - CONTRL Response - Error Codes List</td><td>MPCI — CONTRL 响应错误代码列表</td></tr>
+<tr><td>[4]</td><td>MPCI – Business Continuity Guide</td><td>MPCI — 业务连续性指南</td></tr>
+</table>
+</div>
+
+<!-- Chapter 12 -->
+<div class="section" id="ch12">
+<h2>12. Appendices / 附录</h2>
+
+<h3>12.1 Appendix A – BPMN Annotations / BPMN 标注</h3>
+<table>
+<tr><th>标注 Annotation</th><th>Meaning</th><th>中文含义</th></tr>
+<tr><td>System Activity</td><td>Activity performed by the system</td><td>系统执行的活动</td></tr>
+<tr><td>Linked Subprocess</td><td>Includes multiple activities, actors, milestones</td><td>包含多个活动、参与者和里程碑的子流程</td></tr>
+<tr><td>Time-bound Action</td><td>System action with subsequent action required within specified time</td><td>需在规定时间内采取后续行动的系统操作</td></tr>
+<tr><td>Conditional Gateway</td><td>Process follows different paths based on conditions</td><td>基于条件选择不同路径</td></tr>
+<tr><td>Parallel Gateway</td><td>All subsequent activities triggered simultaneously</td><td>所有后续活动同时触发</td></tr>
+<tr><td>Exclusive Gateway</td><td>Only one path taken out of multiple options</td><td>多选项中仅取一条路径</td></tr>
+<tr><td>Notification Task</td><td>Performed outside the system</td><td>在系统外执行的通知任务</td></tr>
+<tr><td>Human Task</td><td>Requires human action</td><td>需要人工操作</td></tr>
+</table>
+
+<h3>12.2 Appendix C – Party Information Guidelines / 参与方信息指南</h3>
+<div class="bilingual">
+<div class="en-block">
+<strong>Party Name (Shipper/Consignee):</strong>
+<ul>
+<li><strong>Individual:</strong> Must be ultimate shipper/consignee's full name (at least first + middle/last name). Same as ID card. No fillers (TBD, TBC, Unknown).</li>
+<li><strong>Company:</strong> Must be ultimate shipper/consignee company name. Full company name. Same as registration documents. No fillers.</li>
+<li>Shipping Line / Freight Forwarder / consolidator info is NOT accepted.</li>
+</ul>
+<strong>Party Address:</strong>
+<ul>
+<li><strong>Street Address:</strong> Accurate, reflects ultimate party. No fillers. Import → Consignee address in UAE. Export → Shipper address in UAE.</li>
+<li><strong>Location (City):</strong> Accurate city/place (e.g., Mumbai). No fillers.</li>
+<li><strong>ISO Country Code:</strong> Accurate (e.g., IN, US). No fillers.</li>
+<li><strong>Postal Code:</strong> Accurate. No fillers.</li>
+<li><strong>Contact Number:</strong> Accurate. No fillers.</li>
+</ul>
+</div>
+<div class="zh-block">
+<strong>参与方名称（托运人/收货人）：</strong>
+<ul>
+<li><strong>个人：</strong>须为最终托运人/收货人的全名（至少名 + 中间名/姓）。与身份证件一致。不得使用填充值（TBD、TBC、Unknown）。</li>
+<li><strong>公司：</strong>须为最终托运人/收货人公司名称。全称。与注册文件一致。不得使用填充值。</li>
+<li>不接受船公司/货代/拼箱方信息。</li>
+</ul>
+<strong>参与方地址：</strong>
+<ul>
+<li><strong>街道地址：</strong>准确，反映最终当事方。不得使用填充值。进口 → 收货人地址须在阿联酋。出口 → 托运人地址须在阿联酋。</li>
+<li><strong>城市/地点：</strong>准确的城市/地点（如 Mumbai）。不得使用填充值。</li>
+<li><strong>ISO 国家代码：</strong>准确（如 IN、US）。不得使用填充值。</li>
+<li><strong>邮编：</strong>准确。不得使用填充值。</li>
+<li><strong>联系电话：</strong>准确。不得使用填充值。</li>
+</ul>
+</div>
+</div>
+
+<h3>12.3 Appendix D – Goods Description Guidelines / 货物描述指南</h3>
+
+<div class="warn-box">
+<strong>⚠️ 不可接受的格式 Unacceptable Formats:</strong>
+<ul>
+<li>全数字字符（如 1004）| All numeric characters</li>
+<li>文件扩展名（如 .wpx）| File extensions</li>
+<li>3 个或以上相同符号/字母（如 AAA）| Three+ equal symbols</li>
+<li>空字符串（仅空格/句点/连字符）| Empty strings</li>
+<li>全特殊字符 | All special characters</li>
+<li>不完整描述 | Incomplete descriptions</li>
+<li>模糊描述（如 "Nuts" → 应为 "Hexagonal aluminum bicycle nuts"）| Ambiguous descriptions</li>
+<li>非英语描述 | Non-English descriptions</li>
+<li>主分提单间不一致 | Inconsistent information</li>
+</ul>
+</div>
+
+<h4>可接受 vs 不可接受示例 / Acceptable vs Unacceptable Examples</h4>
+<table>
+<tr><th>❌ 不可接受 Unacceptable</th><th>✅ 可接受 Acceptable</th></tr>
+<tr><td>Animals 动物</td><td>Horse 马, Poultry 家禽, Bovine 牛</td></tr>
+<tr><td>Apparel/Clothing 服装</td><td>Shoes 鞋, Women's Dresses 女裙, Men's Shirts 男衬衫</td></tr>
+<tr><td>Appliances 家电</td><td>Refrigerator 冰箱, Microwave Oven 微波炉</td></tr>
+<tr><td>Auto Parts 汽车零件</td><td>Air Filters 空气滤清器, Brakes 刹车</td></tr>
+<tr><td>Chemicals 化学品</td><td>Aluminum Potassium Sulfate 硫酸铝钾, Methyl Alcohol 甲醇</td></tr>
+<tr><td>Consolidated 拼装（非拼装时）</td><td>Consolidated (when house bills expected)</td></tr>
+<tr><td>Documents 文件</td><td>Passport 护照, Identity Card 身份证</td></tr>
+<tr><td>Electronics 电子</td><td>Computers 电脑, Monitors 显示器, Televisions 电视</td></tr>
+<tr><td>Food 食品</td><td>Fresh Oranges 鲜橙, Frozen Chicken 冻鸡, Canned Tuna 金枪鱼罐头</td></tr>
+<tr><td>Iron and steel 钢铁</td><td>Iron Pipes 铁管, Steel Building Material 钢建材</td></tr>
+<tr><td>Medical Supplies 医疗用品</td><td>Medical Gloves 医用手套, Syringes 注射器</td></tr>
+<tr><td>Metal 金属</td><td>Ingots 锭, Round bars 圆钢, Pipes 管材</td></tr>
+<tr><td>Oil 油</td><td>Mineral Oil 矿物油, Motor Oil 机油, Olive Oil 橄榄油</td></tr>
+<tr><td>Ore 矿石</td><td>Iron Ore 铁矿, Copper Ore 铜矿</td></tr>
+<tr><td>Plastic Goods 塑料制品</td><td>Plastic Kitchenware 塑料厨具, Plastic Toys 塑料玩具</td></tr>
+<tr><td>Plants/Flowers 植物/花卉</td><td>Tulips 郁金香, Cedar Saplings 雪松苗</td></tr>
+<tr><td>Rubber Articles 橡胶制品</td><td>Rubber Hoses 橡胶软管, Tires 轮胎</td></tr>
+<tr><td>Stationery 文具</td><td>Pencils 铅笔, Books 书籍, Pens 笔</td></tr>
+</table>
+</div>
+
+</div>
+
+<div class="footer">
+<p>UAE MPCI Business Specification Document V1.0 — 中英双语知识库</p>
+<p>Source: NAIC | Document Version: 1.0 | First Release: 15 Mar 2025 | Bilingual KB: 10 Jul 2026</p>
+<p>GitHub: <a href="https://github.com/rickyqinqi/UAE-MPCI" style="color:#2980b9">github.com/rickyqinqi/UAE-MPCI</a> | Online: <a href="https://rickyqinqi.github.io/UAE-MPCI/" style="color:#2980b9">rickyqinqi.github.io/UAE-MPCI</a></p>
+<p>内容仅供参考，正式申报请以 NAIC 官方最新文档为准 | Content for reference only</p>
+</div>
+
+<script>
+function searchContent(){
+var q=document.getElementById('searchInput').value.toLowerCase().trim();
+var sections=document.querySelectorAll('.section');
+sections.forEach(function(s){
+if(!q){s.style.display='';return;}
+var text=s.textContent.toLowerCase();
+if(text.indexOf(q)>=0){s.style.display='';s.querySelectorAll('.en-block,.zh-block,td,li,h3,h4').forEach(function(el){
+el.style.backgroundColor=el.style.backgroundColor.replace(/rgb\(255, 243, 205\)/,'');
+if(el.textContent.toLowerCase().indexOf(q)>=0&&el.tagName!=='H2'){
+var orig=el.innerHTML;
+el.innerHTML=orig;
+}
+});}else{s.style.display='none';}
+});
+if(q){
+document.querySelectorAll('.section').forEach(function(s){
+if(s.style.display!='none'){
+s.querySelectorAll('.en-block,.zh-block,td,li').forEach(function(el){
+var t=el.textContent.toLowerCase();
+if(t.indexOf(q)>=0){
+el.style.backgroundColor='#fff3cd';
+}
+});
+}
+});
+}
+}
+
+function toggleLang(mode){
+document.body.classList.remove('hide-en','hide-zh');
+document.querySelectorAll('.lang-toggle').forEach(function(b){b.classList.remove('active');});
+if(mode==='zh'){document.body.classList.add('hide-en');document.getElementById('btn-zh').classList.add('active');}
+else if(mode==='en'){document.body.classList.add('hide-zh');document.getElementById('btn-en').classList.add('active');}
+else{document.getElementById('btn-both').classList.add('active');}
+}
+
+document.addEventListener('keydown',function(e){
+if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();document.getElementById('searchInput').focus();}
+});
+</script>
+
+</body>
+</html>
